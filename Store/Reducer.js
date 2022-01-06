@@ -1,15 +1,15 @@
 import {
-    HELLO,
+    FIRST,
 } from "./Action";
 
 const initialState = {
-    hello:""
+    first:""
 };
 
 const Reducer = (state = initialState, action) => {
   switch (action.type) {
-    case HELLO:
-      return {...state, hello: action.payload};
+    case FIRST:
+      return {...state, first: action.payload};
     default:
       return state;
   }

@@ -1,10 +1,10 @@
-export const HELLO="HELLO";
+export const FIRST="FIRST";
 
 
-export const setHello=(data)=>{
+export const setFirst=(data)=>{
     return(
         {
-            type:HELLO,
+            type:FIRST,
             payload:data
         }
     )
