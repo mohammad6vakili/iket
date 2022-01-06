@@ -27,6 +27,9 @@ function MyApp({ Component, pageProps }) {
     if(!localStorage.getItem("lat")){
       router.push("/");
     }
+    if(localStorage.getItem("lat") && !localStorage.getItem("first")){
+      router.push("/welcome");
+    }
   },[])
 
   return(

@@ -18,7 +18,12 @@ const Home=()=> {
             localStorage.setItem("lat",position.coords.latitude.toFixed(6));
             localStorage.setItem("long",position.coords.longitude.toFixed(6));
             setLoading(false);
-            router.push("/login");
+            let firstTime=localStorage.getItem("first");
+            if(!firstTime){
+              router.push("/welcome");
+            }else{
+              router.push("/enter");
+            }
         }
         function handler(error){
             switch(error.code) {
