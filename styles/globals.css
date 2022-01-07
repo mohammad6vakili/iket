@@ -27,6 +27,14 @@
   flex-direction: column;
   background-color: white;
 }
+.home{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #5925B6;
+}
 .header {
   width: 100%;
   height: 8vh;
@@ -34,9 +42,15 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  font-size: 16px;
   color: white;
   background: rgb(89,37,176);
   background: linear-gradient(90deg, rgba(89,37,176,1) 0%, rgba(105,26,247,1) 50%, rgba(157,103,255,1) 100%);  
+}
+.header-right-icon{
+  position:absolute;
+  right: 15px;
+  top: 25%;
 }
 .enter_green_btn{
   background: rgb(0,168,20) !important;
@@ -60,7 +74,6 @@
 }
 @media only screen and (min-width:420px){
   .dashboard-page{
-    border: 1px solid rgba(201, 201, 201, 0.61);
-    border-radius: 10px 10px 0 0;
+    box-shadow: 1px 1px 5px rgba(255, 255, 255, 0.685);
   }
 }

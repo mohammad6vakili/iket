@@ -24,9 +24,7 @@ function MyApp({ Component, pageProps }) {
   const router=useRouter();
 
   useEffect(()=>{
-    if(!localStorage.getItem("lat")){
-      router.push("/");
-    }
+    router.push("/");
     if(localStorage.getItem("lat") && !localStorage.getItem("first")){
       router.push("/welcome");
     }

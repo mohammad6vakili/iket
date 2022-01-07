@@ -1,3 +1,7 @@
+@font-face {
+  font-family: sans;
+  src: url(/assets/fonts/IRANSansWeb.ttf);
+}
 .Toastify__toast--success {
     background-color: rgb(78, 196, 84) !important;
   }
@@ -16,6 +20,7 @@
   .Toastify__toast-body {
     font-size: 14px !important;
     color: white !important;
+    font-family: sans;
   }
   .Toastify__close-button--light {
     color: white !important;
