@@ -21,7 +21,8 @@ const Enter=()=>{
                         height={"90px"}
                     />
                 </div>
-                <Button 
+                <Button
+                    onClick={()=>router.push("/login")}
                     className="enter_green_btn"
                 >
                     ورود
