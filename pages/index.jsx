@@ -12,12 +12,17 @@ const Home=()=> {
   useEffect(()=>{
     setLoading(true);
     let firstTime=localStorage.getItem("first");
+    let userId=localStorage.getItem("userId");
     setTimeout(()=>{
       setLoading(false);
       if(!firstTime){
         router.push("/welcome");
       }else{
-        router.push("/enter");
+        if(userId){
+          router.push("/home");
+        }else{
+          router.push("/enter");
+        }
       }
     },2000)
 },[])
