@@ -4,9 +4,9 @@ import rightArrow from "../assets/images/right-arrow-white.svg";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import secIcon from "../assets/images/sec-icon.png";
-import { Input , Button} from "antd";
-import { setProfile } from "../Store/Action";
 import { useDispatch } from "react-redux";
+import { Input , Button} from "antd";
+import { setProfile} from "../Store/Action";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Countdown from "react-countdown";
@@ -16,11 +16,11 @@ import loginIcon from "../assets/images/login_icon.png";
 
 
 const Login=()=>{
+    const dispatch = useDispatch();
     const router = useRouter();
-    const dispatch=useDispatch();
-    const [isCount , setIsCount]=useState(false);
-    const [step , setStep]=useState(0)
+    const [step , setStep]=useState(0);
     const [mobile , setMobile]=useState("");
+    const [isCount , setIsCount]=useState(false);
     const [userId , setUserId]=useState("");
     const [code , setCode]=useState("");
 
@@ -102,9 +102,9 @@ const Login=()=>{
         }
     }
 
-    const renderer = ({ minutes, seconds}) => {
-        return <span style={{margin:"0 5px"}}>{seconds}</span>;
-    };
+    const renderer = ({ minutes, seconds}) => (
+        <span style={{margin:"0 5px"}}>{seconds}</span>
+    );
 
     return(
         <div className="app-container">

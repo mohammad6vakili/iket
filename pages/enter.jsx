@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 
 const Enter=()=>{
     const router=useRouter();
+    
     return(
         <div className="app-container">
             <div className={`${styles.enter} dashboard-page`}>
