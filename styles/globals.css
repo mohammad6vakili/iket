@@ -72,6 +72,10 @@
   background: linear-gradient(90deg, rgba(89,37,176,1) 0%, rgba(105,26,247,1) 50%, rgba(157,103,255,1) 100%) !important;  
   color: white !important;
 }
+.ant-select-arrow{
+  left: 11px !important;
+  right: unset !important;
+}
 @media only screen and (min-width:420px){
   .dashboard-page{
     box-shadow: 1px 1px 5px rgba(255, 255, 255, 0.685);

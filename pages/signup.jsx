@@ -52,7 +52,7 @@ const Signup=()=>{
             postData.append("FullName",name);
             postData.append("Cellphone",mobile);
             postData.append("Email",email);
-            postData.append("Token","5af6f02ccbc44675930a5f8e275d8213");
+            postData.append("Token",Env.token);
             try{
                 const response = await axios.post(Env.baseUrl + "InsertUser.aspx",postData);
                 if(response.data.Status===1){
@@ -94,7 +94,7 @@ const Signup=()=>{
         }else{
             const postData = new FormData();
             postData.append("Cellphone",mobile);
-            postData.append("Token","5af6f02ccbc44675930a5f8e275d8213");
+            postData.append("Token",Env.token);
             try{
                 const response = await axios.post(Env.baseUrl + "UserLogin.aspx",postData);
                 if(response.data.Status===1){
@@ -132,7 +132,7 @@ const Signup=()=>{
             const postData = new FormData();
             postData.append("ID",userId);
             postData.append("ActivationCode",code);
-            postData.append("Token","5af6f02ccbc44675930a5f8e275d8213");
+            postData.append("Token",Env.token);
             try{
                 const response = await axios.post(Env.baseUrl + "InsertUserStatus.aspx",postData);
                 if(response.data.Status===1){
@@ -141,7 +141,7 @@ const Signup=()=>{
                     })
                     dispatch(setProfile(response.data.Data[0]));
                     localStorage.setItem("userId",response.data.Data[0].ID);
-                    router.push("/home");
+                    router.push("/locateUser");
                 }else{
                     toast.warning(response.data.Message,{
                         position:"bottom-left"

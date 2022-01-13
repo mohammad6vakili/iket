@@ -39,7 +39,7 @@ const Login=()=>{
         }else{
             const postData = new FormData();
             postData.append("Cellphone",mobile);
-            postData.append("Token","5af6f02ccbc44675930a5f8e275d8213");
+            postData.append("Token",Env.token);
             try{
                 const response = await axios.post(Env.baseUrl + "UserLogin.aspx",postData);
                 if(response.data.Status===1){
@@ -77,7 +77,7 @@ const Login=()=>{
             const postData = new FormData();
             postData.append("ID",userId);
             postData.append("ActivationCode",code);
-            postData.append("Token","5af6f02ccbc44675930a5f8e275d8213");
+            postData.append("Token",Env.token);
             try{
                 const response = await axios.post(Env.baseUrl + "InsertUserStatus.aspx",postData);
                 if(response.data.Status===1){
