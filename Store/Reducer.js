@@ -1,11 +1,13 @@
 import {
     FIRST,
-    PROFILE
+    PROFILE,
+    CITY_HYPERS,
 } from "./Action";
 
 const initialState = {
     first:"",
-    profile:null
+    profile:null,
+    cityHypers:null
 };
 
 const Reducer = (state = initialState, action) => {
@@ -14,6 +16,8 @@ const Reducer = (state = initialState, action) => {
       return {...state, first: action.payload};
     case PROFILE:
       return {...state, profile: action.payload};
+    case CITY_HYPERS:
+      return {...state, cityHypers: action.payload};
     default:
       return state;
   }
