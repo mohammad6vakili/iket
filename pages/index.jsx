@@ -19,7 +19,7 @@ const Home=()=> {
         router.push("/welcome");
       }else{
         if(userId){
-          router.push("/home");
+          router.push("/locateUser");
         }else{
           router.push("/enter");
         }

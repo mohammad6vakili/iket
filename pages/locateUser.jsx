@@ -9,7 +9,7 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { setCityHypers } from "../Store/Action";
 import { useRouter } from "next/router";
-import { Input , Button , Modal} from "antd";
+import { Input , Button , Modal, notification} from "antd";
 import { DownOutlined , RightOutlined } from '@ant-design/icons';
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -75,7 +75,11 @@ const LocateUser=()=>{
         try{
             const response=await axios.post(Env.baseUrl + "GetLatestNotifications.aspx",postData);
             if(response.data.Status===1){
-                console.log(response.data);            
+                Notification.requestPermission().then(function(result) {
+                    response.data.Data.map((data)=>{
+                        new Notification(data.Message);
+                    })
+                  });
             }else{
                 toast.warning(response.data.Message,{
                     position:"bottom-left"
