@@ -52,6 +52,11 @@
   right: 15px;
   top: 25%;
 }
+.header-left-icon{
+  position:absolute;
+  left: 15px;
+  top: 25%;
+}
 .enter_green_btn{
   background: rgb(0,168,20) !important;
   background: linear-gradient(90deg, rgba(0,168,20,1) 0%, rgba(27,208,118,1) 50%, rgba(0,208,171,1) 100%) !important;  

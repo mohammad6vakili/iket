@@ -1,8 +1,8 @@
 export const FIRST="FIRST";
 export const PROFILE="PROFILE";
 export const CITY_HYPERS="CITY_HYPERS";
-export const SELECT_CITY="SELECT_CITY";
-export const SELECT_AREA="SELECT_AREA";
+export const CATEGORY_TYPE="CATEGORY_TYPE";
+
 
 
 export const setFirst=(data)=>{
@@ -25,6 +25,14 @@ export const setCityHypers=(data)=>{
     return(
         {
             type:CITY_HYPERS,
+            payload:data
+        }
+    )
+}
+export const setCategoryType=(data)=>{
+    return(
+        {
+            type:CATEGORY_TYPE,
             payload:data
         }
     )
