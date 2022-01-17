@@ -2,12 +2,14 @@ import { useState,useEffect } from "react";
 import styles from "../styles/Restaurant.module.css";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { Button } from "antd";
 import { useDispatch , useSelector} from "react-redux";
 import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
 import axios from "axios";
 import whiteLogo from "../assets/images/white-logo.webp";
 import searchIcon from "../assets/images/search.svg";
+import dashboardIcon from "../assets/images/dashboard.png";
 import Carousel from 'react-elastic-carousel';
 
 
@@ -17,6 +19,8 @@ const Restaurant=()=>{
     
     const categoryType=useSelector(state=>state.Reducer.categoryType);
     const [sliders , setSliders]=useState(null);
+    const [newest , setNewest]=useState(null);
+    const [best , setBest]=useState(null);
 
     const getSliders=async()=>{
         const cityId = localStorage.getItem("selectCity");
@@ -41,8 +45,56 @@ const Restaurant=()=>{
         }
     }
 
+    const getNewest=async()=>{
+        const cityId = localStorage.getItem("selectCity");
+        try{
+            const response=await axios.post(Env.baseUrl + "SelectNewestSellerResturanFastfood/SelectData",{
+                Token:Env.token,
+                CategoryTypeId: categoryType,
+                CityId:cityId
+            });
+            if(response.data.Status===1){
+                setNewest(response.data.Data);
+            }else{
+                toast.warning(response.data.Message,{
+                    position:"bottom-left"
+                })
+            }
+        }catch(err){
+            toast.error("خطا در برقراری ارتباط",{
+                position:"bottom-left"
+            })
+            console.log(err);
+        }
+    }
+
+    const getBest=async()=>{
+        const cityId = localStorage.getItem("selectCity");
+        try{
+            const response=await axios.post(Env.baseUrl + "SelectBestSellerResturanFastfood/SelectData",{
+                Token:Env.token,
+                CategoryTypeId: categoryType,
+                CityId:cityId
+            });
+            if(response.data.Status===1){
+                setBest(response.data.Data);
+            }else{
+                toast.warning(response.data.Message,{
+                    position:"bottom-left"
+                })
+            }
+        }catch(err){
+            toast.error("خطا در برقراری ارتباط",{
+                position:"bottom-left"
+            })
+            console.log(err);
+        }
+    }
+
     useEffect(()=>{
         getSliders();
+        getNewest();
+        getBest();
     },[])
 
     return(
@@ -62,20 +114,34 @@ const Restaurant=()=>{
                         />
                     </div>
                 </div>
-                {/* <Carousel
+                <Carousel
+                    className={styles.restaurant_slider}
                     showArrows={false}
                     itemsToShow={1}
                 >
                     {sliders && sliders.length!==0 && sliders.map((data,index)=>(
                         <Image
                             key={index}
+                            width={"100%"}
+                            height={"100%"}
                             src={data.PhotoUrl}
                             loader={()=>data.PhotoUrl}
                             alt="slider"
                         />
                     ))
                     }
-                </Carousel> */}
+                </Carousel>
+                <Button
+                    className={`btn_green ${styles.all_restaurants_btn}`}
+                >
+                    <div>لیست رستوران ها</div>
+                    <Image
+                        width={"24px"}
+                        height={"24px"}
+                        src={dashboardIcon}
+                        alt="restaurants"
+                    />
+                </Button>
             </div>
         </div>
     )

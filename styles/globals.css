@@ -37,7 +37,7 @@
 }
 .header {
   width: 100%;
-  height: 8vh;
+  height: 10vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,14 +57,22 @@
   left: 15px;
   top: 25%;
 }
+.btn_green{
+  background: rgb(0, 168, 84) !important;
+  color: white !important;
+}
+.btn_green:focus{
+  background: rgb(0, 168, 84) !important;
+  color: white !important;
+}
 .enter_green_btn{
-  background: rgb(0,168,20) !important;
-  background: linear-gradient(90deg, rgba(0,168,20,1) 0%, rgba(27,208,118,1) 50%, rgba(0,208,171,1) 100%) !important;  
+  background: rgb(0, 168, 84) !important;
+  background: linear-gradient(90deg, rgb(0, 168, 84) 0%, rgba(27,208,118,1) 50%, rgba(0,208,171,1) 100%) !important;  
   color: white !important;
 }
 .enter_green_btn:focus{
-  background: rgb(0,168,20) !important;
-  background: linear-gradient(90deg, rgba(0,168,20,1) 0%, rgba(27,208,118,1) 50%, rgba(0,208,171,1) 100%) !important;  
+  background: rgb(0, 168, 84) !important;
+  background: linear-gradient(90deg, rgb(0, 168, 84) 0%, rgba(27,208,118,1) 50%, rgba(0,208,171,1) 100%) !important;  
   color: white !important;
 }
 .enter_purple_btn{
@@ -90,6 +98,25 @@
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
+}
+.rec-carousel-wrapper{
+  position: relative !important;
+}
+.rec-item-wrapper>span{
+  width: 100% !important;
+  height: 30vh !important;
+}
+.rec-pagination{
+  position:absolute !important;
+  bottom: 5px !important;
+}
+.rec-dot{
+  background-color: rgba(255, 255, 255, 0.250) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.rec-dot_active{
+  background-color: white !important;
 }
 @media only screen and (min-width:420px){
   .dashboard-page{

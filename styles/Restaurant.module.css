@@ -1,3 +1,27 @@
+@font-face {
+    font-family: "sans";
+    src: url("../assets/fonts/IRANSansWeb.ttf");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
 .restaurant{
-
+    font-family: "sans";
+    background-color: rgb(233, 233, 233);
+}
+.restaurant_slider{
+    margin-top: 10px;
+}
+.all_restaurants_btn{
+    margin: 5px 10px 0 10px;
+    border-radius: 4px !important;
+    height: 45px;
+    display: flex;
+    align-items: center !important;
+    justify-content: center;
+    position: relative;
+}
+.all_restaurants_btn>span{
+    position:absolute !important;
+    right: 15%;
 }
