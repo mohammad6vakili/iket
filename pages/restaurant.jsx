@@ -11,6 +11,7 @@ import whiteLogo from "../assets/images/white-logo.webp";
 import searchIcon from "../assets/images/search.svg";
 import dashboardIcon from "../assets/images/dashboard.png";
 import Carousel from 'react-elastic-carousel';
+import Menu from "../Components/Menu/Menu";
 
 
 const Restaurant=()=>{
@@ -100,8 +101,10 @@ const Restaurant=()=>{
     return(
         <div className="app-container">
             <div className={`${styles.restaurant} dashboard-page`}>
+                <Menu/>
                 <div className="header">
                     <Image
+                        onClick={()=>console.log(menu)}
                         src={whiteLogo}
                         alt="iket"
                         width={"100px"}
@@ -118,6 +121,8 @@ const Restaurant=()=>{
                     className={styles.restaurant_slider}
                     showArrows={false}
                     itemsToShow={1}
+                    isRTL={true}
+                    enableAutoPlay={true}
                 >
                     {sliders && sliders.length!==0 && sliders.map((data,index)=>(
                         <Image
@@ -142,6 +147,38 @@ const Restaurant=()=>{
                         alt="restaurants"
                     />
                 </Button>
+                <div className={styles.title_seperate}>
+                    <div>جدیدترین ها</div>
+                    <div></div>
+                </div>
+                <Carousel
+                    className={styles.restaurant_slider}
+                    showArrows={false}
+                    enableAutoPlay={true}
+                    renderPagination={()=>(<span></span>)}
+                    itemsToShow={2}
+                    isRTL={true}
+                >
+                    {newest && newest.length!==0 && newest.map((data,index)=>(
+                        <div className={styles.restaurant_slider_box}>
+                            <div className={styles.restaurant_slider_box_image}>
+                                <Image
+                                    key={index}
+                                    width={"100%"}
+                                    height={"100%"}
+                                    src={data.PhotoUrl}
+                                    loader={()=>data.PhotoUrl}
+                                    alt="slider"
+                                />
+                            </div>
+                        </div>
+                    ))
+                    }
+                </Carousel>
+                <div className={styles.title_seperate}>
+                    <div style={{width:"110px"}}>پرفروش ترین ها</div>
+                    <div></div>
+                </div>
             </div>
         </div>
     )

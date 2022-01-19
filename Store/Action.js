@@ -2,6 +2,7 @@ export const FIRST="FIRST";
 export const PROFILE="PROFILE";
 export const CITY_HYPERS="CITY_HYPERS";
 export const CATEGORY_TYPE="CATEGORY_TYPE";
+export const MENU="MENU";
 
 
 
@@ -33,6 +34,14 @@ export const setCategoryType=(data)=>{
     return(
         {
             type:CATEGORY_TYPE,
+            payload:data
+        }
+    )
+}
+export const setMenu=(data)=>{
+    return(
+        {
+            type:MENU,
             payload:data
         }
     )

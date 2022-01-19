@@ -1,0 +1,19 @@
+.menu {
+  width: 100%;
+  max-width: 420px;
+  height: 10vh;
+  background-color: white;
+  position: fixed;
+  bottom: 0;
+  z-index: 9999999999;
+  display: flex;
+  display: flex;
+}
+.menu>div{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
