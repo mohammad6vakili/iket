@@ -24,7 +24,7 @@ const Menu=()=>{
     return(
         <div className={styles.menu}>
             <div 
-                onClick={()=>{dispatch(setMenu(0));router.push("/home")}}
+                onClick={()=>{dispatch(setMenu(0));router.push("/restaurant")}}
             >
                 {menu===0 ?
                     <Image
@@ -43,7 +43,7 @@ const Menu=()=>{
                 }
             </div>
             <div
-                onClick={()=>dispatch(setMenu(1))}
+                onClick={()=>{dispatch(setMenu(1));router.push("/allRestaurants");}}
             >
                 {menu===1 ?
                     <Image

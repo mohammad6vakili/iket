@@ -3,7 +3,8 @@ import {
     PROFILE,
     CITY_HYPERS,
     CATEGORY_TYPE,
-    MENU
+    MENU,
+    RES_DATA
 } from "./Action";
 
 const initialState = {
@@ -11,7 +12,8 @@ const initialState = {
     profile:null,
     cityHypers:null,
     categoryType:"",
-    menu:0
+    menu:0,
+    resData:null
 };
 
 const Reducer = (state = initialState, action) => {
@@ -26,6 +28,8 @@ const Reducer = (state = initialState, action) => {
       return {...state, categoryType: action.payload};
     case MENU:
       return {...state, menu: action.payload};
+    case RES_DATA:
+      return {...state, resData: action.payload};
     default:
       return state;
   }

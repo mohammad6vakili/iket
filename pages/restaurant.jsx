@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useDispatch , useSelector} from "react-redux";
+import { setResData,setMenu } from "../Store/Action";
 import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -92,6 +93,11 @@ const Restaurant=()=>{
         }
     }
 
+    const selectRes=(data)=>{
+        router.push("/restaurantPage");
+        dispatch(setResData(data));
+    }
+
     useEffect(()=>{
         getSliders();
         getNewest();
@@ -104,7 +110,6 @@ const Restaurant=()=>{
                 <Menu/>
                 <div className="header">
                     <Image
-                        onClick={()=>console.log(menu)}
                         src={whiteLogo}
                         alt="iket"
                         width={"100px"}
@@ -137,6 +142,7 @@ const Restaurant=()=>{
                     }
                 </Carousel>
                 <Button
+                    onClick={()=>{dispatch(setMenu(1));router.push("/allRestaurants");}}
                     className={`btn_green ${styles.all_restaurants_btn}`}
                 >
                     <div>لیست رستوران ها</div>
@@ -160,7 +166,10 @@ const Restaurant=()=>{
                     isRTL={true}
                 >
                     {newest && newest.length!==0 && newest.map((data,index)=>(
-                        <div className={styles.restaurant_slider_box}>
+                        <div 
+                            onClick={()=>selectRes(data)} 
+                            className={styles.restaurant_slider_box}
+                        >
                             <div className={styles.restaurant_slider_box_image}>
                                 <Image
                                     key={index}
@@ -170,15 +179,64 @@ const Restaurant=()=>{
                                     loader={()=>data.PhotoUrl}
                                     alt="slider"
                                 />
+                                {data.IsWork===0 &&
+                                    <div>تعطیل</div>
+                                }
+                            </div>
+                            <div className={styles.restaurant_slider_box_title}>
+                                {data.Title}
+                            </div>
+                            <div className={styles.restaurant_slider_box_address}>
+                                {data.Address}
+                            </div>
+                            <div className={styles.restaurant_slider_box_delivery}>
+                                پیک رستوران : <span>{data.DeliveryPrice===0 ? "رایگان" : data.DeliveryPrice+" "+"تومان"}</span>
                             </div>
                         </div>
-                    ))
-                    }
+                    ))}
                 </Carousel>
                 <div className={styles.title_seperate}>
                     <div style={{width:"110px"}}>پرفروش ترین ها</div>
                     <div></div>
                 </div>
+                <Carousel
+                    className={styles.restaurant_slider}
+                    showArrows={false}
+                    enableAutoPlay={true}
+                    renderPagination={()=>(<span></span>)}
+                    itemsToShow={2}
+                    isRTL={true}
+                >
+                    {best && best.length!==0 && best.map((data,index)=>(
+                        <div 
+                            onClick={()=>selectRes(data)} 
+                            className={styles.restaurant_slider_box}
+                        >
+                            <div className={styles.restaurant_slider_box_image}>
+                                <Image
+                                    key={index}
+                                    width={"100%"}
+                                    height={"100%"}
+                                    src={data.PhotoUrl}
+                                    loader={()=>data.PhotoUrl}
+                                    alt="slider"
+                                />
+                                {data.IsWork===0 &&
+                                    <div>تعطیل</div>
+                                }
+                            </div>
+                            <div className={styles.restaurant_slider_box_title}>
+                                {data.Title}
+                            </div>
+                            <div className={styles.restaurant_slider_box_address}>
+                                {data.Address}
+                            </div>
+                            <div className={styles.restaurant_slider_box_delivery}>
+                                پیک رستوران : <span>{data.DeliveryPrice===0 ? "رایگان" : data.DeliveryPrice+" "+"تومان"}</span>
+                            </div>
+                        </div>
+                    ))}
+                </Carousel>
             </div>
         </div>
     )

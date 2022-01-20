@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from "next/image";
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { setMenu } from '../Store/Action';
 import loadingLogo from "../assets/images/splash-logo.webp";
 
 const Home=()=> {
   const router=useRouter();
+  const dispatch=useDispatch();
   const [loading , setLoading]=useState(false);
 
   useEffect(()=>{
@@ -20,6 +22,7 @@ const Home=()=> {
       }else{
         if(userId){
           router.push("/home");
+          dispatch(setMenu(0));
         }else{
           router.push("/enter");
         }

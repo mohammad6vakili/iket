@@ -55,12 +55,14 @@
 .header-right-icon{
   position:absolute;
   right: 15px;
-  top: 25%;
+  top: 28%;
+  cursor: pointer;
 }
 .header-left-icon{
   position:absolute;
   left: 15px;
-  top: 25%;
+  top: 30%;
+  cursor: pointer;
 }
 .btn_green{
   background: rgb(0, 168, 84) !important;
