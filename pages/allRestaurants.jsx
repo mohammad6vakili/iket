@@ -1,7 +1,8 @@
 import { useEffect,useState } from "react";
 import styles from "../styles/AllRestaurants.module.css";
 import Menu from "../Components/Menu/Menu";
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch} from "react-redux";
+import {setResData} from "../Store/Action";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -14,6 +15,7 @@ import starIcon from "../assets/images/star.png";
 
 const AllRestaurants=()=>{
     const router=useRouter();
+    const dispatch=useDispatch();
 
     const categoryType=useSelector(state=>state.Reducer.categoryType);
     const [restaurants , setRestaurants]=useState(null);
@@ -41,6 +43,11 @@ const AllRestaurants=()=>{
         }
     }
 
+    const selectRes=(data)=>{
+        router.push("/restaurantPage");
+        dispatch(setResData(data));
+    }
+
     useEffect(()=>{
         getAllRestaurants();
     },[])
@@ -57,7 +64,7 @@ const AllRestaurants=()=>{
                 </div>
                 <div className={styles.all_restaurants_list}>
                     {restaurants && restaurants.length>0 && restaurants.map((data,index)=>(
-                        <div className={styles.all_restaurants_list_item}>
+                        <div onClick={()=>selectRes(data)} className={styles.all_restaurants_list_item}>
                             <div>
                                 <Image
                                     key={index}
@@ -88,14 +95,16 @@ const AllRestaurants=()=>{
                                                 src={starIcon}
                                                 alt="rate"
                                             />
-                                            <span>{FormatHelper.toPersianString(data.Points)}</span>
+                                            <span>{data.Points && FormatHelper.toPersianString(data.Points)}</span>
                                         </div>
                                     }
                                 </div>
                             </div>
-                            <div className={styles.restaurant_list_discount_box}>
-                                {FormatHelper.toPersianString(data.Discount)} %
-                            </div>
+                            {data.Discount!==null && data.Discount!==0 &&
+                                <div className={styles.restaurant_list_discount_box}>
+                                    {FormatHelper.toPersianString(data.Discount)} %
+                                </div>
+                            }
                         </div>
                     ))}
                 </div>
