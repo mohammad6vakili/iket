@@ -134,6 +134,24 @@
 .city_selected_in_modal{
     color: #000000 !important;
 }
+.map_page{
+  position: relative;
+}
+.map_page_bottom_btn{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10vh;
+  background-color: rgb(230, 230, 230);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.map_page_bottom_btn > button{
+  width: 80% !important;
+  height: 40px;
+  border-radius: 6px;
+}
 @media only screen and (max-width: 375px) {
   .locate_user_title {
     font-size: 16px;

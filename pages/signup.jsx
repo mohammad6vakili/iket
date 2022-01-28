@@ -26,6 +26,7 @@ const Signup=()=>{
     const [code , setCode]=useState("");
     const [isCount , setIsCount]=useState(false);
     const [userId , setUserId]=useState("");
+    const [noww , setNoww]=useState(null);
 
 
 
@@ -66,6 +67,7 @@ const Signup=()=>{
                         position:"bottom-left"
                     });
                     setStep(1);
+                    setNoww(Date.now() + 60000);
                     setUserId(response.data.Data);
                 }else{
                     toast.warning(response.data.Message,{
@@ -252,12 +254,12 @@ const Signup=()=>{
                             placeholder="کد فعال سازی"
                             className={styles.enter_input}
                         />
-                        {isCount===true &&
+                        {isCount===true && noww &&
                             <div style={{width:"90%",display:"flex",justifyContent:"flex-start",alignItems:"center",margin:"2vh"}}>
                                 برای ارسال دوباره کد فعال سازی
                                 <div>
                                     <Countdown
-                                        date={Date.now() + 60000}
+                                        date={noww}
                                         autoStart={true}
                                         zeroPadTime={2}
                                         onStart={()=>console.log("mioo")}

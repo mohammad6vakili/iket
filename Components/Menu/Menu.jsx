@@ -100,7 +100,7 @@ const Menu=()=>{
                 }
             </div>
             <div
-                onClick={()=>dispatch(setMenu(4))}
+                onClick={()=>{dispatch(setMenu(4));router.push("/profile")}}
             >
                 {menu===4 ?
                     <Image

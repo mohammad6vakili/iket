@@ -6,6 +6,7 @@ import headerBackground from "../assets/images/header_background.jpg";
 import successGray from "../assets/images/success-gray.svg";
 import successGreen from "../assets/images/success-green.svg";
 import Image from "next/image";
+import rightArrow from "../assets/images/right-arrow-white.svg";
 import { useDispatch } from "react-redux";
 import { setCityHypers } from "../Store/Action";
 import { useRouter } from "next/router";
@@ -20,6 +21,7 @@ const LocateUser=()=>{
     const dispatch = useDispatch();
     const router = useRouter();
     const submitRef = useRef();
+    const [isMap , setIsMap]=useState(false);
     const [city , setCity]=useState(null);
     const [area , setArea]=useState(null);
     const [selectCity , setSelectCity]=useState({});
@@ -120,6 +122,20 @@ const LocateUser=()=>{
         }
     }
 
+    const openMap=()=>{
+        if(Object.keys(selectCity).length===0){
+            toast.warning("لطفا شهر را انتخاب کنید",{
+                position:"bottom-left"
+            });
+        }else if(Object.keys(selectArea).length===0){
+            toast.warning("لطفا محله خود را انتخاب کنید",{
+                position:"bottom-left"
+            })
+        }else{
+            setIsMap(true);
+        }
+    }
+
     useEffect(async()=>{
         getAreas();
         getAreaWithProvider();
@@ -128,6 +144,8 @@ const LocateUser=()=>{
 
     return(
         <div className="app-container">
+            {isMap===false ?
+            <>
             <div className={`${styles.locate_user} dashboard-page`}>
                 <div className={styles.locate_user_icon}>
                     <Image
@@ -156,7 +174,7 @@ const LocateUser=()=>{
                         onFocus={()=>{setAreaModal(true);submitRef.current.focus();}}
                     />
                 </div>
-                <div className={styles.locate_user_map_button}>
+                <div onClick={openMap} className={styles.locate_user_map_button}>
                     <div>
                         <Image
                             src={locationImage}
@@ -264,6 +282,30 @@ const LocateUser=()=>{
                     </div>
                 </div>
             </Modal>
+            </>
+            :    
+            <div className={`${styles.map_page} dashboard-page`}>
+                <div className="header">
+                    آدرس من
+                    <div className="header-right-icon">
+                        <Image
+                            src={rightArrow}
+                            alt="back"
+                            onClick={()=>setIsMap(false)}
+                        />
+                    </div>
+                </div>
+                
+                <div className={styles.map_page_bottom_btn}>
+                        <Button
+                            onClick={()=>setIsMap(false)}
+                            className="enter_green_btn"
+                        >
+                            ثبت آدرس
+                        </Button>
+                </div>
+            </div>
+            }
         </div>
     )
 }

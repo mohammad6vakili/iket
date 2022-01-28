@@ -1,0 +1,13 @@
+@font-face {
+    font-family: "sans";
+    src: url("../assets/fonts/IRANSansWeb.ttf");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+.profile{
+    font-family: "sans";
+    overflow-y: auto !important;
+    padding: 11vh 0;
+    background-color: rgb(233, 233, 233);
+}

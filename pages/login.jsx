@@ -23,6 +23,7 @@ const Login=()=>{
     const [isCount , setIsCount]=useState(false);
     const [userId , setUserId]=useState("");
     const [code , setCode]=useState("");
+    const [now , setNow]=useState(null);
 
 
 
@@ -49,13 +50,14 @@ const Login=()=>{
                     setStep(1);
                     setIsCount(true);
                     setUserId(response.data.Data);
+                    setNow(Date.now() + 60000);
                 }else{
                     toast.warning(response.data.Message,{
                         position:"bottom-left"
                     })
                 }
             }catch({err,response}){
-                toast.err("خطا در برقراری ارتباط",{
+                toast.error("خطا در برقراری ارتباط",{
                     position:"bottom-left"
                 })
                 console.log(err);
@@ -94,7 +96,7 @@ const Login=()=>{
                     })
                 }
             }catch({err,response}){
-                toast.err("خطا در برقراری ارتباط",{
+                toast.error("خطا در برقراری ارتباط",{
                     position:"bottom-left"
                 })
                 console.log(err);
@@ -183,12 +185,12 @@ const Login=()=>{
                             placeholder="کد فعال سازی"
                             className={styles.enter_input}
                         />
-                        {isCount===true &&
+                        {isCount===true && now &&
                             <div style={{width:"90%",display:"flex",justifyContent:"flex-start",alignItems:"center",margin:"2vh"}}>
                                 برای ارسال دوباره کد فعال سازی
                                 <div>
                                     <Countdown
-                                        date={Date.now() + 60000}
+                                        date={now}
                                         autoStart={true}
                                         zeroPadTime={2}
                                         onStart={()=>console.log("mioo")}
