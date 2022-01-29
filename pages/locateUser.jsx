@@ -6,11 +6,12 @@ import headerBackground from "../assets/images/header_background.jpg";
 import successGray from "../assets/images/success-gray.svg";
 import successGreen from "../assets/images/success-green.svg";
 import Image from "next/image";
+import NeshanMap from 'react-neshan-map-leaflet';
 import rightArrow from "../assets/images/right-arrow-white.svg";
-import { useDispatch } from "react-redux";
-import { setCityHypers } from "../Store/Action";
+import { useDispatch , useSelector} from "react-redux";
+import { setCityHypers , setLat , setLng} from "../Store/Action";
 import { useRouter } from "next/router";
-import { Input , Button , Modal, notification} from "antd";
+import { Input , Button , Modal} from "antd";
 import { DownOutlined , RightOutlined } from '@ant-design/icons';
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -24,11 +25,15 @@ const LocateUser=()=>{
     const [isMap , setIsMap]=useState(false);
     const [city , setCity]=useState(null);
     const [area , setArea]=useState(null);
+    const [state , setState]=useState("");
     const [selectCity , setSelectCity]=useState({});
     const [selectArea , setSelectArea]=useState({});
     const [cityModal , setCityModal]=useState(false);
     const [areaModal , setAreaModal]=useState(false);
+    const [locName , setLocName]=useState("");
 
+    const lat=useSelector(state=>state.Reducer.lat);
+    const lng=useSelector(state=>state.Reducer.lng);
 
     const getAreas=async()=>{
         let postData=new FormData();
@@ -132,7 +137,55 @@ const LocateUser=()=>{
                 position:"bottom-left"
             })
         }else{
-            setIsMap(true);
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(setCoord,handler);
+                function setCoord(position){
+                    dispatch(setLat(position.coords.latitude.toFixed(6)));
+                    dispatch(setLng(position.coords.longitude.toFixed(6)));
+                    setIsMap(true);
+                }
+            }
+            function handler(error){
+                switch(error.code) {
+                    case error.PERMISSION_DENIED:
+                        toast.error("برای استفاده از نقشه نیاز به دسترسی موقعیت مکانی میباشد.",{
+                            position: toast.POSITION.BOTTOM_LEFT
+                        });
+                    break;
+                    case error.POSITION_UNAVAILABLE:
+                        toast.error("موقعیت جغرافیایی ناشناس میباشد.",{
+                            position: toast.POSITION.BOTTOM_LEFT
+                        });
+                    break;
+                    case error.TIMEOUT:
+                        toast.error("لطفا از برنامه خارج شوید و دوباره امتحان کنید.",{
+                            position: toast.POSITION.BOTTOM_LEFT
+                        });
+                    break;
+                    case error.UNKNOWN_ERROR:
+                        toast.error("یک خطای ناشناس رخ داده !",{
+                            position: toast.POSITION.BOTTOM_LEFT
+                        });  
+                    break;
+                }
+            }
+        }
+    }
+
+    const getAddress=async(latt , lngg)=>{
+        try{
+            const response = await axios.get(`https://api.neshan.org/v2/reverse?lat=${latt}&lng=${lngg}`,{
+                headers:{
+                    "Api-Key":"service.3QQRUWJV73dPVDuDBgKEdvS55nTOmiZz8jCJes9j"
+                }
+            })
+            setLocName(response.data.formatted_address);
+            setState(response.data.state);
+        }catch(err){
+            console.log(err);
+            toast.error("خطا در برقراری ارتباط",{
+                position:"bottom-left"
+            });
         }
     }
 
@@ -140,6 +193,7 @@ const LocateUser=()=>{
         getAreas();
         getAreaWithProvider();
         getLatestNotifications();
+        setIsMap(false);
     },[])
 
     return(
@@ -184,6 +238,7 @@ const LocateUser=()=>{
                         />
                     </div>
                     <span>مکان یابی خودکار</span>
+                    <span>{locName}</span>
                 </div>
                 <Button  
                     onClick={goToLogin}
@@ -291,14 +346,49 @@ const LocateUser=()=>{
                         <Image
                             src={rightArrow}
                             alt="back"
-                            onClick={()=>setIsMap(false)}
+                            onClick={()=>{
+                                setIsMap(false);
+                                if(state==="" || state!=="استان مازندران"){
+                                    toast.error("با عرض پوزش استان مورد نظر شما تحت پوشش نیست",{
+                                        position:"bottom-left"
+                                    });
+                                }
+                            }}
                         />
                     </div>
                 </div>
-                
+                <NeshanMap
+                    options={{
+                        key: 'web.lZXZa2W9KrpFIQdhfFjiAXDUh7kz1t1JnSLmkSE9',
+                        maptype: 'dreamy',
+                        poi: true,
+                        traffic: false,
+                        center: [parseFloat(lat), parseFloat(lng)],
+                        zoom: 13
+                    }}
+
+                    onInit={(L, myMap) => {
+                        let marker = L.marker([parseFloat(lat), parseFloat(lng)])
+                        .addTo(myMap)
+
+                        myMap.on('click', function (e) {
+                            marker.setLatLng(e.latlng);
+                            dispatch(setLat(e.latlng.lat));
+                            dispatch(setLng(e.latlng.lng));
+                            getAddress(e.latlng.lat,e.latlng.lng);
+                        });
+                    }}
+                />
                 <div className={styles.map_page_bottom_btn}>
                         <Button
-                            onClick={()=>setIsMap(false)}
+                            onClick={()=>{
+                                setIsMap(false);
+                                if(state==="" || state!=="استان مازندران"){
+                                    toast.error("با عرض پوزش استان مورد نظر شما تحت پوشش نیست",{
+                                        position:"bottom-left"
+                                    });
+                                }
+                            }}
                             className="enter_green_btn"
                         >
                             ثبت آدرس

@@ -137,6 +137,7 @@ const Restaurant=()=>{
                             src={data.PhotoUrl}
                             loader={()=>data.PhotoUrl}
                             alt="slider"
+                            onClick={()=>{data.Link!=="" && window.location.href == data.Link}}
                         />
                     ))
                     }

@@ -4,7 +4,9 @@ import {
     CITY_HYPERS,
     CATEGORY_TYPE,
     MENU,
-    RES_DATA
+    RES_DATA,
+    LAT,
+    LNG
 } from "./Action";
 
 const initialState = {
@@ -13,7 +15,9 @@ const initialState = {
     cityHypers:null,
     categoryType:"",
     menu:0,
-    resData:null
+    resData:null,
+    lat:"",
+    lng:""
 };
 
 const Reducer = (state = initialState, action) => {
@@ -30,6 +34,10 @@ const Reducer = (state = initialState, action) => {
       return {...state, menu: action.payload};
     case RES_DATA:
       return {...state, resData: action.payload};
+    case LAT:
+      return {...state, lat: action.payload};
+    case LNG:
+      return {...state, lng: action.payload};
     default:
       return state;
   }
