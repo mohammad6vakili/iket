@@ -6,7 +6,8 @@ import {
     MENU,
     RES_DATA,
     LAT,
-    LNG
+    LNG,
+    FOOD
 } from "./Action";
 
 const initialState = {
@@ -17,7 +18,8 @@ const initialState = {
     menu:0,
     resData:null,
     lat:"",
-    lng:""
+    lng:"",
+    food:null
 };
 
 const Reducer = (state = initialState, action) => {
@@ -38,6 +40,8 @@ const Reducer = (state = initialState, action) => {
       return {...state, lat: action.payload};
     case LNG:
       return {...state, lng: action.payload};
+    case FOOD:
+      return {...state, food: action.payload};
     default:
       return state;
   }

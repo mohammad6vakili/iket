@@ -7,7 +7,7 @@ module.exports = {
     return [
       {
         source: '/restaurant',
-        destination: '',
+        destination: '/',
         permanent: true,
       },
     ]

@@ -6,6 +6,7 @@ export const MENU="MENU";
 export const RES_DATA="RES_DATA";
 export const LAT="LAT";
 export const LNG="LNG";
+export const FOOD="FOOD";
 
 
 export const setFirst=(data)=>{
@@ -68,6 +69,14 @@ export const setLng=(data)=>{
     return(
         {
             type:LNG,
+            payload:data
+        }
+    )
+}
+export const setFood=(data)=>{
+    return(
+        {
+            type:FOOD,
             payload:data
         }
     )

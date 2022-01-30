@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/RestaurantPage.module.css";
 import Image from "next/image";
-import Menu from "../Components/Menu/Menu";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import searchIcon from "../assets/images/search.svg";
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import {setFood} from "../Store/Action";
 import { useRouter } from "next/router";
 import FormatHelper from "../Helper/FormatHelper";
 import { Button } from "antd";
@@ -12,6 +12,7 @@ import { Button } from "antd";
 
 const RestaurantPage=()=>{
     
+    const dispatch=useDispatch();
     const router=useRouter();
     const resData=useSelector(state=>state.Reducer.resData);
     const [products , setProducts]=useState([]);
@@ -19,6 +20,12 @@ const RestaurantPage=()=>{
     useEffect(()=>{
         if(resData===null){
             router.push("/restaurant");
+        }else{
+            resData.SubCategory.map((data)=>{
+                data.Product.map((pr)=>{
+                    pr.count=1;
+                });
+            })
         }
     },[])
 
@@ -83,8 +90,46 @@ const RestaurantPage=()=>{
                             </div>
                             <div className={styles.restaurant_page_menu_menu}>
                                 {products.map((pr,index)=>(
-                                    <div key={index}>
-                                        fimkf
+                                    <div
+                                        onClick={()=>{
+                                            if(pr.IsActive===true){
+                                                dispatch(setFood(pr));
+                                                router.push("/foodPage");
+                                            }
+                                        }}
+                                        className={pr.IsActive===false ? styles.restaurant_page_item_disabled : ""}
+                                        key={index}
+                                    >
+                                        <div>{pr.Title}</div>
+                                        <div>
+                                            <select
+                                                onChange={(e)=>{
+                                                    pr.count=e.target.value;
+                                                }}
+                                            >
+                                                <option value="1">۱ عدد</option>
+                                                <option value="2">۲ عدد</option>
+                                                <option value="3">۳ عدد</option>
+                                                <option value="4">۴ عدد</option>
+                                                <option value="5">۵ عدد</option>
+                                                <option value="6">۶ عدد</option>
+                                                <option value="7">۷ عدد</option>
+                                                <option value="8">۸ عدد</option>
+                                                <option value="9">۹ عدد</option>
+                                                <option value="10">۱۰ عدد</option>
+                                            </select>
+                                            <div>
+                                                <div className={pr.PriceWithDiscount!==pr.Price ? styles.restaurant_page_discount_price : ""}>
+                                                    {FormatHelper.toPersianString(pr.Price.toLocaleString()) + " تومان"}
+                                                </div>
+                                                <div>
+                                                    {pr.PriceWithDiscount!==pr.Price && FormatHelper.toPersianString(pr.PriceWithDiscount.toLocaleString()) +"تومان"}
+                                                </div>
+                                                <Button>
+                                                    افزودن به سبد خرید
+                                                </Button>
+                                            </div>
+                                        </div>
                                     </div>
                                 ))}
                             </div>

@@ -87,7 +87,7 @@ const Login=()=>{
                         position:"bottom-left"
                     })
                     console.log(response.data.Data[0]);
-                    router.push("/home");
+                    router.push("/locateUser");
                     dispatch(setProfile(response.data.Data[0]));
                     localStorage.setItem("userId",response.data.Data[0].ID);
                 }else{
