@@ -1,4 +1,7 @@
 module.exports = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   reactStrictMode: true,
   images: {
     domains: ['https://iketpanel.com/'],
