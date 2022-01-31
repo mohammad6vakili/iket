@@ -3,11 +3,12 @@ import styles from "../styles/RestaurantPage.module.css";
 import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import searchIcon from "../assets/images/search.svg";
-import { useDispatch,useSelector } from "react-redux";
-import {setFood} from "../Store/Action";
+import {useDispatch,useSelector} from "react-redux";
+import { setFood , setCart} from "../Store/Action";
 import { useRouter } from "next/router";
 import FormatHelper from "../Helper/FormatHelper";
 import { Button } from "antd";
+import { toast } from "react-toastify";
 
 
 const RestaurantPage=()=>{
@@ -15,7 +16,24 @@ const RestaurantPage=()=>{
     const dispatch=useDispatch();
     const router=useRouter();
     const resData=useSelector(state=>state.Reducer.resData);
+    const cart=useSelector(state=>state.Reducer.cart);
     const [products , setProducts]=useState([]);
+
+    const addToCart=(product)=>{
+        let already=false;
+        cart.map((pr)=>{
+            if(pr.ID===product.ID){
+                already = true;
+                pr.count = product.count;
+            }
+        });
+        toast.success("به سبد خرید افزوده شد",{
+            position:"bottom-left"
+        })
+        if (!already) {
+            cart.push(product);
+        }
+    }
 
     useEffect(()=>{
         if(resData===null){
@@ -32,7 +50,7 @@ const RestaurantPage=()=>{
     return(
         <div className="app-container">
             <div className={`${styles.restaurant_page} dashboard-page`}>
-                <div className="header">
+                <div onClick={()=>console.log(cart)} className="header">
                     منوی رستوران
                     <div className="header-right-icon">
                         <Image
@@ -91,20 +109,23 @@ const RestaurantPage=()=>{
                             <div className={styles.restaurant_page_menu_menu}>
                                 {products.map((pr,index)=>(
                                     <div
-                                        onClick={()=>{
-                                            if(pr.IsActive===true){
-                                                dispatch(setFood(pr));
-                                                router.push("/foodPage");
-                                            }
-                                        }}
                                         className={pr.IsActive===false ? styles.restaurant_page_item_disabled : ""}
                                         key={index}
                                     >
-                                        <div>{pr.Title}</div>
+                                        <div 
+                                            onClick={()=>{
+                                                if(pr.IsActive===true){
+                                                    dispatch(setFood(pr));
+                                                    router.push("/foodPage");
+                                                }
+                                            }}
+                                        >
+                                            {pr.Title}
+                                        </div>
                                         <div>
                                             <select
                                                 onChange={(e)=>{
-                                                    pr.count=e.target.value;
+                                                    pr.count=parseInt(e.target.value);
                                                 }}
                                             >
                                                 <option value="1">۱ عدد</option>
@@ -119,13 +140,28 @@ const RestaurantPage=()=>{
                                                 <option value="10">۱۰ عدد</option>
                                             </select>
                                             <div>
-                                                <div className={pr.PriceWithDiscount!==pr.Price ? styles.restaurant_page_discount_price : ""}>
+                                                <div 
+                                                    onClick={()=>{
+                                                        if(pr.IsActive===true){
+                                                            dispatch(setFood(pr));
+                                                            router.push("/foodPage");
+                                                        }
+                                                    }}
+                                                    className={pr.PriceWithDiscount!==pr.Price ? styles.restaurant_page_discount_price : ""}
+                                                >
                                                     {FormatHelper.toPersianString(pr.Price.toLocaleString()) + " تومان"}
                                                 </div>
-                                                <div>
+                                                <div
+                                                    onClick={()=>{
+                                                        if(pr.IsActive===true){
+                                                            dispatch(setFood(pr));
+                                                            router.push("/foodPage");
+                                                        }
+                                                    }}
+                                                >
                                                     {pr.PriceWithDiscount!==pr.Price && FormatHelper.toPersianString(pr.PriceWithDiscount.toLocaleString()) +"تومان"}
                                                 </div>
-                                                <Button>
+                                                <Button onClick={()=>addToCart(pr)}>
                                                     افزودن به سبد خرید
                                                 </Button>
                                             </div>

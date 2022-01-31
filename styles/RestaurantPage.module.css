@@ -124,6 +124,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 .restaurant_page_menu_menu > div > div:nth-child(1) {
   font-weight: 700;
@@ -131,39 +132,43 @@
 }
 .restaurant_page_menu_menu > div > div:nth-child(2) {
   width: 100%;
-  height: 80%;
+  height: 70%;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
-.restaurant_page_menu_menu > div > div:nth-child(2)>select{
+.restaurant_page_menu_menu > div > div:nth-child(2) > select {
   border: 1px solid rgba(117, 117, 117, 0.76);
 }
-.restaurant_page_menu_menu > div > div:nth-child(2)>div:nth-child(2){
+.restaurant_page_menu_menu > div > div:nth-child(2) > div:nth-child(2) {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   height: 100%;
 }
-.restaurant_page_menu_menu > div > div:nth-child(2)>div:nth-child(2)>div:nth-child(1){
+.restaurant_page_menu_menu
+  > div
+  > div:nth-child(2)
+  > div:nth-child(2)
+  > div:nth-child(1) {
   color: #00a854;
-  margin-bottom: 3px;
 }
-.restaurant_page_menu_menu > div > div:nth-child(2)>div>button{
+.restaurant_page_menu_menu > div > div:nth-child(2) > div > button {
   background-color: #00a854;
   color: white;
   font-size: 10px;
-  padding:5px 10px!important;
+  padding: 5px 10px !important;
   border-radius: 5px !important;
   border: none;
+  min-height: 40px !important;
 }
-.restaurant_page_item_disabled{
-  opacity: .7;
+.restaurant_page_item_disabled {
+  opacity: 0.7;
   background-color: rgb(211, 211, 211);
   cursor: no-drop;
 }
-.restaurant_page_discount_price{
+.restaurant_page_discount_price {
   color: red !important;
   text-decoration: line-through;
 }

@@ -1,5 +1,6 @@
 export const FIRST="FIRST";
 export const PROFILE="PROFILE";
+export const CART="CART";
 export const CITY_HYPERS="CITY_HYPERS";
 export const CATEGORY_TYPE="CATEGORY_TYPE";
 export const MENU="MENU";
@@ -21,6 +22,14 @@ export const setProfile=(data)=>{
     return(
         {
             type:PROFILE,
+            payload:data
+        }
+    )
+}
+export const setCart=(data)=>{
+    return(
+        {
+            type:CART,
             payload:data
         }
     )
