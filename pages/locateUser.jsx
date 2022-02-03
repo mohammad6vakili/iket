@@ -55,26 +55,6 @@ const LocateUser=()=>{
         }
     }
 
-    const getAreaWithProvider=async()=>{
-        let postData=new FormData();
-        postData.append("token",Env.token);
-        try{
-            const response=await axios.post(Env.baseUrl + "SelectAreaWithProvider.aspx",postData);
-            if(response.data.Status===1){
-                dispatch(setCityHypers(response.data.Data));
-            }else{
-                toast.warning(response.data.Message,{
-                    position:"bottom-left"
-                })    
-            }
-        }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
-            console.log(err);
-        }
-    }
-
     const getLatestNotifications =async()=>{
         let postData=new FormData();
         postData.append("Token",Env.token);

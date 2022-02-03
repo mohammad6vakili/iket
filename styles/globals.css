@@ -10,6 +10,7 @@
   padding: 0;
   box-sizing: border-box;
   direction: rtl;
+  font-family: "sans";
 }
 .app-container{
   width: 100%;
