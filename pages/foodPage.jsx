@@ -1,29 +1,81 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/FoodPage.module.css";
 import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch} from "react-redux";
 import { useRouter } from "next/router";
+import { setCart } from "../Store/Action";
 import noFood from "../assets/images/empty_food.png";
 import FormatHelper from "../Helper/FormatHelper";
+import { toast } from "react-toastify";
 
 
 const foodPage=()=>{
     const router=useRouter();
+    const dispatch=useDispatch();
     const food = useSelector(state=>state.Reducer.food);
+    const cart = useSelector(state=>state.Reducer.cart);
+    const [count , setCount]=useState(0);
+
+    const addToCart=()=>{
+        if(cart.length===0){
+            food.count++;
+            cart.push(food);
+            toast.success("به سبد خرید افزوده شد",{
+                position:"bottom-left"
+            })
+            setCount(count+1);
+        }else{
+            cart.map((data)=>{
+                if(data.ID===food.ID){
+                    food.count++;
+                    data.count=food.count;
+                    setCount(count+1);
+                }
+                if(data.ID!==food.ID){
+                    cart.push(food);
+                    toast.success("به سبد خرید افزوده شد",{
+                        position:"bottom-left"
+                    });
+                    setCount(1);
+                }
+            })
+        }
+        console.log(cart);
+    }
+
+    const removeFromCart=()=>{
+        cart.map((data)=>{
+            if(data.ID===food.ID){
+                food.count--;
+                data.count=food.count;
+                setCount(count-1);
+            }
+            if(count===1){
+                dispatch(setCart(
+                    cart.filter(cr=>cr.ID !== food.ID)
+                ));
+                food.count=0;
+                toast.success("از سبد خرید حذف شد",{
+                    position:"bottom-left"
+                })
+            }
+        })
+    console.log(cart);
+    }
 
     useEffect(()=>{
-        // if(food===null){
-            // router.push("/home");
-        // }
         console.log(food);
+        if(food){
+            setCount(food.count)
+        }
     },[])
 
     return(
         <div className="app-container">
             {food &&
                 <div className={`${styles.food_page} dashboard-page`}>
-                    <div style={{fontSize:"14px"}} className="header">
+                    <div onClick={()=>console.log(cart , food)} style={{fontSize:"14px"}} className="header">
                         {food.Title}
                         <div className="header-right-icon">
                             <Image
@@ -68,11 +120,19 @@ const foodPage=()=>{
                                 </div>
                             </div>
                             <div>
-                                <div>_</div>
-                                <div>
-                                    {FormatHelper.toPersianString(food.count)}
+                                <div 
+                                    onClick={()=>{
+                                        if(count>0){
+                                            removeFromCart();
+                                        }
+                                    }}
+                                >
+                                    _
                                 </div>
-                                <div>+</div>
+                                <div>
+                                    {FormatHelper.toPersianString(count)}
+                                </div>
+                                <div onClick={addToCart}>+</div>
                                 <div>
                                     {food.PriceWithDiscount===food.Price ?
                                         FormatHelper.toPersianString(food.Price.toLocaleString()) + " تومان"

@@ -41,7 +41,7 @@ const RestaurantPage=()=>{
         }else{
             resData.SubCategory.map((data)=>{
                 data.Product.map((pr)=>{
-                    pr.count=1;
+                    pr.count=0;
                 });
             })
         }
