@@ -56,6 +56,13 @@ const Restaurant=()=>{
                 CityId:cityId
             });
             if(response.data.Status===1){
+                response.data.Data.map((data)=>{
+                    data.SubCategory.map((subCat)=>{
+                        subCat.Product.map((pr)=>{
+                            pr.count=0;
+                        })
+                    })
+                });
                 setNewest(response.data.Data);
             }else{
                 toast.warning(response.data.Message,{
@@ -79,6 +86,13 @@ const Restaurant=()=>{
                 CityId:cityId
             });
             if(response.data.Status===1){
+                response.data.Data.map((data)=>{
+                    data.SubCategory.map((subCat)=>{
+                        subCat.Product.map((pr)=>{
+                            pr.count=0;
+                        })
+                    })
+                });
                 setBest(response.data.Data);
             }else{
                 toast.warning(response.data.Message,{
@@ -119,6 +133,7 @@ const Restaurant=()=>{
                         <Image
                             src={searchIcon}
                             alt="search"
+                            width={""}
                         />
                     </div>
                 </div>

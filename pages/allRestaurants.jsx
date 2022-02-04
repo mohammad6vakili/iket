@@ -29,6 +29,13 @@ const AllRestaurants=()=>{
         try{
             const response=await axios.post(Env.baseUrl + "SelectCategoryFamilyByRestaurant.aspx",postData);
             if(response.data.Status===1){
+                response.data.Data.map((data)=>{
+                    data.SubCategory.map((subCat)=>{
+                        subCat.Product.map((pr)=>{
+                            pr.count=0;
+                        })
+                    })
+                });
                 setRestaurants(response.data.Data);
             }else{
                 toast.warning(response.data.Message,{

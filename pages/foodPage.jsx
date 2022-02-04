@@ -18,28 +18,44 @@ const foodPage=()=>{
     const [count , setCount]=useState(0);
 
     const addToCart=()=>{
+        let already = false;
+        if(cart.length>0){
+            cart.map((data)=>{
+                if(data.ID===food.ID){
+                    already=true;
+                }else{
+                    already=false;
+                }
+            })
+        }
         if(cart.length===0){
             food.count++;
             cart.push(food);
             toast.success("به سبد خرید افزوده شد",{
                 position:"bottom-left"
             })
+            console.log("first");
             setCount(count+1);
         }else{
-            cart.map((data)=>{
-                if(data.ID===food.ID){
+            if(already===true){
                     food.count++;
-                    data.count=food.count;
+                    cart.map((data)=>{
+                        if(data.ID===food.ID){
+                            data.count=food.count;
+                        }
+                    })
                     setCount(count+1);
-                }
-                if(data.ID!==food.ID){
-                    cart.push(food);
-                    toast.success("به سبد خرید افزوده شد",{
-                        position:"bottom-left"
-                    });
-                    setCount(1);
-                }
-            })
+                    console.log("already");
+            }
+            if(already===false){
+                food.count++;
+                cart.push(food);
+                console.log("not already");
+                toast.success("به سبد خرید افزوده شد",{
+                    position:"bottom-left"
+                });
+                setCount(count + 1);
+            }
         }
         console.log(cart);
     }

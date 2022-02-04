@@ -38,12 +38,6 @@ const RestaurantPage=()=>{
     useEffect(()=>{
         if(resData===null){
             router.push("/restaurant");
-        }else{
-            resData.SubCategory.map((data)=>{
-                data.Product.map((pr)=>{
-                    pr.count=0;
-                });
-            })
         }
     },[])
 
