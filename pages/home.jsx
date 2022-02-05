@@ -8,8 +8,8 @@ import { useRouter } from "next/router";
 import Colors from "../Helper/Colors";
 import axios from "axios";
 import { useDispatch , useSelector} from "react-redux";
-import {setCategoryType , setCityHypers} from "../Store/Action";
-import { Modal } from "antd";
+import {setCategoryType , setCityHypers , setHypers} from "../Store/Action";
+import { Modal , Radio} from "antd";
 import fastFoodImage from "../assets/images/fastfood.png";
 import hyperMarketImage from "../assets/images/hyper_market.png";
 import restaurantImage from "../assets/images/restaurant.png";
@@ -22,7 +22,8 @@ const Home=()=>{
 
     const [modal , setModal]=useState(false);
 
-    const hypers = useSelector(state=>state.Reducer.cityHypers);
+    const cityHypers = useSelector(state=>state.Reducer.cityHypers);
+    const hypers = useSelector(state=>state.Reducer.hypers);
 
     const getAreaWithProvider=async()=>{
         let postData=new FormData();
@@ -31,6 +32,18 @@ const Home=()=>{
             const response=await axios.post(Env.baseUrl + "SelectAreaWithProvider.aspx",postData);
             if(response.data.Status===1){
                 dispatch(setCityHypers(response.data.Data));
+                console.log(response.data.Data);
+                response.data.Data.map((data)=>{
+                    data.Area.map((ar)=>{
+                        if(ar.Provider.length>0){
+                             ar.Provider.map((pr , index)=>{
+                                if(pr.AreaIDFK === parseInt(localStorage.getItem("selectArea"))){
+                                    hypers.push(pr);
+                                }
+                             })
+                        }
+                    })
+                })
             }else{
                 toast.warning(response.data.Message,{
                     position:"bottom-left"
@@ -46,8 +59,16 @@ const Home=()=>{
 
     useEffect(()=>{
         getAreaWithProvider();
-        console.log(hypers);
     },[])
+
+    useEffect(()=>{
+        if(hypers.length>0){
+            dispatch(setHypers(
+                hypers.filter((v,i,a)=>a.findIndex(t=>(t.ID===v.ID))===i)
+            ))
+        }
+    },[hypers])
+
 
     return(
         <div className="app-container">
@@ -63,9 +84,14 @@ const Home=()=>{
                 >
                     <div style={{width:"100%",display:"flex",flexDirection:"column"}}>
                         <div style={{width:"100%",textAlign:"center",color:Colors.purple}}>نزدیکترین هایپر مارکت ها</div>
+                        <Radio.Group onChange={(e)=>console.log(e.target.value)}>
+                           {hypers.length > 0 && hypers.map((data)=>(
+                               <Radio value={data.ID}>{data.BusinessName}</Radio>
+                           ))}
+                        </Radio.Group>
                     </div>
                 </Modal>
-                <div className={styles.home_logo}>
+                <div onClick={()=>console.log(hypers)} className={styles.home_logo}>
                     <Image
                         src={logo}
                         alt="enter"

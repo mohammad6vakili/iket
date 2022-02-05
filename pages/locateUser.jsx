@@ -6,11 +6,12 @@ import headerBackground from "../assets/images/header_background.jpg";
 import successGray from "../assets/images/success-gray.svg";
 import successGreen from "../assets/images/success-green.svg";
 import Image from "next/image";
-import NeshanMap from 'react-neshan-map-leaflet';
+import ReactMapGL,{Marker} from "react-map-gl";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import { useDispatch , useSelector} from "react-redux";
 import { setCityHypers , setLat , setLng} from "../Store/Action";
 import { useRouter } from "next/router";
+import markerIcon from "../assets/images/location-marker.png";
 import { Input , Button , Modal} from "antd";
 import { DownOutlined , RightOutlined } from '@ant-design/icons';
 import axios from "axios";
@@ -34,6 +35,15 @@ const LocateUser=()=>{
 
     const lat=useSelector(state=>state.Reducer.lat);
     const lng=useSelector(state=>state.Reducer.lng);
+
+    const [viewport , setViewport]=useState({
+        latitude:parseFloat(lat),
+        longitude:parseFloat(lng),
+        width:"100%",
+        height:"100vh",
+        zoom:12,
+        transitionDuration: 2000,
+    });
 
     const getAreas=async()=>{
         let postData=new FormData();
@@ -122,6 +132,8 @@ const LocateUser=()=>{
                 function setCoord(position){
                     dispatch(setLat(position.coords.latitude.toFixed(6)));
                     dispatch(setLng(position.coords.longitude.toFixed(6)));
+                    viewport.latitude =parseFloat(position.coords.latitude.toFixed(6));
+                    viewport.longitude =parseFloat(position.coords.longitude.toFixed(6));
                     setIsMap(true);
                 }
             }
@@ -171,7 +183,6 @@ const LocateUser=()=>{
 
     useEffect(async()=>{
         getAreas();
-        getAreaWithProvider();
         getLatestNotifications();
         setIsMap(false);
     },[])
@@ -337,7 +348,7 @@ const LocateUser=()=>{
                         />
                     </div>
                 </div>
-                <NeshanMap
+                {/* <NeshanMap
                     options={{
                         key: 'web.lZXZa2W9KrpFIQdhfFjiAXDUh7kz1t1JnSLmkSE9',
                         maptype: 'dreamy',
@@ -358,7 +369,27 @@ const LocateUser=()=>{
                             getAddress(e.latlng.lat,e.latlng.lng);
                         });
                     }}
-                />
+                /> */}
+                <ReactMapGL 
+                    mapboxApiAccessToken="pk.eyJ1IjoibW9oYW1tYWQtdmFhIiwiYSI6ImNremE0Z3dyYjBtM3gybm1xbzY2b3h4czQifQ.gbksB6wI93D2GW1AIIE1Gw" 
+                    {...viewport}
+                    onNativeClick={(val)=>{
+                        dispatch(setLng(val.lngLat[0]));
+                        dispatch(setLat(val.lngLat[1]));
+                        console.log(lat , lng);
+                    }}
+                    onViewportChange={(viewport)=>setViewport(viewport)}
+                    mapStyle="mapbox://styles/mapbox/streets-v11"
+                >
+                    <Marker latitude={parseFloat(lat)} longitude={parseFloat(lng)} offsetLeft={-20} offsetTop={-10}>
+                        <Image
+                            src={markerIcon}
+                            alt="marker"
+                            width={"25px"}
+                            height={"25px"}
+                        />
+                    </Marker>
+                </ReactMapGL>
                 <div className={styles.map_page_bottom_btn}>
                         <Button
                             onClick={()=>{

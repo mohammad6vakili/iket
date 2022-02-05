@@ -8,7 +8,8 @@ import {
     RES_DATA,
     LAT,
     LNG,
-    FOOD
+    FOOD,
+    HYPERS
 } from "./Action";
 
 const initialState = {
@@ -21,7 +22,8 @@ const initialState = {
     resData:null,
     lat:"",
     lng:"",
-    food:null
+    food:null,
+    hypers:[]
 };
 
 const Reducer = (state = initialState, action) => {
@@ -46,6 +48,8 @@ const Reducer = (state = initialState, action) => {
       return {...state, lng: action.payload};
     case FOOD:
       return {...state, food: action.payload};
+    case HYPERS:
+      return {...state, hypers: action.payload};
     default:
       return state;
   }

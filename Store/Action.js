@@ -8,6 +8,7 @@ export const RES_DATA="RES_DATA";
 export const LAT="LAT";
 export const LNG="LNG";
 export const FOOD="FOOD";
+export const HYPERS="HYPERS";
 
 
 export const setFirst=(data)=>{
@@ -86,6 +87,14 @@ export const setFood=(data)=>{
     return(
         {
             type:FOOD,
+            payload:data
+        }
+    )
+}
+export const setHypers=(data)=>{
+    return(
+        {
+            type:HYPERS,
             payload:data
         }
     )

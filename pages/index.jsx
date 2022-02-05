@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { setMenu } from '../Store/Action';
 import loadingLogo from "../assets/images/splash-logo.webp";
+import {setRTLTextPlugin} from "react-map-gl";
+
 
 const Home=()=> {
   const router=useRouter();
@@ -15,12 +17,16 @@ const Home=()=> {
     setLoading(true);
     let firstTime=localStorage.getItem("first");
     let userId=localStorage.getItem("userId");
+    let area=localStorage.getItem("selectArea");
     setTimeout(()=>{
       setLoading(false);
+      setRTLTextPlugin(
+        'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
+      );
       if(!firstTime){
         router.push("/welcome");
       }else{
-        if(userId){
+        if(userId && area){
           router.push("/home");
           dispatch(setMenu(0));
         }else{
