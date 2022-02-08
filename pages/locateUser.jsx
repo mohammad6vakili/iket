@@ -171,6 +171,7 @@ const LocateUser=()=>{
                     "Api-Key":"service.3QQRUWJV73dPVDuDBgKEdvS55nTOmiZz8jCJes9j"
                 }
             })
+            console.log(response.data)
             setLocName(response.data.formatted_address);
             setState(response.data.state);
         }catch(err){
@@ -348,35 +349,13 @@ const LocateUser=()=>{
                         />
                     </div>
                 </div>
-                {/* <NeshanMap
-                    options={{
-                        key: 'web.lZXZa2W9KrpFIQdhfFjiAXDUh7kz1t1JnSLmkSE9',
-                        maptype: 'dreamy',
-                        poi: true,
-                        traffic: false,
-                        center: [parseFloat(lat), parseFloat(lng)],
-                        zoom: 13
-                    }}
-
-                    onInit={(L, myMap) => {
-                        let marker = L.marker([parseFloat(lat), parseFloat(lng)])
-                        .addTo(myMap)
-
-                        myMap.on('click', function (e) {
-                            marker.setLatLng(e.latlng);
-                            dispatch(setLat(e.latlng.lat));
-                            dispatch(setLng(e.latlng.lng));
-                            getAddress(e.latlng.lat,e.latlng.lng);
-                        });
-                    }}
-                /> */}
                 <ReactMapGL 
                     mapboxApiAccessToken="pk.eyJ1IjoibW9oYW1tYWQtdmFhIiwiYSI6ImNremE0Z3dyYjBtM3gybm1xbzY2b3h4czQifQ.gbksB6wI93D2GW1AIIE1Gw" 
                     {...viewport}
                     onNativeClick={(val)=>{
                         dispatch(setLng(val.lngLat[0]));
                         dispatch(setLat(val.lngLat[1]));
-                        console.log(lat , lng);
+                        getAddress(lat , lng);
                     }}
                     onViewportChange={(viewport)=>setViewport(viewport)}
                     mapStyle="mapbox://styles/mapbox/streets-v11"
@@ -398,6 +377,8 @@ const LocateUser=()=>{
                                     toast.error("با عرض پوزش استان مورد نظر شما تحت پوشش نیست",{
                                         position:"bottom-left"
                                     });
+                                    dispatch(setLat(""));
+                                    dispatch(setLng(""));
                                 }
                             }}
                             className="enter_green_btn"

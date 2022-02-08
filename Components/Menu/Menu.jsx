@@ -20,11 +20,19 @@ const Menu=()=>{
     const router=useRouter();
     const dispatch=useDispatch();
     const menu=useSelector(state=>state.Reducer.menu);
+    const categoryType=useSelector(state=>state.Reducer.categoryType);
 
     return(
         <div className={styles.menu}>
             <div 
-                onClick={()=>{dispatch(setMenu(0));router.push("/restaurant")}}
+                onClick={()=>{
+                    dispatch(setMenu(0));
+                    if(categoryType==="1"){
+                        router.push("/hypers");
+                    }else{
+                        router.push("/restaurant");
+                    }
+                }}
             >
                 {menu===0 ?
                     <Image

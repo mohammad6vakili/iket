@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Colors from "../Helper/Colors";
 import axios from "axios";
 import { useDispatch , useSelector} from "react-redux";
-import {setCategoryType , setCityHypers , setHypers} from "../Store/Action";
+import {setCategoryType , setCityHypers , setHypers , setSelectedHyper} from "../Store/Action";
 import { Modal , Radio} from "antd";
 import fastFoodImage from "../assets/images/fastfood.png";
 import hyperMarketImage from "../assets/images/hyper_market.png";
@@ -22,8 +22,11 @@ const Home=()=>{
 
     const [modal , setModal]=useState(false);
 
+    const lat = useSelector(state=>state.Reducer.lat);
+    const lng = useSelector(state=>state.Reducer.lng);
     const cityHypers = useSelector(state=>state.Reducer.cityHypers);
     const hypers = useSelector(state=>state.Reducer.hypers);
+    const selectedHyper = useSelector(state=>state.Reducer.selectedHyper);
 
     const getAreaWithProvider=async()=>{
         let postData=new FormData();
@@ -61,14 +64,6 @@ const Home=()=>{
         getAreaWithProvider();
     },[])
 
-    useEffect(()=>{
-        if(hypers.length>0){
-            dispatch(setHypers(
-                hypers.filter((v,i,a)=>a.findIndex(t=>(t.ID===v.ID))===i)
-            ))
-        }
-    },[hypers])
-
 
     return(
         <div className="app-container">
@@ -83,15 +78,53 @@ const Home=()=>{
                     closable={false}
                 >
                     <div style={{width:"100%",display:"flex",flexDirection:"column"}}>
-                        <div style={{width:"100%",textAlign:"center",color:Colors.purple}}>نزدیکترین هایپر مارکت ها</div>
-                        <Radio.Group onChange={(e)=>console.log(e.target.value)}>
+                        <div 
+                            style={{
+                                width:"100%",
+                                fontSize:"16px",
+                                marginBottom:"20px",
+                                textAlign:"center",
+                                color:Colors.purple,
+                            }}
+                        >
+                            نزدیکترین هایپر مارکت ها
+                        </div>
                            {hypers.length > 0 && hypers.map((data)=>(
-                               <Radio value={data.ID}>{data.BusinessName}</Radio>
+                                <div style={{display:'flex',alignItems:"center",marginBottom:"10px"}}>
+                                    <input
+                                        style={{marginLeft:"7px",cursor:"pointer"}}
+                                        onClick={(e)=>{
+                                            setSelectedHyper(e.target.value);
+                                            dispatch(setSelectedHyper(data));
+                                        }}
+                                        type="radio"
+                                        value={data.ID}
+                                        name="hyper"
+                                    />
+                                    <label htmlFor="hyper">
+                                        {data.BusinessName}
+                                    </label>
+                                </div>
                            ))}
-                        </Radio.Group>
+                        <div 
+                            onClick={()=>{
+                                if(selectedHyper===""){
+                                    toast.warning("لطفا مجموعه مورد نظر خود را انتخاب کنید",{
+                                        position:"bottom-left"
+                                    })
+                                }else{
+                                    dispatch(setCategoryType("1"));
+                                    router.push("/hypers");
+                                }
+                                 
+                            }}
+                            style={{color:Colors.purple,marginTop:"10px",cursor:"pointer"}}
+                        >
+                            انتخاب
+                        </div>
                     </div>
                 </Modal>
-                <div onClick={()=>console.log(hypers)} className={styles.home_logo}>
+                <div onClick={()=>console.log(lat , lng)} className={styles.home_logo}>
                     <Image
                         src={logo}
                         alt="enter"
@@ -101,8 +134,23 @@ const Home=()=>{
                 </div>
                 <div className={styles.home_item_one}>
                     <div 
-                        // onClick={()=>{dispatch(setCategoryType("1"))}}
-                        onClick={()=>setModal(true)}
+                        onClick={()=>{
+                            if(hypers.length===0){
+                                toast.error("در حال حاضر مجموعه ای جهت ارائه خدمات فعال نمی باشد",{
+                                    position:"bottom-left"
+                                })
+                            }else if(hypers.length===1){
+                                setSelectedHyper(hypers[0].ID);
+                                dispatch(setCategoryType("1"));
+                            }else{
+                                if(hypers.length>0){
+                                    dispatch(setHypers(
+                                        hypers.filter((v,i,a)=>a.findIndex(t=>(t.ID===v.ID))===i)
+                                    ))
+                                }
+                                setModal(true);
+                            }
+                        }}
                     >
                         <Image
                             src={hyperMarketImage}

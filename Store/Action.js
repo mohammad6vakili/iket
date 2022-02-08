@@ -9,6 +9,7 @@ export const LAT="LAT";
 export const LNG="LNG";
 export const FOOD="FOOD";
 export const HYPERS="HYPERS";
+export const SELECTED_HYPER="SELECTED_HYPER";
 
 
 export const setFirst=(data)=>{
@@ -95,6 +96,14 @@ export const setHypers=(data)=>{
     return(
         {
             type:HYPERS,
+            payload:data
+        }
+    )
+}
+export const setSelectedHyper=(data)=>{
+    return(
+        {
+            type:SELECTED_HYPER,
             payload:data
         }
     )

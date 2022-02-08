@@ -9,7 +9,8 @@ import {
     LAT,
     LNG,
     FOOD,
-    HYPERS
+    HYPERS,
+    SELECTED_HYPER
 } from "./Action";
 
 const initialState = {
@@ -23,7 +24,8 @@ const initialState = {
     lat:"",
     lng:"",
     food:null,
-    hypers:[]
+    hypers:[],
+    selectedHyper:null
 };
 
 const Reducer = (state = initialState, action) => {
@@ -50,6 +52,8 @@ const Reducer = (state = initialState, action) => {
       return {...state, food: action.payload};
     case HYPERS:
       return {...state, hypers: action.payload};
+    case SELECTED_HYPER:
+      return {...state, selectedHyper: action.payload};
     default:
       return state;
   }
