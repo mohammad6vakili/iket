@@ -126,6 +126,11 @@
 .rec-dot_active{
   background-color: white !important;
 }
+.ant-collapse-arrow{
+  position:absolute;
+  left: 10px;
+  top: 15px;
+}
 @media only screen and (min-width:420px){
   .dashboard-page{
     box-shadow: 1px 1px 5px rgba(255, 255, 255, 0.685);

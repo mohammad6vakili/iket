@@ -51,7 +51,14 @@ const Menu=()=>{
                 }
             </div>
             <div
-                onClick={()=>{dispatch(setMenu(1));router.push("/allRestaurants");}}
+                onClick={()=>{
+                    dispatch(setMenu(1));
+                    if(categoryType==="1"){
+                        router.push("/categories");
+                    }else{
+                        router.push("/allRestaurants");
+                    }
+                }}
             >
                 {menu===1 ?
                     <Image

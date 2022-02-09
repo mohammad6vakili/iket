@@ -1,0 +1,84 @@
+@font-face {
+  font-family: "sans";
+  src: url("../assets/fonts/IRANSansWeb.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+.product_list {
+  font-family: "sans";
+  overflow-y: auto !important;
+  padding: 11vh 0;
+  background-color: rgb(233, 233, 233);
+}
+.product_bottom_box {
+  width: 100%;
+  max-width: 420px;
+  height: 10vh;
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid rgba(117, 117, 117, 0.76);
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+.product_bottom_box > button {
+  border: none;
+  border-radius: 10px;
+  color: white;
+  width: 130px;
+  height: 7vh;
+}
+.product_list_filters {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+.product_list_filters > button {
+  width: 45%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 6px;
+  border: none !important ;
+}
+.product_list_filters > button > span:nth-child(1) {
+  position: absolute !important;
+  right: 5px !important;
+  width: 25px !important;
+}
+.product_list_list {
+  width: 100%;
+  margin-top: 15px;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.product_list_list > div {
+  width: 100%;
+  height: 17vh;
+  border-radius: 6px;
+  background-color: white;
+  margin-bottom: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.product_list_list > div > div{
+    height: 100%;
+    border: 1px solid red;
+}
+.product_list_list > div > div:nth-child(1){
+    width: 30%;
+}
+.product_list_list > div > div:nth-child(2){
+    width: 70%;
+}

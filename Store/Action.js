@@ -10,6 +10,8 @@ export const LNG="LNG";
 export const FOOD="FOOD";
 export const HYPERS="HYPERS";
 export const SELECTED_HYPER="SELECTED_HYPER";
+export const SELECTED_SUBCAT="SELECTED_SUBCAT";
+export const PRODUCT="PRODUCT";
 
 
 export const setFirst=(data)=>{
@@ -104,6 +106,22 @@ export const setSelectedHyper=(data)=>{
     return(
         {
             type:SELECTED_HYPER,
+            payload:data
+        }
+    )
+}
+export const setSelectedSubCat=(data)=>{
+    return(
+        {
+            type:SELECTED_SUBCAT,
+            payload:data
+        }
+    )
+}
+export const setProduct=(data)=>{
+    return(
+        {
+            type:PRODUCT,
             payload:data
         }
     )
