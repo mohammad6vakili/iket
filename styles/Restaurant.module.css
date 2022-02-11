@@ -101,7 +101,7 @@
     display: flex;
     align-items: center;
     margin-top: auto;
-    font-size: 12px;
+    font-size: 11px;
     border-top:1px solid rgba(117, 117, 117, 0.493);
     color: rgb(117, 117, 117);
 }

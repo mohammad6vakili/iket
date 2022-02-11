@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useDispatch , useSelector} from "react-redux";
-import { setResData,setMenu } from "../Store/Action";
+import { setResData,setMenu, setProduct } from "../Store/Action";
 import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -123,8 +123,8 @@ const Hypers=()=>{
     }
 
     const selectRes=(data)=>{
-        router.push("/restaurantPage");
-        dispatch(setResData(data));
+        router.push("/product");
+        dispatch(setProduct(data));
     }
 
     useEffect(()=>{
@@ -178,10 +178,10 @@ const Hypers=()=>{
                     </Carousel>
                 }
                 <Button
-                    onClick={()=>{dispatch(setMenu(1));router.push("/allRestaurants");}}
+                    onClick={()=>{dispatch(setMenu(1));router.push("/categories");}}
                     className={`btn_green ${styles.all_restaurants_btn}`}
                 >
-                    <div>لیست رستوران ها</div>
+                    <div>لیست دسته بندی محصولات</div>
                     <Image
                         width={"24px"}
                         height={"24px"}
@@ -221,10 +221,16 @@ const Hypers=()=>{
                                             <div>تعطیل</div>
                                         }
                                     </div>
-                                    <div style={{fontSize:"10px",fontWeight:"100"}} className={styles.restaurant_slider_box_title}>
+                                    <div 
+                                        style={{fontSize:"10px",fontWeight:"100"}} 
+                                        className={styles.restaurant_slider_box_title}
+                                    >
                                         {data.Title}
                                     </div>
-                                    <div style={{justifyContent:"flex-end",color:Colors.success}} className={styles.restaurant_slider_box_delivery}>
+                                    <div 
+                                        style={{justifyContent:"flex-end",color:Colors.success}}
+                                        className={styles.restaurant_slider_box_delivery}
+                                    >
                                         {FormatHelper.toPersianString(data.Price)} تومان 
                                     </div>
                                 </div>

@@ -26,7 +26,7 @@ const Categories=()=>{
     const [step , setStep]=useState(0);
     const [categories , setCategories]=useState(null);
     const [selectedCategory , setSelectedCategory]=useState(null);
-    const [selectedVitrin , setSelectedVitrin]=useState(null);
+    const [selectedSubCategory, setSelectedSubCategory]=useState(null);
 
     const getCategories=async()=>{
         const areaId = localStorage.getItem("selectArea");
@@ -47,6 +47,17 @@ const Categories=()=>{
             const response=await axios.post(Env.baseUrl + "SelectCategoryFamilyByHyperMarket.aspx",postData);
             if(response.data.Status===1){
                 setCategories(response.data.Data);
+                response.data.Data.map((data)=>{
+                    data.SubCategory.map((subCat)=>{
+                        subCat.SubCategoryVitrin.map((vitrin)=>{
+                            vitrin.SubCategoryPackage.map((pack)=>{
+                                pack.Product.map((pr)=>{
+                                    return pr.count=1;
+                                })
+                            })
+                        })
+                    })
+                })
             }else{
                 toast.warning(response.data.Message,{
                     position:"bottom-left"
@@ -113,7 +124,7 @@ const Categories=()=>{
                     <div className={styles.categories_step_two}>
                         <div>
                             {selectedCategory && selectedCategory.SubCategory.map((data , index)=>(
-                                <div onClick={()=>setSelectedVitrin(data.SubCategoryVitrin)} key={index}>
+                                <div onClick={()=>setSelectedSubCategory(data.SubCategoryVitrin)} key={index}>
                                     <Image
                                         width={"65px"}
                                         height={"65px"}
@@ -126,14 +137,20 @@ const Categories=()=>{
                             ))}
                         </div>
                         <div>
-                            {selectedVitrin && selectedVitrin.length>0 && selectedVitrin.map((data,index)=>(
+                            {selectedSubCategory && selectedSubCategory.length>0 && selectedSubCategory.map((data,index)=>(
                                 <Collapse defaultActiveKey={['0']}>
                                     <Panel header={data.Title} key={index}>
                                         {data.SubCategoryPackage && data.SubCategoryPackage.length>0 && data.SubCategoryPackage.map((pac)=>(
                                             <div 
                                                 onClick={()=>{
-                                                    dispatch(setSelectedSubCat(pac));
-                                                    router.push("/productList");
+                                                    if(pac.Product.length===0){
+                                                        toast.warning("متاسفانه محصولی یافت نشد",{
+                                                            position:"bottom-left"
+                                                        });
+                                                    }else{
+                                                        dispatch(setSelectedSubCat(pac));
+                                                        router.push("/productList");
+                                                    }
                                                 }}
                                                 className={styles.category_package_item}
                                             >

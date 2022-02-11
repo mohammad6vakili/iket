@@ -77,7 +77,10 @@ const Menu=()=>{
                 }
             </div>
             <div
-                onClick={()=>dispatch(setMenu(2))}
+                onClick={()=>{
+                    dispatch(setMenu(2));
+                    router.push("/cart");
+                }}
             >
                 {menu===2 ?
                     <Image

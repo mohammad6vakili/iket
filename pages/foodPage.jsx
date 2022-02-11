@@ -151,9 +151,9 @@ const foodPage=()=>{
                                 <div onClick={addToCart}>+</div>
                                 <div>
                                     {food.PriceWithDiscount===food.Price ?
-                                        FormatHelper.toPersianString(food.Price.toLocaleString()) + " تومان"
+                                        FormatHelper.toPersianString((food.Price * food.count).toLocaleString()) + " تومان"
                                     :
-                                        FormatHelper.toPersianString(food.PriceWithDiscount.toLocaleString()) +"تومان"
+                                        FormatHelper.toPersianString((food.PriceWithDiscount * food.count).toLocaleString()) +"تومان"
                                     }
                                 </div>
                             </div>

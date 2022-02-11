@@ -33,7 +33,6 @@
 .categories_step_two{
     width: 100%;
     height: calc(100vh - 22vh);
-    border: 1px solid red;
     display: flex;
 }
 .categories_step_two>div{

@@ -91,13 +91,13 @@ const Product=()=>{
         <div className="app-container">
             {product &&
                 <div className={`${styles.food_page} dashboard-page`}>
-                    <div onClick={()=>console.log(cart , product)} style={{fontSize:"14px"}} className="header">
+                    <div style={{fontSize:"14px"}} className="header">
                         {product.Title}
                         <div className="header-right-icon">
                             <Image
                                 src={rightArrow}
                                 alt="back"
-                                onClick={()=>router.push("/restaurantPage")}
+                                onClick={()=>router.push("/hypers")}
                             />
                         </div>
                     </div>
@@ -121,7 +121,7 @@ const Product=()=>{
                     </div>
                     <div className={styles.food_page_box}>
                         <div>
-                            <div>
+                            <div style={{fontSize:"14px"}}>
                                 {product.Title}
                             </div>
                             <div>
@@ -151,9 +151,9 @@ const Product=()=>{
                                 <div onClick={addToCart}>+</div>
                                 <div>
                                     {product.PriceWithDiscount===product.Price ?
-                                        FormatHelper.toPersianString(product.Price.toLocaleString()) + " تومان"
+                                        FormatHelper.toPersianString((product.Price * product.count).toLocaleString()) + " تومان"
                                     :
-                                        FormatHelper.toPersianString(product.PriceWithDiscount.toLocaleString()) +"تومان"
+                                        FormatHelper.toPersianString((product.PriceWithDiscount * product.count).toLocaleString()) +"تومان"
                                     }
                                 </div>
                             </div>
