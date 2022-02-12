@@ -148,7 +148,13 @@ const Product=()=>{
                                 <div>
                                     {FormatHelper.toPersianString(count)}
                                 </div>
-                                <div onClick={addToCart}>+</div>
+                                <div onClick={()=>{
+                                    if(product.count<10){
+                                        addToCart();
+                                    }
+                                }}>
+                                    +
+                                </div>
                                 <div>
                                     {product.PriceWithDiscount===product.Price ?
                                         FormatHelper.toPersianString((product.Price * product.count).toLocaleString()) + " تومان"

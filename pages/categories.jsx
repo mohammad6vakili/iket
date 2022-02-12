@@ -140,8 +140,9 @@ const Categories=()=>{
                             {selectedSubCategory && selectedSubCategory.length>0 && selectedSubCategory.map((data,index)=>(
                                 <Collapse defaultActiveKey={['0']}>
                                     <Panel header={data.Title} key={index}>
-                                        {data.SubCategoryPackage && data.SubCategoryPackage.length>0 && data.SubCategoryPackage.map((pac)=>(
-                                            <div 
+                                        {data.SubCategoryPackage && data.SubCategoryPackage.length>0 && data.SubCategoryPackage.map((pac,index)=>(
+                                            <div
+                                                key={index}
                                                 onClick={()=>{
                                                     if(pac.Product.length===0){
                                                         toast.warning("متاسفانه محصولی یافت نشد",{
@@ -157,8 +158,8 @@ const Categories=()=>{
                                                 <Image
                                                     width={"65px"}
                                                     height={"65px"}
-                                                    src={data.PhotoUrl}
-                                                    loader={()=>data.PhotoUrl}
+                                                    src={pac.PhotoUrl}
+                                                    loader={()=>pac.PhotoUrl}
                                                     alt="product"
                                                 />
                                                 {pac.Title}

@@ -217,7 +217,7 @@ const Hypers=()=>{
                                             loader={()=>data.PhotoUrl}
                                             alt="slider"
                                         />
-                                        {data.IsWork===0 &&
+                                        {data.isActive===false &&
                                             <div>تعطیل</div>
                                         }
                                     </div>
@@ -266,7 +266,7 @@ const Hypers=()=>{
                                         loader={()=>data.PhotoUrl}
                                         alt="slider"
                                     />
-                                    {data.IsWork===0 &&
+                                    {data.isActive===false &&
                                         <div>تعطیل</div>
                                     }
                                 </div>

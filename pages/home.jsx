@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Colors from "../Helper/Colors";
 import axios from "axios";
 import { useDispatch , useSelector} from "react-redux";
-import {setCategoryType , setCityHypers , setHypers , setSelectedHyper} from "../Store/Action";
+import {setCategoryType , setCityHypers , setHypers , setSelectedHyper , setCart} from "../Store/Action";
 import { Modal , Radio} from "antd";
 import fastFoodImage from "../assets/images/fastfood.png";
 import hyperMarketImage from "../assets/images/hyper_market.png";
@@ -62,6 +62,7 @@ const Home=()=>{
 
     useEffect(()=>{
         getAreaWithProvider();
+        dispatch(setCart([]));
     },[])
 
 
