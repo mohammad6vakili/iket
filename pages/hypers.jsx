@@ -123,8 +123,14 @@ const Hypers=()=>{
     }
 
     const selectRes=(data)=>{
-        router.push("/product");
-        dispatch(setProduct(data));
+        if(data.IsActive===true){
+            router.push("/product");
+            dispatch(setProduct(data));
+        }else{
+            toast.warning("این محصول غیرفعال می باشد.",{
+                position:"bottom-left"
+            })
+        }
     }
 
     useEffect(()=>{

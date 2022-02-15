@@ -90,7 +90,7 @@ const Product=()=>{
     return(
         <div className="app-container">
             {product &&
-                <div className={`${styles.food_page} dashboard-page`}>
+                <div className={`${styles.food_page} dashboard-page`} style={{position:"relative"}}>
                     <div style={{fontSize:"14px"}} className="header">
                         {product.Title}
                         <div className="header-right-icon">
@@ -164,6 +164,19 @@ const Product=()=>{
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div style={{
+                        position:"absolute",
+                        bottom:"0",
+                        width:"100%",
+                        height:"40px",
+                        display:"flex",
+                        background:"#00a854",
+                        justifyContent:"center",
+                        alignItems:"center",
+                        color:"white"
+                    }}>
+                        افزودن به سبد خرید
                     </div>
                 </div>
             }

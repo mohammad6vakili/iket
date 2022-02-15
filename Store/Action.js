@@ -12,6 +12,9 @@ export const HYPERS="HYPERS";
 export const SELECTED_HYPER="SELECTED_HYPER";
 export const SELECTED_SUBCAT="SELECTED_SUBCAT";
 export const PRODUCT="PRODUCT";
+export const ADDRESS="ADDRESS";
+export const SELECTED_ADDRESS="SELECTED_ADDRESS";
+
 
 
 export const setFirst=(data)=>{
@@ -122,6 +125,22 @@ export const setProduct=(data)=>{
     return(
         {
             type:PRODUCT,
+            payload:data
+        }
+    )
+}
+export const setAddress=(data)=>{
+    return(
+        {
+            type:ADDRESS,
+            payload:data
+        }
+    )
+}
+export const setSelectedAddress=(data)=>{
+    return(
+        {
+            type:SELECTED_ADDRESS,
             payload:data
         }
     )

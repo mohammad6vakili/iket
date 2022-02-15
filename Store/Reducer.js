@@ -12,7 +12,9 @@ import {
     HYPERS,
     SELECTED_HYPER,
     SELECTED_SUBCAT,
-    PRODUCT
+    PRODUCT,
+    ADDRESS,
+    SELECTED_ADDRESS
 } from "./Action";
 
 const initialState = {
@@ -29,7 +31,9 @@ const initialState = {
     hypers:[],
     selectedHyper:null,
     selectedSubCat:null,
-    product:null
+    product:null,
+    address:null,
+    selectedAddress:null
 };
 
 const Reducer = (state = initialState, action) => {
@@ -62,6 +66,10 @@ const Reducer = (state = initialState, action) => {
       return {...state, selectedSubCat: action.payload};
     case PRODUCT:
       return {...state, product: action.payload};
+    case ADDRESS:
+      return {...state, address: action.payload};
+    case SELECTED_ADDRESS:
+      return {...state, selectedAddress: action.payload};
     default:
       return state;
   }

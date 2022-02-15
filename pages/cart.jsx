@@ -2,6 +2,7 @@ import { useState , useEffect } from "react";
 import styles from "../styles/Cart.module.css";
 import { useSelector , useDispatch} from "react-redux";
 import { setCart } from "../Store/Action";
+import { useRouter } from "next/router";
 import trashIcon from "../assets/images/trash.svg";
 import Image from "next/image";
 import axios from "axios";
@@ -15,6 +16,7 @@ import { toast } from "react-toastify";
 
 const Cart=()=>{
     const dispatch=useDispatch();
+    const router=useRouter();
     const cartData=useSelector(state=>state.Reducer.cart);
 
     const [deliveryPrice , setDeliveryPrice]=useState(null);
@@ -33,6 +35,15 @@ const Cart=()=>{
                 position:"bottom-left"
             });
         }
+    }
+
+    const removeFromCart=(data)=>{
+        dispatch(setCart(
+            cartData.filter(cart=>cart.ID !== data.ID)
+        ));
+        toast.success("با موفقیت از سبد خرید شما حذف شد",{
+            position:'bottom-left'
+        });
     }
 
     useEffect(()=>{
@@ -77,7 +88,9 @@ const Cart=()=>{
                                 src={scooter}
                                 alt="delivery"
                             />
-                            <div>هزینه ارسال : {FormatHelper.toPersianString(deliveryPrice)} تومان</div>
+                            {deliveryPrice===-1 && <div>غیر قابل ارسال</div>}
+                            {deliveryPrice===0 && <div>هزینه ارسال : رایگان</div>}
+                            {deliveryPrice>0 && <div>هزینه ارسال : {FormatHelper.toPersianString(deliveryPrice)} تومان</div>}
                         </div>
                     }
                 </div>
@@ -103,9 +116,9 @@ const Cart=()=>{
                                     <div>{FormatHelper.toPersianString(data.Title)}</div>
                                     <div>{FormatHelper.toPersianString(data.Description)}</div>
                                     {data.Price !== data.PriceWithDiscount &&
-                                        <div style={{color:"red",textDecoration:"line-through"}}>{FormatHelper.toPersianString(data.PriceWithDiscount)} تومان</div>
+                                        <div style={{color:"red",textDecoration:"line-through"}}>{FormatHelper.toPersianString(data.Price)} تومان</div>
                                     }
-                                    <div style={{color:"#00a854"}}>{FormatHelper.toPersianString(data.Price)} تومان</div>
+                                    <div style={{color:"#00a854"}}>{FormatHelper.toPersianString(data.PriceWithDiscount)} تومان</div>
                                 </div>
                             </div>
                             <div>
@@ -115,11 +128,7 @@ const Cart=()=>{
                                     height={20}
                                     src={trashRed}
                                     alt="delete"
-                                    onClick={()=>{
-                                        toast.success("با موفقیت از سبد خرید شما حذف شد",{
-                                            position:'bottom-left'
-                                        });
-                                    }}
+                                    onClick={()=>removeFromCart(data)}
                                 />
                                 </div>
                                 <div>
@@ -151,6 +160,23 @@ const Cart=()=>{
                             </div>
                         </div>
                     ))}
+                </div>
+                <div
+                    onClick={()=>{
+                        if(deliveryPrice===-1){
+                            toast.warning("ارسال از این تامین کننده ممکن نیست",{
+                                position:"bottom-left"
+                            })
+                        }else{
+                            router.push("/selectAddress");
+                        }
+                    }}
+                    className={styles.cart_page_bottom_box}
+                >
+                    خرید خود را نهایی کنید
+                    <div>
+                        {FormatHelper.toPersianString(cartData.reduce((a, c) => a + c.Price * c.count, 0).toLocaleString())} تومان
+                    </div>
                 </div>
             </div>
         </div>

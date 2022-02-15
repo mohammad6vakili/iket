@@ -68,6 +68,7 @@
 .profile_links_list>div{
   height:13%;
   display: flex;
+  cursor: pointer;
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid rgba(117, 117, 117, 0.233);

@@ -3,6 +3,7 @@ import styles from "../styles/Profile.module.css";
 import Menu from "../Components/Menu/Menu";
 import axios from "axios";
 import Env from "../Constant/Env.json";
+import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import FormatHelper from "../Helper/FormatHelper";
@@ -12,7 +13,7 @@ import scooter from "../assets/images/scooter.png";
 
 
 const Profile=()=>{
-    
+    const router = useRouter();
     const [profile , setProfile]=useState(null);
 
     const getProfile=async()=>{
@@ -74,7 +75,7 @@ const Profile=()=>{
                         </div>
                     </div>
                     <div className={styles.profile_links_list}>
-                        <div>
+                        <div onClick={()=>router.push("/myOrders")}>
                             لیست سفارشات
                         </div>
                         <div>

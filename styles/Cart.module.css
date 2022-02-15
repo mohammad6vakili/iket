@@ -8,8 +8,33 @@
 .cart_page {
   font-family: "sans";
   overflow-y: auto !important;
-  padding: 11vh 0;
+  padding: 11vh 0 16.5vh 0;
   background-color: rgb(233, 233, 233);
+  position: relative;
+}
+.cart_page_bottom_box{
+  position:fixed;
+  bottom: 10vh;
+  width: 100%;
+  max-width: 420px;
+  height: 6.5vh;
+  background-color: #00a854;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cart_page_bottom_box>div{
+  position:absolute;
+  left: 10px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  border-radius: 6px;
+  background-color: #20b834cb;
 }
 .cart_body {
   width: 100%;

@@ -108,8 +108,14 @@ const Restaurant=()=>{
     }
 
     const selectRes=(data)=>{
-        router.push("/restaurantPage");
-        dispatch(setResData(data));
+        if(data.IsWork===0){
+            toast.warning("این رستوران تعطیل می باشد.",{
+                position:"bottom-left"
+            })
+        }else{
+            router.push("/restaurantPage");
+            dispatch(setResData(data));
+        }
     }
 
     useEffect(()=>{
