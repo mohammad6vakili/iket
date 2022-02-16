@@ -5,6 +5,8 @@ import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
 import { Button } from "antd";
 import { useEffect } from "react";
+import {setFactorData} from "../Store/Action";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import FormatHelper from "../Helper/FormatHelper";
@@ -15,6 +17,7 @@ import scooter from "../assets/images/scooter.png";
 
 const MyOrders=()=>{
     const router = useRouter();
+    const dispatch = useDispatch();
     const [orders , setOrders]=useState(null);
 
     const getOrders=async()=>{
@@ -77,7 +80,15 @@ const MyOrders=()=>{
                                         مبلغ : {FormatHelper.toPersianString(order.TotalPrice.toLocaleString())} تومان
                                     </span>
                                 </div>
-                                <Button>مشاهده فاکتور</Button>
+                                <Button 
+                                    onClick={()=>{
+                                        console.log(order);
+                                        dispatch(setFactorData(order));
+                                        router.push("/factor");
+                                    }}
+                                >
+                                    مشاهده فاکتور
+                                </Button>
                             </div>
                         ))}
                     </div>

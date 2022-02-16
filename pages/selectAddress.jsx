@@ -20,6 +20,7 @@ const SelectAddress=()=>{
     const dispatch=useDispatch();
     const router=useRouter();
 
+    const menu = useSelector(state=>state.Reducer.menu);
     const address = useSelector(state=>state.Reducer.address);
     const selectedHyper = useSelector(state=>state.Reducer.selectedHyper);
     const selectedAddress = useSelector(state=>state.Reducer.selectedAddress);
@@ -66,12 +67,22 @@ const SelectAddress=()=>{
                         <Image
                             src={rightArrow}
                             alt="back"
-                            onClick={()=>router.push("/cart")}
+                            onClick={()=>{
+                                if(menu===4){
+                                    router.push("/profile")
+                                }else{
+                                    router.push("/cart")
+                                }
+                            }}
                         />
                     </div>
                 </div>
                 <div className={styles.address_title}>
-                    انتخاب آدرس
+                    {menu===4 ?
+                        "آدرس ها"
+                        :
+                        "انتخاب آدرس"
+                    }
                 </div>
                 <Radio.Group 
                     onChange={(e)=>dispatch(setSelectedAddress(e.target.value))} 
@@ -102,12 +113,14 @@ const SelectAddress=()=>{
                         </Radio>
                     ))}
                 </Radio.Group>
-                <div
-                    onClick={goToNext}
-                    className={styles.cart_page_bottom_box}
-                >
-                    ثبت و ادامه
-                </div>
+                {menu!==4 &&
+                    <div
+                        onClick={goToNext}
+                        className={styles.cart_page_bottom_box}
+                    >
+                        ثبت و ادامه
+                    </div>
+                }
                 {address && address.length===0 && 
                     <div style={{width:"100%",textAlign:"center",marginTop:"10vh"}}>
                         شما آدرسی ثبت نکردید

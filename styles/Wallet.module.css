@@ -1,0 +1,37 @@
+@font-face {
+  font-family: "sans";
+  src: url("../assets/fonts/IRANSansWeb.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+.wallet {
+  font-family: "sans";
+  overflow-y: auto !important;
+  padding: 11vh 0;
+  background-color: rgb(233, 233, 233);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cart_page_bottom_box{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 420px;
+    height: 6.5vh;
+    background-color: #00a854;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+.enter_input{
+    width: 90% !important;
+    border: none;
+    margin-bottom:2vh;
+    height: 40px;
+    border-bottom: 1px solid #998caf94;
+    border-radius: 0;
+  }

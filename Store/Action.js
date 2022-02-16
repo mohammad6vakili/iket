@@ -14,6 +14,7 @@ export const SELECTED_SUBCAT="SELECTED_SUBCAT";
 export const PRODUCT="PRODUCT";
 export const ADDRESS="ADDRESS";
 export const SELECTED_ADDRESS="SELECTED_ADDRESS";
+export const FACTOR_DATA="FACTOR_DATA";
 
 
 
@@ -141,6 +142,14 @@ export const setSelectedAddress=(data)=>{
     return(
         {
             type:SELECTED_ADDRESS,
+            payload:data
+        }
+    )
+}
+export const setFactorData=(data)=>{
+    return(
+        {
+            type:FACTOR_DATA,
             payload:data
         }
     )

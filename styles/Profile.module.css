@@ -35,8 +35,8 @@
   align-items: center;
 }
 .profile_white_box>div:nth-child(1)>div{
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,16 +63,58 @@
   height: 40vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
 }
 .profile_links_list>div{
+  width: 100%;
   height:13%;
+  padding-right: 30%;
   display: flex;
   cursor: pointer;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   border-bottom: 1px solid rgba(117, 117, 117, 0.233);
 }
 .profile_links_list>div:last-child{
   border: none !important;
+}
+.profile_links_list>div>span{
+  margin-left: 7px !important;
+}
+.exit_modal{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  padding-top: 30px;
+}
+.exit_modal>div{
+  text-align: center;
+  color: #5a25b6c5;
+}
+.exit_modal>div:first-child{
+  width: 40px;
+  height: 40px;
+  top: -20px;
+  display: flex;
+  justify-content: center;
+  position:absolute;
+  align-items: center;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.425);
+}
+.exit_modal>div:last-child{
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+.exit_modal>div:last-child>button{
+  width: 50%;
+  border: none;
+  height: 40px;
+  border-top: 1px solid gray;
 }

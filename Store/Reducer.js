@@ -14,7 +14,8 @@ import {
     SELECTED_SUBCAT,
     PRODUCT,
     ADDRESS,
-    SELECTED_ADDRESS
+    SELECTED_ADDRESS,
+    FACTOR_DATA
 } from "./Action";
 
 const initialState = {
@@ -33,7 +34,8 @@ const initialState = {
     selectedSubCat:null,
     product:null,
     address:null,
-    selectedAddress:null
+    selectedAddress:null,
+    factorData:null
 };
 
 const Reducer = (state = initialState, action) => {
@@ -70,6 +72,8 @@ const Reducer = (state = initialState, action) => {
       return {...state, address: action.payload};
     case SELECTED_ADDRESS:
       return {...state, selectedAddress: action.payload};
+    case FACTOR_DATA:
+      return {...state, factorData: action.payload};
     default:
       return state;
   }
