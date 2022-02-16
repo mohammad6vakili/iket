@@ -1,7 +1,7 @@
 import { useState , useEffect } from "react";
 import styles from "../styles/AddAddress.module.css";
 import { useSelector , useDispatch} from "react-redux";
-import { setAddress } from "../Store/Action";
+import { setAddress, setEditAddress } from "../Store/Action";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Input , Button} from "antd";
@@ -23,6 +23,8 @@ const {TextArea}=Input;
 const AddAddress=()=>{
     const dispatch=useDispatch();
     const router=useRouter();
+
+    const editAddress=useSelector(state=>state.Reducer.editAddress);
 
     const [isMarker , setIsMarker]=useState(true);
     const [lat , setLat]=useState("");
@@ -120,6 +122,12 @@ const AddAddress=()=>{
         }
 
         const submitAddressReq=async()=>{
+            let endPoint;
+            if(editAddress===null){
+                endPoint = "InsertUserAddress.aspx";
+            }else{
+                endPoint = "UpdateUserAddressByAddressID.aspx";
+            }
             const userId = localStorage.getItem("userId");
             let postData=new FormData();
             if(name===""){
@@ -165,13 +173,23 @@ const AddAddress=()=>{
                 if(lng!==""){
                     postData.append("Longitude",lng);
                 }
+                if(editAddress){
+                    postData.append("AddressID",editAddress.ID);
+                }
                 postData.append("Token",Env.token);
                 try{
-                    const response = await axios.post(Env.baseUrl + "InsertUserAddress.aspx",postData)
-                    toast.success(response.data.Message,{
-                        position:"bottom-left"
-                    });
-                    router.push("/selectAddress");
+                    const response = await axios.post(Env.baseUrl + endPoint ,postData);
+                    if(response.data.Status===1){
+                        toast.success(response.data.Message,{
+                            position:"bottom-left"
+                        });
+                        dispatch(setEditAddress(null));
+                        router.push("/selectAddress");
+                    }else{
+                        toast.warning(response.data.Message,{
+                            position:"bottom-left"
+                        });
+                    }
                 }catch(err){
                     console.log(err);
                     toast.error("خطا در برقراری ارتباط",{
@@ -183,6 +201,11 @@ const AddAddress=()=>{
 
     useEffect(()=>{
         getStatesData();
+        if(editAddress){
+            setTitle(editAddress.Title);
+            setMobile(editAddress.Cellphone);
+            setPostAddress(editAddress.FullAddress);
+        }
     },[])
 
     useEffect(()=>{
@@ -215,13 +238,16 @@ const AddAddress=()=>{
         <div style={{position:"relative"}} className="app-container">
             {isMap===false ?
                 <div className={`${styles.add_address} dashboard-page`}>
-                    <div style={{fontSize:"14px"}} className="header">
+                    <div onClick={()=>console.log(editAddress)} style={{fontSize:"14px"}} className="header">
                         آدرس جدید
                         <div className="header-right-icon">
                             <Image
                                 src={rightArrow}
                                 alt="back"
-                                onClick={()=>router.push("/selectAddress")}
+                                onClick={()=>{
+                                    router.push("/selectAddress");
+                                    dispatch(setEditAddress(null));
+                                }}
                             />
                         </div>
                     </div>

@@ -15,6 +15,7 @@ export const PRODUCT="PRODUCT";
 export const ADDRESS="ADDRESS";
 export const SELECTED_ADDRESS="SELECTED_ADDRESS";
 export const FACTOR_DATA="FACTOR_DATA";
+export const EDTI_ADDRESS="EDTI_ADDRESS";
 
 
 
@@ -150,6 +151,14 @@ export const setFactorData=(data)=>{
     return(
         {
             type:FACTOR_DATA,
+            payload:data
+        }
+    )
+}
+export const setEditAddress=(data)=>{
+    return(
+        {
+            type:EDTI_ADDRESS,
             payload:data
         }
     )

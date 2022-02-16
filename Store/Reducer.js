@@ -15,7 +15,8 @@ import {
     PRODUCT,
     ADDRESS,
     SELECTED_ADDRESS,
-    FACTOR_DATA
+    FACTOR_DATA,
+    EDTI_ADDRESS
 } from "./Action";
 
 const initialState = {
@@ -35,7 +36,8 @@ const initialState = {
     product:null,
     address:null,
     selectedAddress:null,
-    factorData:null
+    factorData:null,
+    editAddress:null
 };
 
 const Reducer = (state = initialState, action) => {
@@ -74,6 +76,8 @@ const Reducer = (state = initialState, action) => {
       return {...state, selectedAddress: action.payload};
     case FACTOR_DATA:
       return {...state, factorData: action.payload};
+    case EDTI_ADDRESS:
+      return {...state, editAddress: action.payload};
     default:
       return state;
   }

@@ -177,7 +177,7 @@ const Profile=()=>{
                             />
                             آدرس ها
                         </div>
-                        <div>
+                        <div onClick={()=>router.push("/editProfile")}>
                             <Image
                                 src={editIcon}
                                 alt="edit"
@@ -218,7 +218,9 @@ const Profile=()=>{
                         className="enter_purple_btn"
                         style={{width:"calc(100% - 20px)",border:"none",borderRadius:"6px",marginTop:"5px"}}
                     >
-                        تماس با پشتیبانی
+                        <a href="tel:09426001269">
+                            تماس با پشتیبانی
+                        </a>
                     </Button>
                 </div>
             </div>        

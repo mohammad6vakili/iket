@@ -1,13 +1,14 @@
 import { useState , useEffect } from "react";
 import styles from "../styles/SelectAddress.module.css";
 import { useSelector , useDispatch} from "react-redux";
-import { setAddress , setSelectedAddress} from "../Store/Action";
+import { setAddress , setSelectedAddress , setEditAddress} from "../Store/Action";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import addLocation from "../assets/images/add-location.png";
+import infoIcon from "../assets/images/info.png";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import axios from "axios";
-import { Radio } from "antd";
+import { Radio , Modal,Button} from "antd";
 import Menu from "../Components/Menu/Menu";
 import Env from "../Constant/Env.json";
 import FormatHelper from "../Helper/FormatHelper";
@@ -25,6 +26,8 @@ const SelectAddress=()=>{
     const selectedHyper = useSelector(state=>state.Reducer.selectedHyper);
     const selectedAddress = useSelector(state=>state.Reducer.selectedAddress);
 
+    const [modal , setModal]=useState(false);
+    const [selectAddress , setSelectAddress]=useState(null);
 
     const getAddresses=async()=>{
         const userId = localStorage.getItem("userId");
@@ -35,6 +38,32 @@ const SelectAddress=()=>{
         try{
             const response=await axios.post(Env.baseUrl + "SelectUserAddressByUserID.aspx",postData);
             dispatch(setAddress(response.data.Data));
+        }catch(err){
+            toast.error("خطا در برقراری ارتباط",{
+                position:"bottom-left"
+            });
+        }
+    }
+
+    const deleteAddress=async()=>{
+        let postData = new FormData();
+        postData.append("ID",selectAddress.ID);
+        postData.append("Token",Env.token);
+        try{
+            const response=await axios.post(Env.baseUrl + "DeleteUserAddress.aspx",postData);
+            if(response.data.Status===1){
+                toast.success(response.data.Message,{
+                    position:"bottom-left"
+                });
+                setModal(false);
+                getAddresses();
+            }else{
+                toast.warning(response.data.Message,{
+                    position:"bottom-left"
+                });
+                setModal(false);
+                getAddresses();
+            }
         }catch(err){
             toast.error("خطا در برقراری ارتباط",{
                 position:"bottom-left"
@@ -77,6 +106,48 @@ const SelectAddress=()=>{
                         />
                     </div>
                 </div>
+                <Modal
+                    visible={modal}
+                    closable={false}
+                    width={250}
+                    style={{borderRadius:"10px"}}
+                    bodyStyle={{padding:"0",borderRadius:"10px"}}
+                    onCancel={()=>setModal(false)}
+                    onOk={()=>setModal(false)}
+                >
+                    <div className={styles.exit_modal}>
+                        <div>
+                            <Image
+                                src={infoIcon}
+                                alt="log out"
+                                width={"20px"}
+                                height={"20px"}
+                            />
+                        </div>
+                        <div style={{marginTop:"10px"}}>
+                            حذف
+                        </div>
+                        <div style={{fontSize:"12px",textAlign:"center"}}>
+                            آیا از حذف آدرس {selectAddress && selectAddress.Title} مطمئن هستید؟
+                        </div>
+                        <div>
+                            <Button 
+                                onClick={()=>{
+                                    deleteAddress();
+                                }}
+                                style={{color:"white",background:"red"}}
+                            >
+                                بله
+                            </Button>
+                            <Button
+                                onClick={()=>setModal(false)}
+                                style={{color:"white",background:"gray"}}
+                            >
+                                خیر
+                            </Button>
+                        </div>
+                    </div>
+                </Modal>
                 <div className={styles.address_title}>
                     {menu===4 ?
                         "آدرس ها"
@@ -102,12 +173,18 @@ const SelectAddress=()=>{
                                 <Image
                                     src={trash}
                                     alt="back"
-                                    onClick={()=>alert("delete")}
+                                    onClick={()=>{
+                                        setSelectAddress(data);
+                                        setModal(true);
+                                    }}
                                 />
                                 <Image
                                     src={editIcon}
                                     alt="back"
-                                    onClick={()=>alert("edit")}
+                                    onClick={()=>{
+                                        dispatch(setEditAddress(data));
+                                        router.push("/addAddress");
+                                    }}
                                 />
                             </div>
                         </Radio>

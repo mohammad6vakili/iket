@@ -133,7 +133,7 @@ const SelectPayment=()=>{
                 <Radio.Group 
                     onChange={(e)=>{
                         setMethod(e.target.value);
-                        if(e.target.value==="2"){
+                        if(e.target.value==="1"){
                             setIsWallet(true);
                             if(profile.Wallet===sum){
                                 setSum(0);
@@ -143,6 +143,9 @@ const SelectPayment=()=>{
                             if(profile.Wallet> sum+delivery){
                                 setSum(0);
                                 setDelivery(0);
+                            }
+                            if(profile.Wallet<sum){
+                                setSum(sum - profile.Wallet)
                             }
                         }else{
                             if(address){
@@ -210,11 +213,23 @@ const SelectPayment=()=>{
                     <div style={{width:"100%",textAlign:"center",marginTop:"10px"}}>
                         مبلغ : {FormatHelper.toPersianString(sum.toLocaleString())} تومان
                     </div>
-                    <div style={{width:"100%",textAlign:"center",marginTop:"10px",fontSize:"10px",color:"gray"}}>
-                        هزینه ارسال : 
-                        {" "}
-                        {FormatHelper.toPersianString(delivery.toLocaleString())}
-                    </div>
+                    {delivery>0 &&
+                        <div style={{width:"100%",textAlign:"center",marginTop:"10px",fontSize:"10px",color:"gray"}}>
+                            هزینه ارسال : 
+                            {" "}
+                            {FormatHelper.toPersianString(delivery.toLocaleString())}
+                        </div>
+                    }
+                    {delivery===0 && 
+                        <div style={{width:"100%",textAlign:"center",marginTop:"10px",fontSize:"10px",color:"gray"}}>
+                            هزینه ارسال : رایگان
+                        </div>
+                    }
+                    {delivery===-1 && 
+                        <div style={{width:"100%",textAlign:"center",marginTop:"10px",fontSize:"10px",color:"red"}}>
+                            غیر قابل ارسال
+                        </div>
+                    }
                 </div>
                 <div
                     onClick={()=>{

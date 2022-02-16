@@ -165,8 +165,12 @@ const RestaurantPage=()=>{
                             </div>
                         </div>
                         <div className={styles.restaurant_page_bottom_box}>
-                            <Button className="enter_purple_btn">اتمام خرید</Button>
-                            <Button className="enter_purple_btn">۰ تومان</Button>
+                            <Button onClick={()=>router.push("/cart")} className="enter_purple_btn">اتمام خرید</Button>
+                            <Button className="enter_purple_btn">
+                                {cart && cart.map((data)=>{
+                                    return FormatHelper.toPersianString((data.Price * data.count).toLocaleString()) + "تومان"
+                                })}
+                            </Button>
                         </div>
                     </>
                 }

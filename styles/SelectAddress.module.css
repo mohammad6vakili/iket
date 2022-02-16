@@ -72,3 +72,38 @@
   width: 20px !important;
   margin-right: 20px !important;
 }
+.exit_modal{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  padding-top: 30px;
+}
+.exit_modal>div{
+  text-align: center;
+  color: #353535;
+}
+.exit_modal>div:first-child{
+  width: 40px;
+  height: 40px;
+  top: 0px;
+  display: flex;
+  justify-content: center;
+  position:absolute;
+  align-items: center;
+}
+.exit_modal>div:last-child{
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.exit_modal>div:last-child>button{
+  width: 35%;
+  margin: 0 5px 10px 5px;
+  border-radius: 8px;
+  border: none;
+  height: 40px;
+}
