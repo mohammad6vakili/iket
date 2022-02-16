@@ -1,0 +1,109 @@
+@font-face {
+  font-family: "sans";
+  src: url("../assets/fonts/IRANSansWeb.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+.select_address {
+  font-family: "sans";
+  overflow-y: auto !important;
+  padding: 11vh 0 7vh 0;
+  background-color: rgb(233, 233, 233);
+  position: relative;
+}
+.cart_page_bottom_box {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 420px;
+  height: 6.5vh;
+  background-color: #00a854;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.address_title{
+    width: 100%;
+    height: 30px;
+    color: #5925B6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.address_body{
+  width: 100%;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+.address_body>label{
+  width: 100%;
+  height: 20vh;
+  border-radius: 10px;
+  background-color: white;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  font-size: 12px;
+}
+.address_body>label>span:nth-child(1){
+  position:absolute;
+  right: 5px;
+  top: 10px;
+}
+.address_body>label>span>div:last-child{
+  position:absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0 10px;
+  height: 6vh;
+}
+.address_body>label>span>div:last-child>span{
+  width: 20px !important;
+  margin-right: 20px !important;
+}
+.exit_modal{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  padding-top: 30px;
+}
+.exit_modal>div{
+  text-align: center;
+  color: #353535;
+}
+.exit_modal>div:first-child{
+  width: 40px;
+  height: 40px;
+  top: 0px;
+  display: flex;
+  justify-content: center;
+  position:absolute;
+  align-items: center;
+}
+.exit_modal>div:last-child{
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.exit_modal>div:last-child>button{
+  width: 35%;
+  margin: 0 5px 10px 5px;
+  border-radius: 8px;
+  border: none;
+  height: 40px;
+}

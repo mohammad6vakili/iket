@@ -1,0 +1,174 @@
+@font-face {
+  font-family: "sans";
+  src: url("../assets/fonts/IRANSansWeb.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+.restaurant_page {
+  font-family: "sans";
+  overflow-y: auto !important;
+  padding: 10vh 0 10vh 0;
+  background-color: rgb(233, 233, 233);
+}
+.restaurant_page_banner {
+  width: 100%;
+  height: 27vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.restaurant_page_banner_overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.45);
+  top: 0;
+}
+.restaurant_page_banner_overlay_image {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 70px;
+  border-radius: 50%;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.384);
+}
+.restaurant_page_banner_overlay_image > span {
+  border-radius: 50%;
+  position: absolute;
+}
+.restaurant_page_banner > div {
+  position: absolute;
+}
+.restaurant_page_banner > div:nth-child(4) {
+  color: white;
+  margin-top: 30px;
+  font-size: 18px;
+}
+.restaurant_page_banner > div:nth-child(5) {
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 100px;
+  font-size: 12px;
+}
+.restaurant_page_banner > span {
+  width: 100% !important;
+  height: 100% !important;
+}
+.restaurant_page_bottom_box {
+  width: 100%;
+  max-width: 420px;
+  height: 10vh;
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid rgba(117, 117, 117, 0.76);
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+.restaurant_page_bottom_box > button {
+  border: none;
+  border-radius: 10px;
+  color: white;
+  width: 130px;
+  height: 7vh;
+}
+.restaurant_page_menu_wrapper {
+  width: 100%;
+  height: 53vh;
+  display: flex;
+  background-color: white;
+}
+.restaurant_page_menu_sidebar::-webkit-scrollbar,
+.restaurant_page_menu_menu::-webkit-scrollbar {
+  display: none !important;
+}
+.restaurant_page_menu_sidebar {
+  width: 30%;
+  height: 100%;
+  overflow-y: auto;
+  border-left: 1px solid rgba(117, 117, 117, 0.76);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scrollbar-width: none;
+  padding-top: 5px;
+}
+.restaurant_page_menu_sidebar > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.restaurant_page_menu_sidebar > div > span {
+  width: 70% !important;
+  margin: 5px 0 !important;
+}
+.restaurant_page_menu_sidebar > div > div {
+  color: rgba(117, 117, 117, 0.76);
+  font-size: 12px;
+}
+.restaurant_page_menu_menu {
+  width: 70%;
+  height: 100%;
+  overflow-y: auto;
+}
+.restaurant_page_menu_menu > div {
+  width: 100%;
+  height: 20vh;
+  border-bottom: 1px solid rgba(117, 117, 117, 0.76);
+  padding: 10px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+.restaurant_page_menu_menu > div > div:nth-child(1) {
+  font-weight: 700;
+  font-size: 12px;
+}
+.restaurant_page_menu_menu > div > div:nth-child(2) {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.restaurant_page_menu_menu > div > div:nth-child(2) > select {
+  border: 1px solid rgba(117, 117, 117, 0.76);
+}
+.restaurant_page_menu_menu > div > div:nth-child(2) > div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+.restaurant_page_menu_menu
+  > div
+  > div:nth-child(2)
+  > div:nth-child(2)
+  > div:nth-child(1) {
+  color: #00a854;
+}
+.restaurant_page_menu_menu > div > div:nth-child(2) > div > button {
+  background-color: #00a854;
+  color: white;
+  font-size: 10px;
+  padding: 5px 10px !important;
+  border-radius: 5px !important;
+  border: none;
+  min-height: 40px !important;
+}
+.restaurant_page_item_disabled {
+  opacity: 0.7;
+  background-color: rgb(211, 211, 211);
+  cursor: no-drop;
+}
+.restaurant_page_discount_price {
+  color: red !important;
+  text-decoration: line-through;
+}

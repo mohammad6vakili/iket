@@ -1,0 +1,168 @@
+@font-face {
+  font-family: "sans";
+  src: url("../assets/fonts/IRANSansWeb.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+.locate_user {
+  font-family: sans;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.locate_user_icon {
+  display: flex;
+  justify-content: center;
+  margin: 5vh 0;
+}
+.locate_user_title {
+  padding: 0 10px;
+  font-size: 19px;
+  text-align: center;
+}
+.locate_user_select_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
+  margin: 5vh 0;
+}
+.locate_user_select_wrapper > span {
+  border: none !important;
+  border-bottom: 1px solid #5a25b691 !important;
+  border-radius: 0;
+}
+.locate_user_select_wrapper > span:nth-child(1) {
+  width: 35% !important;
+}
+.locate_user_select_wrapper > span:nth-child(2) {
+  width: 60% !important;
+}
+.locate_user_map_button {
+  width: 100%;
+  margin: 7vh 0;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+.locate_user_map_button > div {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: rgba(211, 206, 206, 0.425);
+}
+.locate_user_map_button > span {
+  color: rgb(163, 163, 163);
+  margin-top: 10px;
+}
+.locate_user_login_button {
+  width: calc(100% - 30px);
+  border: none;
+  height: 40px;
+  position: relative;
+}
+.locate_user_city_modal_body {
+  width: 90% !important;
+  max-width: 380px;
+}
+.locate_user_city_modal {
+  width: 100%;
+  min-height: 20vh;
+  max-height: 70vh;
+}
+.locate_user_city_modal > div:nth-child(1) {
+  width: 100%;
+  position: relative;
+}
+.locate_user_city_modal > div:nth-child(1) > div {
+  position: absolute;
+  bottom: -5px;
+  left: 43%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.829);
+}
+.locate_user_city_modal > div:nth-child(1) > span {
+  width: 100% !important;
+}
+.locate_user_city_modal_list_wrapper {
+  width: 100%;
+  margin-top: 20px;
+}
+.locate_user_city_modal_list_wrapper > div {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+}
+.locate_user_city_modal_list{
+    margin-top: 15px;
+    width: 100%;
+    max-height: 25vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding:0 15px;
+}
+.locate_user_city_modal_list>div{
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.locate_user_city_modal_list>div>span:nth-child(2){
+    color: #C5C5C5 ;
+    margin-right: 7px;
+}
+.city_selected_in_modal{
+    color: #000000 !important;
+}
+.map_page{
+  position: relative;
+}
+.map_page_bottom_btn{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10vh;
+  background-color: rgb(230, 230, 230);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.map_page_bottom_btn > button{
+  width: 80% !important;
+  height: 40px;
+  border-radius: 6px;
+}
+.map_page>div:nth-child(2){
+  max-width: 100% !important;
+  margin-top: 10vh !important;
+  height: 80vh !important;
+  z-index: 999999999999999 !important;
+}
+@media only screen and (max-width: 375px) {
+  .locate_user_title {
+    font-size: 16px;
+  }
+  .locate_user_city_modal > div:nth-child(1) > div {
+    left: 41%;
+  }
+}

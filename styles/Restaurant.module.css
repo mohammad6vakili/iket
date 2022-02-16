@@ -1,0 +1,112 @@
+@font-face {
+    font-family: "sans";
+    src: url("../assets/fonts/IRANSansWeb.ttf");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+.restaurant{
+    font-family: "sans";
+    overflow-y: auto !important;
+    padding: 11vh 0;
+    background-color: rgb(233, 233, 233);
+}
+.restaurant_slider{
+    margin-top: 10px;
+    cursor: pointer;
+}
+.all_restaurants_btn{
+    margin: 5px 10px 0 10px;
+    border-radius: 4px !important;
+    height: 45px;
+    display: flex;
+    align-items: center !important;
+    justify-content: center;
+    position: relative;
+}
+.all_restaurants_btn>span{
+    position:absolute !important;
+    right: 15%;
+}
+.title_seperate{
+    width: 100%;
+    height: 30px;
+    margin:10px 0 0 0;
+    padding:0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.title_seperate>div:nth-child(1){
+    width: 80px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 12px;
+    color: #5925B6;
+}
+.title_seperate>div:nth-child(2){
+    width: 100%;
+    height: 1.6px;
+    background-color: #5925B6;
+}
+.restaurant_slider_box{
+    width: 170px;
+    height: 200px;
+    margin: 0 5px 5px 5px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.39);
+    padding:5px;
+    display: flex;
+    cursor: pointer;
+    flex-direction: column;
+}
+.restaurant_slider_box_image{
+    width: 100%;
+    height: 50%;
+    position: relative;
+}
+.restaurant_slider_box_image>div{
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: rgba(117, 117, 117, 0.678);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+.restaurant_slider_box_image>span{
+    width: 100% !important;
+    height: 100% !important;
+}
+.restaurant_slider_box_title{
+    width: 100%;
+    margin: 10px 0;
+    font-size: 13px;
+    font-weight: 700;
+}
+.restaurant_slider_box_address{
+    width: 100%;
+    margin-bottom: 7px;
+    font-size: 9px;
+    color: rgb(117, 117, 117);
+}
+.restaurant_slider_box_delivery{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+    font-size: 11px;
+    border-top:1px solid rgba(117, 117, 117, 0.493);
+    color: rgb(117, 117, 117);
+}
+.restaurant_slider_box_delivery>span{
+    color: rgb(0, 168, 84);
+    font-weight: 700;
+    margin-right: 3px;
+}

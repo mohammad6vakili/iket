@@ -1,0 +1,51 @@
+@font-face {
+  font-family: "sans";
+  src: url("../assets/fonts/IRANSansWeb.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+.welcome {
+  font-family: sans;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 20vh;
+  position: relative;
+}
+.welcome_bottom_section{
+    width: 100%;
+    height: 10vh;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.welcome_bottom_section>div:nth-child(1){
+    position:absolute;
+    right: 35px;
+    cursor: pointer;
+}
+.welcome_bottom_section>div{
+    display: flex;
+    direction: ltr;
+}
+.welcome_bottom_section>div>div{
+    width: 12px;
+    margin: 0 4px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgb(219, 219, 219);
+}
+.welcome_span{
+    margin-top: 30vh;
+    color: #5925B6;
+}
+.welcome_span_selected{
+    background-color: #5925B6 !important;
+}
+@media only screen and (max-width:370px){
+    .welcome_span{
+        font-size: 12px;
+    }
+}

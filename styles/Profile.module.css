@@ -1,0 +1,120 @@
+@font-face {
+  font-family: "sans";
+  src: url("../assets/fonts/IRANSansWeb.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+.profile {
+  font-family: "sans";
+  overflow-y: auto !important;
+  padding: 11vh 0;
+  background-color: rgb(233, 233, 233);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile_logo{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+.profile_white_box{
+  width: 100%;
+  height: 16vh;
+  background-color: white;
+  margin-top: 20px;
+  display: flex;
+}
+.profile_white_box>div:nth-child(1){
+  width: 25%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile_white_box>div:nth-child(1)>div{
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #5a25b66e;
+}
+.profile_white_box>div:nth-child(2){
+  width: 75%;
+  height: 100%;
+}
+.profile_white_box>div:nth-child(2)>div{
+  width: 100%;
+  height: 33%;
+  display: flex;
+  font-size: 12px;
+  align-items: center;
+  border-bottom: 1px solid rgba(117, 117, 117, 0.582);
+}
+.profile_white_box>div:nth-child(2)>div:last-child{
+  border: none !important;
+}
+.profile_links_list{
+  width: 100%;
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.profile_links_list>div{
+  width: 100%;
+  height:13%;
+  padding-right: 30%;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid rgba(117, 117, 117, 0.233);
+}
+.profile_links_list>div:last-child{
+  border: none !important;
+}
+.profile_links_list>div>span{
+  margin-left: 7px !important;
+}
+.exit_modal{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  padding-top: 30px;
+}
+.exit_modal>div{
+  text-align: center;
+  color: #5a25b6c5;
+}
+.exit_modal>div:first-child{
+  width: 40px;
+  height: 40px;
+  top: -20px;
+  display: flex;
+  justify-content: center;
+  position:absolute;
+  align-items: center;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.425);
+}
+.exit_modal>div:last-child{
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+.exit_modal>div:last-child>button{
+  width: 50%;
+  border: none;
+  height: 40px;
+  border-top: 1px solid gray;
+}

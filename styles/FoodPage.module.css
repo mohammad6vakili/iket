@@ -1,0 +1,93 @@
+@font-face {
+  font-family: "sans";
+  src: url("../assets/fonts/IRANSansWeb.ttf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+.food_page {
+  font-family: "sans";
+  overflow-y: auto !important;
+  padding: 10vh 0 10vh 0;
+  background-color: rgb(233, 233, 233);
+}
+.food_page_banner {
+  width: 100%;
+  height: 27vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: white;
+}
+.food_page_banner > span {
+  width: 100% !important;
+  height: 100% !important;
+}
+.food_page_box {
+  width: 100%;
+  margin-top: 2vh;
+  display: flex;
+  justify-content: center;
+}
+.food_page_box > div {
+  width: 90%;
+  height: 180px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.171);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+.food_page_box > div > div {
+  width: 100%;
+}
+.food_page_box > div > div:nth-child(1) {
+  width: 100%;
+  height: 5vh;
+  font-size: 16px;
+  font-weight: 600;
+}
+.food_page_box > div > div:nth-child(2) {
+  font-size: 13px;
+  color: rgb(168, 168, 168);
+}
+.food_page_box > div > div:nth-child(3) {
+  color: #00a854;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 15px;
+}
+.food_page_box > div > div:nth-child(4) {
+  height: 30%;
+  border: 1px solid gray;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.food_page_box > div > div:nth-child(4) > div:nth-child(1){
+    padding-bottom: 11px;
+}
+.food_page_box > div > div:nth-child(4) > div:nth-child(1),
+.food_page_box > div > div:nth-child(4) > div:nth-child(3) {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #5925B6;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 28px;
+}
+.food_page_box > div > div:nth-child(4) > div:nth-child(4) {
+    font-size: 14px;
+    padding-left: 5px;
+}
+.restaurant_page_discount_price {
+  color: red !important;
+  text-decoration: line-through;
+}
