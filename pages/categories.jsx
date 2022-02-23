@@ -4,13 +4,13 @@ import Menu from "../Components/Menu/Menu";
 import { useSelector , useDispatch} from "react-redux";
 import {setSelectedSubCat} from "../Store/Action";
 import Image from "next/image";
+import Head from 'next/head';
 import { useRouter } from "next/router";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import axios from "axios";
 import { toast } from "react-toastify";
-import FormatHelper from "../Helper/FormatHelper";
 import Env from "../Constant/Env.json";
-import { Input , Collapse } from "antd";
+import { Collapse } from "antd";
 const { Panel } = Collapse;
 
 
@@ -20,6 +20,7 @@ const Categories=()=>{
 
     const categoryType=useSelector(state=>state.Reducer.categoryType);
     const selectedHyper=useSelector(state=>state.Reducer.selectedHyper);
+    const cartData=useSelector(state=>state.Reducer.cart);
     const lat=useSelector(state=>state.Reducer.lat);
     const lng=useSelector(state=>state.Reducer.lng);
 
@@ -78,8 +79,21 @@ const Categories=()=>{
         }
     },[])
 
+    useEffect(()=>{
+        console.log("cart");
+        if(cartData.length>0){
+            localStorage.setItem("cart",JSON.stringify(cartData));
+        }
+    })
+
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.categories} dashboard-page`}>
                 <Menu/>
                 <div className="header">

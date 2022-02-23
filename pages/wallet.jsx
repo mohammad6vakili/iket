@@ -1,13 +1,12 @@
 import { useState } from "react";
 import styles from "../styles/Wallet.module.css";
-import Menu from "../Components/Menu/Menu";
 import axios from "axios";
 import Env from "../Constant/Env.json";
-import { Button , Input, Space} from "antd";
+import { Button , Input} from "antd";
+import Head from 'next/head';
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
 import FormatHelper from "../Helper/FormatHelper";
 import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
@@ -23,7 +22,7 @@ const Wallet=()=>{
         const postData = new FormData();
         postData.append("Token",Env.token);
         postData.append("UserID",localStorage.getItem("userId"));
-        postData.append("Charge",price);
+        postData.append("Charge",FormatHelper.toEnglishString(price));
         postData.append("FromPlatform",2);
         try{
             const response = await axios.post(Env.baseUrl + "WalletChargeInsert.aspx",postData);
@@ -45,6 +44,12 @@ const Wallet=()=>{
     return(
         <div>
             <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
                 <div className={`${styles.wallet} dashboard-page`}>
                     <div className="header">
                         کیف پول

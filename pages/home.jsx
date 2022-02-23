@@ -4,12 +4,13 @@ import logo from "../assets/images/logo_colored.webp";
 import Image from "next/image";
 import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
+import Head from 'next/head';
 import { useRouter } from "next/router";
 import Colors from "../Helper/Colors";
 import axios from "axios";
 import { useDispatch , useSelector} from "react-redux";
 import {setCategoryType , setCityHypers , setHypers , setSelectedHyper , setCart} from "../Store/Action";
-import { Modal , Radio} from "antd";
+import { Modal } from "antd";
 import fastFoodImage from "../assets/images/fastfood.png";
 import hyperMarketImage from "../assets/images/hyper_market.png";
 import restaurantImage from "../assets/images/restaurant.png";
@@ -25,8 +26,10 @@ const Home=()=>{
     const lat = useSelector(state=>state.Reducer.lat);
     const lng = useSelector(state=>state.Reducer.lng);
     const cityHypers = useSelector(state=>state.Reducer.cityHypers);
+    const cartData = useSelector(state=>state.Reducer.cart);
     const hypers = useSelector(state=>state.Reducer.hypers);
     const selectedHyper = useSelector(state=>state.Reducer.selectedHyper);
+    const categoryType = useSelector(state=>state.Reducer.categoryType);
 
     const getAreaWithProvider=async()=>{
         let postData=new FormData();
@@ -62,12 +65,29 @@ const Home=()=>{
 
     useEffect(()=>{
         getAreaWithProvider();
-        dispatch(setCart([]));
     },[])
+    
+    useEffect(()=>{
+        console.log("cart");
+        if(cartData.length>0){
+            localStorage.setItem("cart",JSON.stringify(cartData));
+        }
+    })
 
+    useEffect(()=>{
+        dispatch(setCart([]));
+        localStorage.setItem("cart",JSON.stringify(cartData));
+    },[categoryType])
+    
 
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.home} dashboard-page`}>
                 <Modal
                     visible={modal}

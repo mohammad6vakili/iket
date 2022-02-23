@@ -4,6 +4,7 @@ import Menu from "../Components/Menu/Menu";
 import { useSelector , useDispatch} from "react-redux";
 import {setResData} from "../Store/Action";
 import Image from "next/image";
+import Head from 'next/head';
 import { useRouter } from "next/router";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -18,6 +19,7 @@ const AllRestaurants=()=>{
     const dispatch=useDispatch();
 
     const categoryType=useSelector(state=>state.Reducer.categoryType);
+    const cartData=useSelector(state=>state.Reducer.cart);
     const [restaurants , setRestaurants]=useState(null);
 
     const getAllRestaurants=async()=>{
@@ -59,8 +61,21 @@ const AllRestaurants=()=>{
         getAllRestaurants();
     },[])
 
+    useEffect(()=>{
+        console.log("cart");
+        if(cartData.length>0){
+            localStorage.setItem("cart",JSON.stringify(cartData));
+        }
+    })
+
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.all_restaurants} dashboard-page`}>
                 <Menu/>
                 <div className="header">

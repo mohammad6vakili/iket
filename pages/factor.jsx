@@ -1,27 +1,20 @@
-import { useState } from "react";
 import styles from "../styles/Factor.module.css";
-import axios from "axios";
-import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
-import { Button } from "antd";
-import { useEffect } from "react";
+import Head from 'next/head';
 import Logo from "../assets/images/logo_colored.webp";
-import {setFactorData} from "../Store/Action";
-import { useDispatch , useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import shareIcon from "../assets/images/share-white.png";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import FormatHelper from "../Helper/FormatHelper";
 import Image from "next/image";
-import logo from "../assets/images/logo_colored.webp";
-import scooter from "../assets/images/scooter.png";
 
 
 const Factor=()=>{
     const router = useRouter();
-    const dispatch = useDispatch();
 
     const factorData=useSelector(state=>state.Reducer.factorData);
+    const cartData=useSelector(state=>state.Reducer.cart);
 
     const handleSharing = async () => {
         let shareData = {
@@ -51,10 +44,21 @@ const Factor=()=>{
           }
         };
 
+        useEffect(()=>{
+            console.log("cart");
+            if(cartData.length>0){
+                localStorage.setItem("cart",JSON.stringify(cartData));
+            }
+        })
 
     return(
-        <div>
-            <div className="app-container">
+        <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
                 <div className={`${styles.factor} dashboard-page`}>
                     <div className="header">
                         فاکتور
@@ -89,7 +93,7 @@ const Factor=()=>{
                             <div style={{width:"15%"}}>تعداد</div>
                             <div style={{width:"25%"}}>مبلغ</div>
                         </div>
-                        {factorData && factorData.OrderList.map((data,index)=>(
+                        {factorData && factorData.OrderList && factorData.OrderList.map((data,index)=>(
                             <div>
                                 <div style={{width:"15%"}}>{FormatHelper.toPersianString(index+1)}</div>
                                 <div style={{width:"45%"}}>{data.Title}</div>
@@ -99,27 +103,26 @@ const Factor=()=>{
                         ))}
                     </div>
                     <div className={styles.factor_bottom_box}>
-                        <div>شماره پیگیری : {FormatHelper.toPersianString(factorData.TrackingCode)}</div>        
+                        <div>شماره پیگیری : {factorData && factorData.TrackingCode && FormatHelper.toPersianString(factorData.TrackingCode)}</div>        
                         <div>
                             <div>
                                 <div style={{fontSize:"11px"}}>هزینه ارسال</div>
                                 <div style={{color:"gray"}}>- - - - - - - - - -</div>
                                 <div style={{fontSize:"11px"}}>
-                                    {FormatHelper.toPersianString(factorData.DeliveryPrice.toLocaleString())} تومان
+                                    {factorData && factorData.DeliveryPrice &&FormatHelper.toPersianString(factorData.DeliveryPrice.toLocaleString())} تومان
                                 </div>
                             </div>
                             <div>
                                 <div style={{fontSize:"13px"}}>مبلغ کل</div>
                                 <div style={{color:"gray"}}>- - - - - - - - - -</div>
                                 <div style={{fontSize:"13px"}}>
-                                    {FormatHelper.toPersianString(factorData.TotalPrice.toLocaleString())} تومان
+                                    {factorData && factorData.TotalPrice && FormatHelper.toPersianString(factorData.TotalPrice.toLocaleString())} تومان
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>        
-        </div>
+            </div>
     )
 }
 export default Factor;

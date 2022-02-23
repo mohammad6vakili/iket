@@ -4,7 +4,8 @@ import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import searchIcon from "../assets/images/search.svg";
 import {useDispatch,useSelector} from "react-redux";
-import { setFood , setCart} from "../Store/Action";
+import { setFood } from "../Store/Action";
+import Head from 'next/head';
 import { useRouter } from "next/router";
 import FormatHelper from "../Helper/FormatHelper";
 import { Button } from "antd";
@@ -31,7 +32,7 @@ const RestaurantPage=()=>{
             position:"bottom-left"
         })
         if (!already) {
-            cart.push(product);
+            cart.push({...product , count:1});
         }
     }
 
@@ -41,8 +42,21 @@ const RestaurantPage=()=>{
         }
     },[])
 
+    useEffect(()=>{
+        console.log("cart");
+        if(cart.length>0){
+            localStorage.setItem("cart",JSON.stringify(cart));
+        }
+    })
+
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.restaurant_page} dashboard-page`}>
                 <div onClick={()=>console.log(cart)} className="header">
                     منوی رستوران

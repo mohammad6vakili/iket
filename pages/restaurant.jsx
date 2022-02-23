@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useDispatch , useSelector} from "react-redux";
-import { setResData,setMenu } from "../Store/Action";
+import { setResData,setMenu,setCart} from "../Store/Action";
+import Head from 'next/head';
 import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -20,6 +21,7 @@ const Restaurant=()=>{
     const router=useRouter();
     
     const categoryType=useSelector(state=>state.Reducer.categoryType);
+    const cartData=useSelector(state=>state.Reducer.cart);
     const [sliders , setSliders]=useState(null);
     const [newest , setNewest]=useState(null);
     const [best , setBest]=useState(null);
@@ -108,14 +110,8 @@ const Restaurant=()=>{
     }
 
     const selectRes=(data)=>{
-        if(data.IsWork===0){
-            toast.warning("این رستوران تعطیل می باشد.",{
-                position:"bottom-left"
-            })
-        }else{
-            router.push("/restaurantPage");
-            dispatch(setResData(data));
-        }
+        router.push("/restaurantPage");
+        dispatch(setResData(data));
     }
 
     useEffect(()=>{
@@ -124,10 +120,27 @@ const Restaurant=()=>{
         getBest();
     },[])
 
+    useEffect(()=>{
+        console.log("cart");
+        if(cartData.length>0){
+            localStorage.setItem("cart",JSON.stringify(cartData));
+        }
+    })
+
+    useEffect(()=>{
+        dispatch(setCart([]));
+        localStorage.setItem("cart",JSON.stringify(cartData));
+    },[categoryType])
+
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.restaurant} dashboard-page`}>
-                <Menu/>
                 <div className="header">
                     <Image
                         src={whiteLogo}
@@ -135,7 +148,14 @@ const Restaurant=()=>{
                         width={"100px"}
                         height={"28px"}
                     />
-                    <div style={{cursor:"pointer"}} className="header-left-icon">
+                    <div
+                        onClick={()=>{
+                            dispatch(setMenu(3));
+                            router.push("/search");
+                        }}
+                        style={{cursor:"pointer"}} 
+                        className="header-left-icon"
+                    >
                         <Image
                             src={searchIcon}
                             alt="search"
@@ -151,15 +171,16 @@ const Restaurant=()=>{
                     enableAutoPlay={true}
                 >
                     {sliders && sliders.length!==0 && sliders.map((data,index)=>(
-                        <Image
-                            key={index}
-                            width={"100%"}
-                            height={"100%"}
-                            src={data.PhotoUrl}
-                            loader={()=>data.PhotoUrl}
-                            alt="slider"
-                            onClick={()=>{data.Link!=="" && window.location.href == data.Link}}
-                        />
+                        <a href={data.Link}>
+                            <Image
+                                key={index}
+                                width={"100%"}
+                                height={"100%"}
+                                src={data.PhotoUrl}
+                                loader={()=>data.PhotoUrl}
+                                alt="slider"
+                            />
+                        </a>
                     ))
                     }
                 </Carousel>
@@ -175,6 +196,7 @@ const Restaurant=()=>{
                         alt="restaurants"
                     />
                 </Button>
+                <Menu/>
                 <div className={styles.title_seperate}>
                     <div>جدیدترین ها</div>
                     <div></div>

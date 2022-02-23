@@ -1,21 +1,17 @@
 import { useState , useEffect } from "react";
 import styles from "../styles/AddAddress.module.css";
 import { useSelector , useDispatch} from "react-redux";
-import { setAddress, setEditAddress } from "../Store/Action";
+import { setCart, setEditAddress} from "../Store/Action";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import Head from 'next/head';
 import { Input , Button} from "antd";
-import addLocation from "../assets/images/add-location.png";
+import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import axios from "axios";
 import ReactMapGL,{Marker} from "react-map-gl";
 import locationImage from "../assets/images/map-locate.webp";
-import Menu from "../Components/Menu/Menu";
 import Env from "../Constant/Env.json";
 import markerIcon from "../assets/images/location-marker.png";
-import FormatHelper from "../Helper/FormatHelper";
-import scooter from "../assets/images/scooter.png";
-import trashRed from "../assets/images/trash-red.svg";
 import { toast } from "react-toastify";
 const {TextArea}=Input;
 
@@ -25,6 +21,7 @@ const AddAddress=()=>{
     const router=useRouter();
 
     const editAddress=useSelector(state=>state.Reducer.editAddress);
+    const cartData=useSelector(state=>state.Reducer.cart);
 
     const [isMarker , setIsMarker]=useState(true);
     const [lat , setLat]=useState("");
@@ -208,6 +205,15 @@ const AddAddress=()=>{
         }
     },[])
 
+
+
+    useEffect(()=>{
+        console.log("cart");
+        if(cartData.length>0){
+            localStorage.setItem("cart",JSON.stringify(cartData));
+        }
+    })
+
     useEffect(()=>{
         if(provinces){
             provinces.map((data)=>{
@@ -236,6 +242,12 @@ const AddAddress=()=>{
 
     return(
         <div style={{position:"relative"}} className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             {isMap===false ?
                 <div className={`${styles.add_address} dashboard-page`}>
                     <div onClick={()=>console.log(editAddress)} style={{fontSize:"14px"}} className="header">

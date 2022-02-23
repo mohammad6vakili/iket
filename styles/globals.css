@@ -110,9 +110,13 @@
 .rec-carousel-wrapper{
   position: relative !important;
 }
-.rec-item-wrapper>span{
+.rec-item-wrapper a{
   width: 100% !important;
   height: 30vh !important;
+}
+.rec-item-wrapper span{
+  width: 100% !important;
+  height: 100% !important;
 }
 .rec-pagination{
   position:absolute !important;

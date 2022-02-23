@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "../styles/Welcome.module.css";
 import Image from "next/image";
+import Head from 'next/head';
 import { useRouter } from "next/router";
 import introOne from "../assets/images/intro1.webp";
 import introTwo from "../assets/images/intro2.webp";
@@ -34,6 +35,12 @@ const Welcome=()=>{
 
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.welcome} dashboard-page`}>
                 {step===0 &&
                     <>

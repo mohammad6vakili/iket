@@ -5,6 +5,7 @@ import { setCart } from "../Store/Action";
 import { useRouter } from "next/router";
 import trashIcon from "../assets/images/trash.svg";
 import Image from "next/image";
+import Head from 'next/head';
 import axios from "axios";
 import Menu from "../Components/Menu/Menu";
 import Env from "../Constant/Env.json";
@@ -29,7 +30,11 @@ const Cart=()=>{
                 ID: cartData[0].ID,
                 Token: Env.token
             });
-            setDeliveryPrice(response.data.Data);
+            if(response.data.Data===0){
+                setDeliveryPrice("رایگان");
+            }else{
+                setDeliveryPrice(response.data.Data);
+            }
         }catch(err){
             toast.error("خطا در برقراری ارتباط",{
                 position:"bottom-left"
@@ -53,6 +58,13 @@ const Cart=()=>{
     },[])
 
     useEffect(()=>{
+        console.log("cart");
+        if(cartData.length>0){
+            localStorage.setItem("cart",JSON.stringify(cartData));
+        }
+    })
+
+    useEffect(()=>{
         if(showTotal===false){
             setShowTotal(true);
         }
@@ -60,8 +72,14 @@ const Cart=()=>{
 
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.cart_page} dashboard-page`}>
-                <div style={{fontSize:"14px"}} className="header">
+                <div onClick={()=>console.log(cartData)} style={{fontSize:"14px"}} className="header">
                     سبد خرید شما
                     <div className="header-left-icon">
                         <Image
@@ -89,7 +107,7 @@ const Cart=()=>{
                                 alt="delivery"
                             />
                             {deliveryPrice===-1 && <div>غیر قابل ارسال</div>}
-                            {deliveryPrice===0 && <div>هزینه ارسال : رایگان</div>}
+                            {deliveryPrice==="رایگان" && <div>هزینه ارسال : رایگان</div>}
                             {deliveryPrice>0 && <div>هزینه ارسال : {FormatHelper.toPersianString(deliveryPrice)} تومان</div>}
                         </div>
                     }
@@ -113,12 +131,12 @@ const Cart=()=>{
                                     />
                                 </div>
                                 <div>
-                                    <div>{FormatHelper.toPersianString(data.Title)}</div>
-                                    <div>{FormatHelper.toPersianString(data.Description)}</div>
-                                    {data.Price !== data.PriceWithDiscount &&
+                                    <div>{data.Title && FormatHelper.toPersianString(data.Title)}</div>
+                                    <div>{data.Description && FormatHelper.toPersianString(data.Description)}</div>
+                                    {data.Price && data.Price !== data.PriceWithDiscount &&
                                         <div style={{color:"red",textDecoration:"line-through"}}>{FormatHelper.toPersianString(data.Price)} تومان</div>
                                     }
-                                    <div style={{color:"#00a854"}}>{FormatHelper.toPersianString(data.PriceWithDiscount)} تومان</div>
+                                    <div style={{color:"#00a854"}}>{data.PriceWithDiscount && FormatHelper.toPersianString(data.PriceWithDiscount)} تومان</div>
                                 </div>
                             </div>
                             <div>

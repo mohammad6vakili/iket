@@ -36,3 +36,7 @@ yarn-error.log*
 /.cloud/
 .cloud/
 /.cloud
+
+# pwa
+public/sw.js
+public/workbox-*.js

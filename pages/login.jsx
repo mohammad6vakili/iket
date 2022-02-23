@@ -7,6 +7,7 @@ import secIcon from "../assets/images/sec-icon.png";
 import { useDispatch } from "react-redux";
 import { Input , Button} from "antd";
 import { setProfile} from "../Store/Action";
+import Head from 'next/head';
 import { toast } from "react-toastify";
 import axios from "axios";
 import Countdown from "react-countdown";
@@ -110,6 +111,12 @@ const Login=()=>{
 
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.signup} dashboard-page`}>
                 {
                     step===0 ?

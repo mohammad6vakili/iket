@@ -6,10 +6,11 @@ import headerBackground from "../assets/images/header_background.jpg";
 import successGray from "../assets/images/success-gray.svg";
 import successGreen from "../assets/images/success-green.svg";
 import Image from "next/image";
+import Head from 'next/head';
 import ReactMapGL,{Marker} from "react-map-gl";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import { useDispatch , useSelector} from "react-redux";
-import { setCityHypers , setLat , setLng} from "../Store/Action";
+import { setLat , setLng} from "../Store/Action";
 import { useRouter } from "next/router";
 import markerIcon from "../assets/images/location-marker.png";
 import { Input , Button , Modal} from "antd";
@@ -35,6 +36,7 @@ const LocateUser=()=>{
 
     const lat=useSelector(state=>state.Reducer.lat);
     const lng=useSelector(state=>state.Reducer.lng);
+    const cartData=useSelector(state=>state.Reducer.cart);
 
     const [viewport , setViewport]=useState({
         latitude:parseFloat(lat),
@@ -188,8 +190,21 @@ const LocateUser=()=>{
         setIsMap(false);
     },[])
 
+    useEffect(()=>{
+        console.log("cart");
+        if(cartData.length>0){
+            localStorage.setItem("cart",JSON.stringify(cartData));
+        }
+    })
+
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             {isMap===false ?
             <>
             <div className={`${styles.locate_user} dashboard-page`}>

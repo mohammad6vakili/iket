@@ -8,8 +8,8 @@ import addLocation from "../assets/images/add-location.png";
 import infoIcon from "../assets/images/info.png";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import axios from "axios";
+import Head from 'next/head';
 import { Radio , Modal,Button} from "antd";
-import Menu from "../Components/Menu/Menu";
 import Env from "../Constant/Env.json";
 import FormatHelper from "../Helper/FormatHelper";
 import trash from "../assets/images/trash-black.svg";
@@ -29,11 +29,13 @@ const SelectAddress=()=>{
     const [modal , setModal]=useState(false);
     const [selectAddress , setSelectAddress]=useState(null);
 
-    const getAddresses=async()=>{
+    const getAddresses=async(index)=>{
         const userId = localStorage.getItem("userId");
         let postData = new FormData();
         postData.append("ID",userId);
-        postData.append("ProviderID",selectedHyper.ID);
+        if(index){
+            postData.append("ProviderID",selectedHyper.ID);
+        }        
         postData.append("Token",Env.token);
         try{
             const response=await axios.post(Env.baseUrl + "SelectUserAddressByUserID.aspx",postData);
@@ -79,16 +81,25 @@ const SelectAddress=()=>{
         }else{
             router.push("/selectPayment");
         }
+        console.log(selectedAddress)
     }
 
     useEffect(()=>{
         if(selectedHyper){
+            getAddresses(1);
+        }else{
             getAddresses();
         }
     },[])
 
     return(
         <div style={{position:"relative"}} className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.select_address} dashboard-page`}>
                 <div style={{fontSize:"14px"}} className="header">
                     آدرس های من
@@ -160,7 +171,10 @@ const SelectAddress=()=>{
                     className={styles.address_body}
                 >
                     {address && address.length>0 && address.map((data)=>(
-                        <Radio value={data.ID}>
+                        <Radio
+                            disabled={data.DeliveryPrice===-1} 
+                            value={data.ID}
+                        >
                             {data.Title}
                             <div style={{color:"gray",margin:"5px 0"}}>{data.FullAddress}</div>
                             {data.DeliveryPrice>0 &&
@@ -168,6 +182,9 @@ const SelectAddress=()=>{
                             }
                             {data.DeliveryPrice===0 &&
                                 <div style={{color:"gray",marginBottom:"5px"}}>هزینه ارسال : رایگان</div>
+                            }
+                            {data.DeliveryPrice===-1 &&
+                                <div style={{color:"red",marginBottom:"5px"}}>غیر قابل ارسال</div>
                             }
                             <div>
                                 <Image

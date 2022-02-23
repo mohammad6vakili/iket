@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from "next/image";
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
-import { setMenu } from '../Store/Action';
+import { useDispatch , useSelector} from 'react-redux';
+import { setMenu , setCart} from '../Store/Action';
 import loadingLogo from "../assets/images/splash-logo.webp";
 import {setRTLTextPlugin} from "react-map-gl";
 
@@ -12,6 +12,8 @@ const Home=()=> {
   const router=useRouter();
   const dispatch=useDispatch();
   const [loading , setLoading]=useState(false);
+
+  const cartData = useSelector(state=>state.Reducer.cart);
 
   useEffect(()=>{
     setLoading(true);
@@ -27,7 +29,7 @@ const Home=()=> {
         router.push("/welcome");
       }else{
         if(userId && area){
-          router.push("/home");
+          router.push("/locateUser");
           dispatch(setMenu(0));
         }else{
           router.push("/enter");
@@ -35,11 +37,20 @@ const Home=()=> {
       }
     },2000)
 },[])
+
+
+useEffect(()=>{
+  console.log("cart");
+  dispatch(setCart(JSON.parse(localStorage.getItem("cart"))))
+})
   
   return (
     <div>
       <Head>
-        <title>Home</title>
+        <title>آیکت</title>
+        <meta name='description' content='فروشگاه آنلاین آیکت'/>
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.json" />
       </Head>
       <div className="home">
         {loading===true &&

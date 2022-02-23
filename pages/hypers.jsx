@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useDispatch , useSelector} from "react-redux";
-import { setResData,setMenu, setProduct } from "../Store/Action";
+import { setMenu, setProduct , setCart } from "../Store/Action";
+import Head from 'next/head';
 import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -21,6 +22,7 @@ const Hypers=()=>{
     const dispatch=useDispatch();
     const router=useRouter();
     
+    const cartData=useSelector(state=>state.Reducer.cart);
     const categoryType=useSelector(state=>state.Reducer.categoryType);
     const selectedHyper=useSelector(state=>state.Reducer.selectedHyper);
     const lat=useSelector(state=>state.Reducer.lat);
@@ -141,8 +143,26 @@ const Hypers=()=>{
         }
     },[])
 
+    useEffect(()=>{
+        console.log("cart");
+        if(cartData.length>0){
+            localStorage.setItem("cart",JSON.stringify(cartData));
+        }
+    })
+
+    useEffect(()=>{
+        dispatch(setCart([]));
+        localStorage.setItem("cart",JSON.stringify(cartData));
+    },[categoryType])
+
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.restaurant} dashboard-page`}>
                 <Menu/>
                 <div className="header">
@@ -170,15 +190,16 @@ const Hypers=()=>{
                         enableAutoPlay={true}
                     >
                         {sliders && sliders.length!==0 && sliders.map((data,index)=>(
-                            <Image
-                                key={index}
-                                width={"100%"}
-                                height={"100%"}
-                                src={data.PhotoUrl}
-                                loader={()=>data.PhotoUrl}
-                                alt="slider"
-                                onClick={()=>{data.Link!=="" && window.location.href == data.Link}}
-                            />
+                            <a href={data.Link}>
+                                <Image
+                                    key={index}
+                                    width={"100%"}
+                                    height={"100%"}
+                                    src={data.PhotoUrl}
+                                    loader={()=>data.PhotoUrl}
+                                    alt="slider"
+                                />
+                            </a>
                         ))
                         }
                     </Carousel>

@@ -4,6 +4,7 @@ import rightArrow from "../assets/images/right-arrow-white.svg";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
+import Head from 'next/head';
 import { setProfile } from "../Store/Action";
 import signupVector from "../assets/images/signup.png";
 import Countdown from "react-countdown";
@@ -164,6 +165,12 @@ const Signup=()=>{
 
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.signup} dashboard-page`}>
                 {step===0 ?
                     <>

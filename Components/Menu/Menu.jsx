@@ -99,7 +99,10 @@ const Menu=()=>{
                 }
             </div>
             <div
-                onClick={()=>dispatch(setMenu(3))}
+                onClick={()=>{
+                    dispatch(setMenu(3));
+                    router.push("/search");
+                }}
             >
                 {menu===3 ?
                     <Image

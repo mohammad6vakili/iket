@@ -5,6 +5,7 @@ import rightArrow from "../assets/images/right-arrow-white.svg";
 import { useSelector , useDispatch} from "react-redux";
 import { useRouter } from "next/router";
 import { setCart } from "../Store/Action";
+import Head from 'next/head';
 import noFood from "../assets/images/empty_food.png";
 import FormatHelper from "../Helper/FormatHelper";
 import { toast } from "react-toastify";
@@ -87,8 +88,21 @@ const Product=()=>{
         }
     },[])
 
+    useEffect(()=>{
+        console.log("cart");
+        if(cart.length>0){
+            localStorage.setItem("cart",JSON.stringify(cart));
+        }
+    })
+
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             {product &&
                 <div className={`${styles.food_page} dashboard-page`} style={{position:"relative"}}>
                     <div style={{fontSize:"14px"}} className="header">

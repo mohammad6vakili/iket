@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styles from "../styles/EditProfile.module.css";
-import Menu from "../Components/Menu/Menu";
 import axios from "axios";
 import Env from "../Constant/Env.json";
 import rightArrow from "../assets/images/right-arrow-white.svg";
@@ -8,7 +7,7 @@ import { Button , Input} from "antd";
 import { useRouter } from "next/router";
 import { useDispatch , useSelector } from "react-redux";
 import Logo from "../assets/images/logo_colored.webp";
-import { setProfile } from "../Store/Action";
+import Head from 'next/head';
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import FormatHelper from "../Helper/FormatHelper";
@@ -23,6 +22,7 @@ const EditProfile=()=>{
     const [email , setEmail]=useState("");
 
     const profile=useSelector(state=>state.Reducer.profile);
+    const cartData=useSelector(state=>state.Reducer.cart);
 
     const updateProfile=async()=>{
         const userId =localStorage.getItem("userId");
@@ -55,9 +55,21 @@ const EditProfile=()=>{
         setEmail(profile.Email);
     },[])
 
+    useEffect(()=>{
+        console.log("cart");
+        if(cartData.length>0){
+            localStorage.setItem("cart",JSON.stringify(cartData));
+        }
+    })
+
     return(
-        <div>
-            <div className="app-container">
+        <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
                 <div className={`${styles.edit_profile} dashboard-page`}>
                     <div onClick={()=>console.log(profile)} className="header">
                         ویرایش حساب کاربری
@@ -71,19 +83,20 @@ const EditProfile=()=>{
                     </div>
                     <div className={styles.edit_profile_top}>
                         <div>
-                            {profile && profile.PhotoUrl==="https://iketpanel.com" ?
+                            {profile && profile.PhotoUrl!==null && profile.PhotoUrl!=="https://iketpanel.com" ?
+                                <Image
+                                    src={profile.PhotoUrl}
+                                    loader={()=>profile.PhotoUrl}
+                                    alt="back"
+                                    width={"60px"}
+                                    height={"60px"}
+                                />
+                            :
                                 <Image
                                     src={Logo}
                                     alt="back"
                                     width={"70px"}
                                     height={"40px"}
-                                />
-                                :
-                                <Image
-                                    src={profile.PhotoUrl}
-                                    alt="back"
-                                    width={"60px"}
-                                    height={"60px"}
                                 />
                             }
                             
@@ -126,8 +139,7 @@ const EditProfile=()=>{
                         ثبت تغییرات
                     </Button>
                 </div>
-            </div>        
-        </div>
+        </div>        
     )
 }
 export default EditProfile;

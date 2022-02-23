@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useDispatch , useSelector } from "react-redux";
 import { setProfile } from "../Store/Action";
 import { toast } from "react-toastify";
+import Head from 'next/head';
 import { useEffect } from "react";
 import FormatHelper from "../Helper/FormatHelper";
 import Image from "next/image";
@@ -72,13 +73,19 @@ const Profile=()=>{
         }
     }
 
+
     useEffect(()=>{
         getProfile();
     },[])
 
     return(
-        <div>
-            <div className="app-container">
+        <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
                 <Modal
                     visible={modal}
                     closable={false}
@@ -223,8 +230,7 @@ const Profile=()=>{
                         </a>
                     </Button>
                 </div>
-            </div>        
-        </div>
+            </div>
     )
 }
 export default Profile;

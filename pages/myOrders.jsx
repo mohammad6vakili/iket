@@ -6,13 +6,12 @@ import { toast } from "react-toastify";
 import { Button } from "antd";
 import { useEffect } from "react";
 import {setFactorData} from "../Store/Action";
+import Head from 'next/head';
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import FormatHelper from "../Helper/FormatHelper";
 import Image from "next/image";
-import logo from "../assets/images/logo_colored.webp";
-import scooter from "../assets/images/scooter.png";
 
 
 const MyOrders=()=>{
@@ -40,8 +39,13 @@ const MyOrders=()=>{
     },[])
 
     return(
-        <div>
-            <div className="app-container">
+        <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
                 <div className={`${styles.my_orders} dashboard-page`}>
                     <div className="header">
                         سفارشات من
@@ -93,8 +97,7 @@ const MyOrders=()=>{
                         ))}
                     </div>
                 </div>
-            </div>        
-        </div>
+            </div>
     )
 }
 export default MyOrders;

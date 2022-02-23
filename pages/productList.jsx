@@ -6,7 +6,8 @@ import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import { useRouter } from "next/router";
 import FormatHelper from "../Helper/FormatHelper";
-import { Input , Button} from "antd";
+import {Button} from "antd";
+import Head from 'next/head';
 import { toast } from "react-toastify";
 import listIcon from "../assets/images/list.svg";
 import filterIcon from "../assets/images/filter.svg";
@@ -35,8 +36,21 @@ const ProductList=()=>{
         }
     }
 
+    useEffect(()=>{
+        console.log("cart");
+        if(cart.length>0){
+            localStorage.setItem("cart",JSON.stringify(cart));
+        }
+    })
+
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.product_list} dashboard-page`}>
                 <div className="header">
                     {subCat && subCat.Title}

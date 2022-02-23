@@ -8,7 +8,7 @@ import thunk from "redux-thunk";
 import {createStore, combineReducers, applyMiddleware} from "redux";
 import Reducer from "../Store/Reducer";
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch , useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
 const rootReducer=combineReducers({
@@ -20,15 +20,16 @@ const store = createStore(rootReducer , applyMiddleware(thunk));
 
 
 function MyApp({ Component, pageProps }) {
-
   const router=useRouter();
 
+  
   useEffect(()=>{
     router.push("/");
     if(localStorage.getItem("lat") && !localStorage.getItem("first")){
       router.push("/welcome");
     }
   },[])
+
 
   return(
     <Provider store={store}>

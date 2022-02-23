@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import styles from "../styles/Enter.module.css";
+import Head from 'next/head';
 import Image from "next/image";
 import loginIcon from "../assets/images/login_icon.png";
 import { Button } from "antd";
@@ -10,6 +10,12 @@ const Enter=()=>{
     
     return(
         <div className="app-container">
+            <Head>
+                <title>آیکت</title>
+                <meta name='description' content='فروشگاه آنلاین آیکت'/>
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+            </Head>
             <div className={`${styles.enter} dashboard-page`}>
                 <div className="header">
                     حساب کاربری
