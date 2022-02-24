@@ -22,6 +22,7 @@ const RestaurantPage=()=>{
 
     const addToCart=(product)=>{
         let already=false;
+        console.log(cart[0])
         cart.map((pr)=>{
             if(pr.ID===product.ID){
                 already = true;
@@ -43,7 +44,6 @@ const RestaurantPage=()=>{
     },[])
 
     useEffect(()=>{
-        console.log("cart");
         if(cart.length>0){
             localStorage.setItem("cart",JSON.stringify(cart));
         }
@@ -181,9 +181,8 @@ const RestaurantPage=()=>{
                         <div className={styles.restaurant_page_bottom_box}>
                             <Button onClick={()=>router.push("/cart")} className="enter_purple_btn">اتمام خرید</Button>
                             <Button className="enter_purple_btn">
-                                {cart && cart.map((data)=>{
-                                    return FormatHelper.toPersianString((data.Price * data.count).toLocaleString()) + "تومان"
-                                })}
+                                {cart && 
+                                    FormatHelper.toPersianString(cart.reduce((a, c) => a + c.Price * c.count, 0).toLocaleString())} تومان
                             </Button>
                         </div>
                     </>

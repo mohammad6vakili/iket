@@ -49,6 +49,9 @@ const Cart=()=>{
         toast.success("با موفقیت از سبد خرید شما حذف شد",{
             position:'bottom-left'
         });
+        if(cartData.length>0){
+            localStorage.setItem("cart",JSON.stringify(cartData));
+        }
     }
 
     useEffect(()=>{
@@ -58,7 +61,6 @@ const Cart=()=>{
     },[])
 
     useEffect(()=>{
-        console.log("cart");
         if(cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
@@ -92,6 +94,9 @@ const Cart=()=>{
                                 toast.success("سبد خرید شما خالی شد",{
                                     position:'bottom-left'
                                 });
+                                if(cartData.length>0){
+                                    localStorage.setItem("cart",JSON.stringify(cartData));
+                                }
                             }}
                         />
                     </div>
@@ -183,6 +188,10 @@ const Cart=()=>{
                     onClick={()=>{
                         if(deliveryPrice===-1){
                             toast.warning("ارسال از این تامین کننده ممکن نیست",{
+                                position:"bottom-left"
+                            })
+                        }else if (cartData && cartData.length===0){
+                            toast.warning("سبد خرید خالی میباشد",{
                                 position:"bottom-left"
                             })
                         }else{

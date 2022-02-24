@@ -21,6 +21,8 @@ const AllRestaurants=()=>{
     const categoryType=useSelector(state=>state.Reducer.categoryType);
     const cartData=useSelector(state=>state.Reducer.cart);
     const [restaurants , setRestaurants]=useState(null);
+    const [text , setText]=useState("");
+    const [search , setSearch]=useState([]);
 
     const getAllRestaurants=async()=>{
         const cityId = localStorage.getItem("selectCity");
@@ -62,11 +64,20 @@ const AllRestaurants=()=>{
     },[])
 
     useEffect(()=>{
-        console.log("cart");
         if(cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
     })
+
+    useEffect(()=>{
+        if(text.length===0 || text.length===1){
+            setSearch([]);
+        }else{
+            setSearch(
+                restaurants.filter((data)=>data.Title.includes(text))
+            )
+        }
+    },[text])
 
     return(
         <div className="app-container">
@@ -78,14 +89,62 @@ const AllRestaurants=()=>{
             </Head>
             <div className={`${styles.all_restaurants} dashboard-page`}>
                 <Menu/>
-                <div className="header">
+                <div onClick={()=>console.log(search , text)} className="header">
                     رستوران ها
                 </div>
                 <div className={styles.all_restaurants_search_bar}>
-                    <Input placeholder="جستجوی نام رستوران و فست فود" />
+                    <Input 
+                        value={text} 
+                        onChange={(e)=>setText(e.target.value)} 
+                        placeholder="جستجوی نام رستوران و فست فود" 
+                    />
                 </div>
                 <div className={styles.all_restaurants_list}>
-                    {restaurants && restaurants.length>0 && restaurants.map((data,index)=>(
+                    {search && search.length>0 && search.map((data,index)=>(
+                        <div onClick={()=>selectRes(data)} className={styles.all_restaurants_list_item}>
+                            <div>
+                                <Image
+                                    key={index}
+                                    width={"65px"}
+                                    height={"65px"}
+                                    src={data.PhotoUrl}
+                                    loader={()=>data.PhotoUrl}
+                                    alt="slider"
+                                />
+                                {data.IsWork===0 &&                            
+                                    <div>تعطیل</div>
+                                }
+                            </div>
+                            <div>
+                                <div>{data.Title}</div>
+                                <div>
+                                    <div>{data.Address}</div>
+                                </div>
+                                <div>
+                                    <div className={styles.restaurant_slider_box_delivery}>
+                                        هزینه ارسال : <span>{data.DeliveryPrice===0 ? "رایگان" : data.DeliveryPrice+" "+"تومان"}</span>
+                                    </div>
+                                    {data.Points!==0 &&
+                                        <div className={styles.restaurant_list_rate_box}>
+                                            <Image
+                                                width={"12px"}
+                                                height={"12px"}
+                                                src={starIcon}
+                                                alt="rate"
+                                            />
+                                            <span>{data.Points && FormatHelper.toPersianString(data.Points)}</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            {data.Discount!==null && data.Discount!==0 &&
+                                <div className={styles.restaurant_list_discount_box}>
+                                    {FormatHelper.toPersianString(data.Discount)} %
+                                </div>
+                            }
+                        </div>
+                    ))}
+                    {restaurants && search.length===0 && restaurants.length>0 && restaurants.map((data,index)=>(
                         <div onClick={()=>selectRes(data)} className={styles.all_restaurants_list_item}>
                             <div>
                                 <Image

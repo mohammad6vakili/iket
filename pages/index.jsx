@@ -28,11 +28,15 @@ const Home=()=> {
       if(!firstTime){
         router.push("/welcome");
       }else{
-        if(userId && area){
-          router.push("/locateUser");
-          dispatch(setMenu(0));
+        if(document.referrer.includes("https://iketpanel.com/")){
+          console.log("payment successFull");
         }else{
-          router.push("/enter");
+          if(userId && area){
+            router.push("/locateUser");
+            dispatch(setMenu(0));
+          }else{
+            router.push("/enter");
+          }
         }
       }
     },2000)
@@ -40,7 +44,6 @@ const Home=()=> {
 
 
 useEffect(()=>{
-  console.log("cart");
   dispatch(setCart(JSON.parse(localStorage.getItem("cart"))))
 })
   

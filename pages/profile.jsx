@@ -30,6 +30,8 @@ const Profile=()=>{
     const profile=useSelector(state=>state.Reducer.profile);
     const [modal , setModal]=useState(false);
 
+
+
     const handleSharing = async () => {
         let shareData = {
           title: 'آیکت',
@@ -77,6 +79,7 @@ const Profile=()=>{
     useEffect(()=>{
         getProfile();
     },[])
+
 
     return(
         <div className="app-container">
@@ -145,12 +148,22 @@ const Profile=()=>{
                     <div className={styles.profile_white_box}>
                         <div>
                             <div>
-                                <Image
-                                    src={scooter}
-                                    alt="user avatar"
-                                    width={"50px"}
-                                    height={"50px"}
-                                />
+                                {profile && profile.PhotoUrl && profile.PhotoUrl==="https://iketpanel.com" ?                                
+                                    <Image
+                                        src={scooter}
+                                        alt="user avatar"
+                                        width={"50px"}
+                                        height={"50px"}
+                                    />
+                                : profile && profile.PhotoUrl &&
+                                    <Image
+                                        src={profile.PhotoUrl}
+                                        loader={()=>profile.PhotoUrl}
+                                        alt="user avatar"
+                                        width={"50px"}
+                                        height={"50px"}
+                                    />
+                                }
                             </div>
                         </div>
                         <div style={{paddingRight:"10px"}}>

@@ -89,7 +89,6 @@ const Product=()=>{
     },[])
 
     useEffect(()=>{
-        console.log("cart");
         if(cart.length>0){
             localStorage.setItem("cart",JSON.stringify(cart));
         }

@@ -80,7 +80,6 @@ const Categories=()=>{
     },[])
 
     useEffect(()=>{
-        console.log("cart");
         if(cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
@@ -113,6 +112,7 @@ const Categories=()=>{
                         {categories && categories.length>0 && categories.map((data,index)=>(
                             <div 
                                 onClick={()=>{
+                                    setSelectedSubCategory(null);
                                     setSelectedCategory(data);
                                     setStep(1);
                                 }}

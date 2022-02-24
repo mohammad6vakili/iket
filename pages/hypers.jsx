@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { useDispatch , useSelector} from "react-redux";
-import { setMenu, setProduct , setCart } from "../Store/Action";
+import { setMenu, setProduct , setCart , setCategoryType} from "../Store/Action";
 import Head from 'next/head';
 import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
@@ -16,6 +16,9 @@ import searchIcon from "../assets/images/search.svg";
 import dashboardIcon from "../assets/images/dashboard.png";
 import Carousel from 'react-elastic-carousel';
 import Menu from "../Components/Menu/Menu";
+import fastFoodImage from "../assets/images/fastfood.png";
+import hyperMarketImage from "../assets/images/hyper_market.png";
+import restaurantImage from "../assets/images/restaurant.png";
 
 
 const Hypers=()=>{
@@ -125,14 +128,8 @@ const Hypers=()=>{
     }
 
     const selectRes=(data)=>{
-        if(data.IsActive===true){
-            router.push("/product");
-            dispatch(setProduct(data));
-        }else{
-            toast.warning("این محصول غیرفعال می باشد.",{
-                position:"bottom-left"
-            })
-        }
+        router.push("/product");
+        dispatch(setProduct(data));
     }
 
     useEffect(()=>{
@@ -144,16 +141,10 @@ const Hypers=()=>{
     },[])
 
     useEffect(()=>{
-        console.log("cart");
         if(cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
     })
-
-    useEffect(()=>{
-        dispatch(setCart([]));
-        localStorage.setItem("cart",JSON.stringify(cartData));
-    },[categoryType])
 
     return(
         <div className="app-container">
@@ -179,6 +170,56 @@ const Hypers=()=>{
                             alt="search"
                             width={""}
                         />
+                    </div>
+                </div>
+                <div className="service_change_wrapper">
+                    <div
+                        className={categoryType==="1" ? "type_selected" : ""}
+                        onClick={()=>{
+                            if(hypers.length===0){
+                                toast.error("در حال حاضر مجموعه ای جهت ارائه خدمات فعال نمی باشد",{
+                                    position:"bottom-left"
+                                })
+                            }else if(hypers.length===1){
+                                dispatch(setSelectedHyper(hypers[0].ID));
+                                dispatch(setCategoryType("1"));
+                            }else{
+                                if(hypers.length>0){
+                                    dispatch(setHypers(
+                                        hypers.filter((v,i,a)=>a.findIndex(t=>(t.ID===v.ID))===i)
+                                    ))
+                                }
+                                setModal(true);
+                            }
+                        }}
+                    >
+                        <Image
+                            src={hyperMarketImage}
+                            alt="service"
+                        />  
+                        <span>هایپر مارکت</span>
+                    </div>
+                    <div
+                        className={categoryType==="2" ? "type_selected" : ""}
+                        onClick={()=>{dispatch(setCategoryType("2"));router.push("/restaurant")}}
+                    >
+                        <Image
+                            src={restaurantImage}
+                            alt="service"
+                        />
+                        <span>رستوران</span>
+                    </div>
+                    <div className={styles.home_item_two}>
+                        <div
+                            className={categoryType==="3" ? "type_selected" : ""}
+                            onClick={()=>{dispatch(setCategoryType("3"));router.push("/restaurant")}}
+                        >
+                            <Image
+                                src={fastFoodImage}
+                                alt="service"
+                            />
+                            <span>فست فود</span>
+                        </div>
                     </div>
                 </div>
                 {sliders && sliders.length>0 &&
@@ -300,11 +341,11 @@ const Hypers=()=>{
                                 <div className={styles.restaurant_slider_box_title}>
                                     {data.Title}
                                 </div>
-                                <div className={styles.restaurant_slider_box_address}>
-                                    {data.Address}
-                                </div>
-                                <div className={styles.restaurant_slider_box_delivery}>
-                                    پیک رستوران : <span>{data.DeliveryPrice===0 ? "رایگان" : data.DeliveryPrice+" "+"تومان"}</span>
+                                <div 
+                                    style={{justifyContent:"flex-end",color:Colors.success}}
+                                    className={styles.restaurant_slider_box_delivery}
+                                >
+                                    {FormatHelper.toPersianString(data.Price)} تومان 
                                 </div>
                             </div>
                         ))}

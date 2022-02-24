@@ -37,7 +37,6 @@ const ProductList=()=>{
     }
 
     useEffect(()=>{
-        console.log("cart");
         if(cart.length>0){
             localStorage.setItem("cart",JSON.stringify(cart));
         }
@@ -52,7 +51,7 @@ const ProductList=()=>{
                 <link rel="manifest" href="/manifest.json" />
             </Head>
             <div className={`${styles.product_list} dashboard-page`}>
-                <div className="header">
+                <div onClick={()=>console.log(subCat)} className="header">
                     {subCat && subCat.Title}
                     <div className="header-right-icon">
                         <Image
@@ -83,9 +82,7 @@ const ProductList=()=>{
                         <div
                             onClick={()=>{
                                 if(data.IsActive===false){
-                                    toast.warning("متاسفانه محصول موجود نمیباشد",{
-                                        position:"bottom-left"
-                                    })
+                                    console.log("product is not active");
                                 }else{
                                     dispatch(setProduct(data));
                                     router.push("/product");
@@ -132,8 +129,11 @@ const ProductList=()=>{
                     ))}
                 </div>
                 <div className={styles.product_bottom_box}>
-                    <Button className="enter_purple_btn">اتمام خرید</Button>
-                    <Button className="enter_purple_btn">۰ تومان</Button>
+                    <Button onClick={()=>router.push("/cart")} className="enter_purple_btn">اتمام خرید</Button>
+                    <Button className="enter_purple_btn">
+                        {cart && 
+                            FormatHelper.toPersianString(cart.reduce((a, c) => a + c.Price * c.count, 0).toLocaleString())} تومان
+                    </Button>
                 </div>
             </div>
         </div>

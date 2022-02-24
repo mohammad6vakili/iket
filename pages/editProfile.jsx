@@ -20,6 +20,22 @@ const EditProfile=()=>{
 
     const [name , setName]=useState("");
     const [email , setEmail]=useState("");
+    const [uploadRef , setUploadRef]=useState(null);
+    const [imageList , setImageList]=useState("");
+    const [isImageList , setIsImageList]=useState(false);
+    const [fileList , setFileList]=useState([]);
+
+    const upload = (e) => {
+        let list=[];        
+        for (var i = 0; i < e.target.files.length; i++) {
+            list.push(e.target.files[i]);
+        }
+        list.map((li)=>{
+            setImageList(URL.createObjectURL(li))
+        })
+        setFileList(list);
+        setIsImageList(true);
+    };
 
     const profile=useSelector(state=>state.Reducer.profile);
     const cartData=useSelector(state=>state.Reducer.cart);
@@ -31,6 +47,9 @@ const EditProfile=()=>{
         postData.append("Token",Env.token);
         postData.append("Email",email);
         postData.append("FullName",name);
+        if(fileList && fileList.length>0){
+            postData.append("PhotoUrl",fileList);
+        }
         try{
             const response = await axios.post(Env.baseUrl + "UpdateUserInformationByUserID.aspx",postData)
             if(response.data.Status===1){
@@ -51,16 +70,22 @@ const EditProfile=()=>{
     }
 
     useEffect(()=>{
-        setName(profile.FullName);
-        setEmail(profile.Email);
+        if(profile){
+            setName(profile.FullName);
+            setEmail(profile.Email);
+        }
     },[])
 
     useEffect(()=>{
-        console.log("cart");
         if(cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
     })
+
+    useEffect(()=>{
+        setIsImageList(false);
+    },[isImageList])
+
 
     return(
         <div className="app-container">
@@ -71,7 +96,7 @@ const EditProfile=()=>{
                 <link rel="manifest" href="/manifest.json" />
             </Head>
                 <div className={`${styles.edit_profile} dashboard-page`}>
-                    <div onClick={()=>console.log(profile)} className="header">
+                    <div onClick={()=>console.log(imageList , fileList)} className="header">
                         ویرایش حساب کاربری
                         <div className="header-right-icon">
                             <Image
@@ -80,20 +105,23 @@ const EditProfile=()=>{
                                 onClick={()=>router.push("/profile")}
                             />
                         </div>
+                        <input 
+                            onChange={upload}
+                            type="file" 
+                            name="filefield" 
+                            style={{display:"none"}}
+                            ref={(fileInput)=>setUploadRef(fileInput)}    
+                        />
                     </div>
                     <div className={styles.edit_profile_top}>
-                        <div>
-                            {profile && profile.PhotoUrl!==null && profile.PhotoUrl!=="https://iketpanel.com" ?
-                                <Image
-                                    src={profile.PhotoUrl}
-                                    loader={()=>profile.PhotoUrl}
-                                    alt="back"
-                                    width={"60px"}
-                                    height={"60px"}
-                                />
+                        <div onClick={()=>uploadRef.click()}>
+                            {profile && imageList==="" ?
+                                <div style={{cursor:"pointer"}}>
+                                    افزودن تصویر
+                                </div>
                             :
                                 <Image
-                                    src={Logo}
+                                    src={imageList}
                                     alt="back"
                                     width={"70px"}
                                     height={"40px"}

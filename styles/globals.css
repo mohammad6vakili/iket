@@ -135,6 +135,23 @@
   left: 10px;
   top: 15px;
 }
+.service_change_wrapper{
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.service_change_wrapper>div{
+  width: 20% !important;
+  text-align: center;
+  color: #5925B6;
+  cursor: pointer;
+}
+.type_selected > span:last-child{
+  border-bottom: 1px solid #5a25b6a2 !important;
+}
+
 @media only screen and (min-width:420px){
   .dashboard-page{
     box-shadow: 1px 1px 5px rgba(255, 255, 255, 0.685);
