@@ -1,3 +1,4 @@
+import {useEffect} from "react";
 import styles from "../styles/Factor.module.css";
 import { toast } from "react-toastify";
 import Head from 'next/head';
