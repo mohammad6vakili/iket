@@ -46,7 +46,7 @@ const Factor=()=>{
         };
 
         useEffect(()=>{
-            if(cartData.length>0){
+            if(cartData && cartData.length>0){
                 localStorage.setItem("cart",JSON.stringify(cartData));
             }
         })

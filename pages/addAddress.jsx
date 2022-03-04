@@ -47,6 +47,8 @@ const AddAddress=()=>{
     const [selectedCity , setSelectedCity]=useState("");
     const [selectedArea , setSelectedArea]=useState("");
     const [postAddress , setPostAddress]=useState("");
+    // const [show , setShow]=useState(false);
+
 
 
     const getStatesData=async()=>{
@@ -199,16 +201,48 @@ const AddAddress=()=>{
     useEffect(()=>{
         getStatesData();
         if(editAddress){
+            setName(editAddress.FullName)
             setTitle(editAddress.Title);
             setMobile(editAddress.Cellphone);
             setPostAddress(editAddress.FullAddress);
         }
     },[])
 
-
+    useEffect(()=>{
+        if(editAddress && provinces && provinces.length>0){
+            provinces.map((province)=>{
+                if(province.ID.toString()===editAddress.StateIDFk.toString()){
+                    setSelectedProvince(province.ID);
+                    setCities(province.City)
+                }
+            })
+        }
+    },[provinces])
 
     useEffect(()=>{
-        if(cartData.length>0){
+        if(editAddress && cities && cities.length>0){
+            cities.map((city)=>{
+                if(city.ID.toString()===editAddress.CityIDFk.toString()){
+                    setSelectedCity(city.ID);
+                    setAreas(city.Area)
+                }
+            })
+        }
+    },[cities])
+
+    useEffect(()=>{
+        if(editAddress && areas && areas.length>0){
+            areas.map((area)=>{
+                if(area.ID.toString()===editAddress.AreaIDFk.toString()){
+                    setSelectedArea(area.ID)
+                    // setShow(false);
+                }
+            })
+        }
+    },[areas])
+
+    useEffect(()=>{
+        if(cartData && cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
     })
@@ -233,11 +267,19 @@ const AddAddress=()=>{
         }
     },[selectedCity])
 
+
     useEffect(()=>{
         if(isMarker===false){
             setIsMarker(true);
         }
     },[isMarker])
+
+    // useEffect(()=>{
+    //     if(show===false){
+    //         setShow(true);
+    //     }
+    // },[show])
+
 
     return(
         <div style={{position:"relative"}} className="app-container">
@@ -286,6 +328,7 @@ const AddAddress=()=>{
                         />
                         <div className={styles.combos_wrapper}>
                             <select
+                                value={selectedProvince}
                                 disabled={provinces===null}
                                 style={provinces===null ? {opacity:".5"} : {opacity:"1"}}
                                 onChange={(e)=>{
@@ -298,6 +341,7 @@ const AddAddress=()=>{
                                 ))}
                             </select>
                             <select
+                                value={selectedCity}
                                 disabled={cities===null}
                                 style={cities===null ? {opacity:".5"} : {opacity:"1"}}
                                 onChange={(e)=>{
@@ -309,18 +353,21 @@ const AddAddress=()=>{
                                     <option value={city.ID}>{city.City}</option>
                                 ))}
                             </select>
-                            <select
-                                disabled={areas===null}
-                                style={areas===null ? {opacity:".5"} : {opacity:"1"}}
-                                onChange={(e)=>{
-                                    setSelectedArea(e.target.value);
-                                }}
-                            >
-                                <option value="-1">محله</option>
-                                {areas && areas.map((area)=>(
-                                    <option value={area.ID}>{area.Area}</option>
-                                ))}
-                            </select>  
+                            {/* {show===true && */}
+                                <select
+                                    value={selectedArea}
+                                    disabled={areas===null}
+                                    style={areas===null ? {opacity:".5"} : {opacity:"1"}}
+                                    onChange={(e)=>{
+                                        setSelectedArea(e.target.value);
+                                    }}
+                                >
+                                    <option value="-1">محله</option>
+                                    {areas && areas.map((area)=>(
+                                        <option value={area.ID}>{area.Area}</option>
+                                    ))}
+                                </select>
+                            {/* }   */}
                         </div>
                         <TextArea
                             value={postAddress}
@@ -357,7 +404,7 @@ const AddAddress=()=>{
                     </div>
                 </div>
             :
-                <div className={`${styles.map_page} dashboard-page`}>
+                <div style={{position:"relative"}} className={`${styles.map_page} dashboard-page`}>
                     <div className="header">
                         آدرس من
                         <div className="header-right-icon">
@@ -399,6 +446,7 @@ const AddAddress=()=>{
                                 setIsMap(false);
                             }}
                             className="enter_green_btn"
+                            style={{maxWidth:"420px"}}
                         >
                             ثبت آدرس
                         </Button>

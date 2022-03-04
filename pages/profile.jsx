@@ -171,10 +171,10 @@ const Profile=()=>{
                                 {profile && profile.FullName}
                             </div>
                             <div>
-                                {profile && FormatHelper.toPersianString(profile.CellPhone)}
+                                {profile && profile.CellPhone && FormatHelper.toPersianString(profile.CellPhone)}
                             </div>
                             <div>
-                                {profile && FormatHelper.toPersianString(profile.Email)}
+                                {profile && profile.Email && FormatHelper.toPersianString(profile.Email)}
                             </div>
                         </div>
                     </div>

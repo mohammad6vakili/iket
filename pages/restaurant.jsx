@@ -25,6 +25,7 @@ const Restaurant=()=>{
     const dispatch=useDispatch();
     const router=useRouter();
     
+    const lat=useSelector(state=>state.Reducer.lat);
     const hypers=useSelector(state=>state.Reducer.hypers);
     const categoryType=useSelector(state=>state.Reducer.categoryType);
     const cartData=useSelector(state=>state.Reducer.cart);
@@ -136,7 +137,7 @@ const Restaurant=()=>{
     },[categoryType])
 
     useEffect(()=>{
-        if(cartData.length>0){
+        if(cartData && cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
     })
@@ -233,20 +234,25 @@ const Restaurant=()=>{
                     <div
                         className={categoryType==="1" ? "type_selected" : ""}
                         onClick={()=>{
-                            if(hypers.length===0){
-                                toast.error("در حال حاضر مجموعه ای جهت ارائه خدمات فعال نمی باشد",{
-                                    position:"bottom-left"
-                                })
-                            }else if(hypers.length===1){
-                                dispatch(setSelectedHyper(hypers[0].ID));
+                            if(lat!==""){
                                 dispatch(setCategoryType("1"));
+                                router.push("/hypers");
                             }else{
-                                if(hypers.length>0){
-                                    dispatch(setHypers(
-                                        hypers.filter((v,i,a)=>a.findIndex(t=>(t.ID===v.ID))===i)
-                                    ))
+                                if(hypers.length===0){
+                                    toast.error("در حال حاضر مجموعه ای جهت ارائه خدمات فعال نمی باشد",{
+                                        position:"bottom-left"
+                                    })
+                                }else if(hypers.length===1){
+                                    dispatch(setSelectedHyper(hypers[0].ID));
+                                    dispatch(setCategoryType("1"));
+                                }else{
+                                    if(hypers.length>0){
+                                        dispatch(setHypers(
+                                            hypers.filter((v,i,a)=>a.findIndex(t=>(t.ID===v.ID))===i)
+                                        ))
+                                    }
+                                    setModal(true);
                                 }
-                                setModal(true);
                             }
                         }}
                     >
@@ -287,7 +293,7 @@ const Restaurant=()=>{
                     enableAutoPlay={true}
                 >
                     {sliders && sliders.length!==0 && sliders.map((data,index)=>(
-                        <a href={data.Link}>
+                        <a href={data.Link !=="" ? data.Link : "#"}>
                             <Image
                                 key={index}
                                 width={"100%"}
@@ -300,20 +306,22 @@ const Restaurant=()=>{
                     ))
                     }
                 </Carousel>
-                {categoryType==="2" &&
-                    <Button
-                        onClick={()=>{dispatch(setMenu(1));router.push("/allRestaurants");}}
-                        className={`btn_green ${styles.all_restaurants_btn}`}
-                    >
+                <Button
+                    onClick={()=>{dispatch(setMenu(1));router.push("/allRestaurants");}}
+                    className={`btn_green ${styles.all_restaurants_btn}`}
+                >
+                    {categoryType==="2" ?
                         <div>لیست رستوران ها</div>
-                        <Image
-                            width={"24px"}
-                            height={"24px"}
-                            src={dashboardIcon}
-                            alt="restaurants"
-                        />
-                    </Button>
-                }
+                    :
+                        <div>لیست فست فود ها</div>
+                    }
+                    <Image
+                        width={"24px"}
+                        height={"24px"}
+                        src={dashboardIcon}
+                        alt="restaurants"
+                    />
+                </Button>
                 <Menu/>
                 <div className={styles.title_seperate}>
                     <div>جدیدترین ها</div>
@@ -337,8 +345,8 @@ const Restaurant=()=>{
                                     key={index}
                                     width={"100%"}
                                     height={"100%"}
-                                    src={data.PhotoUrl}
-                                    loader={()=>data.PhotoUrl}
+                                    src={data.Profilebackground}
+                                    loader={()=>data.Profilebackground}
                                     alt="slider"
                                 />
                                 {data.IsWork===0 &&
@@ -352,7 +360,7 @@ const Restaurant=()=>{
                                 {data.Address}
                             </div>
                             <div className={styles.restaurant_slider_box_delivery}>
-                                پیک رستوران : <span>{data.DeliveryPrice===0 ? "رایگان" : data.DeliveryPrice+" "+"تومان"}</span>
+                                <span>پیک رستوران : </span><span>{data.DeliveryPrice===0 ? "رایگان" : data.DeliveryPrice+" "+"تومان"}</span>
                             </div>
                         </div>
                     ))}
@@ -379,8 +387,8 @@ const Restaurant=()=>{
                                     key={index}
                                     width={"100%"}
                                     height={"100%"}
-                                    src={data.PhotoUrl}
-                                    loader={()=>data.PhotoUrl}
+                                    src={data.Profilebackground}
+                                    loader={()=>data.Profilebackground}
                                     alt="slider"
                                 />
                                 {data.IsWork===0 &&
@@ -394,7 +402,7 @@ const Restaurant=()=>{
                                 {data.Address}
                             </div>
                             <div className={styles.restaurant_slider_box_delivery}>
-                                پیک رستوران : <span>{data.DeliveryPrice===0 ? "رایگان" : data.DeliveryPrice+" "+"تومان"}</span>
+                                <span>پیک رستوران : </span> <span>{data.DeliveryPrice===0 ? "رایگان" : data.DeliveryPrice+" "+"تومان"}</span>
                             </div>
                         </div>
                     ))}

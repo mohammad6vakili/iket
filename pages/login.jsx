@@ -29,7 +29,7 @@ const Login=()=>{
 
 
     const getCode=async(e)=>{
-        e.preventDefault();
+        setIsCount(false);
         if(mobile===""){
             toast.warning("لطفا شماره موبایل خود را وارد کنید",{
                 position:"bottom-left"
@@ -49,9 +49,9 @@ const Login=()=>{
                         position:"bottom-left"
                     })
                     setStep(1);
-                    setIsCount(true);
                     setUserId(response.data.Data);
                     setNow(Date.now() + 60000);
+                    setIsCount(true);
                 }else{
                     toast.warning(response.data.Message,{
                         position:"bottom-left"

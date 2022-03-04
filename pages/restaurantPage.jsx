@@ -19,21 +19,35 @@ const RestaurantPage=()=>{
     const resData=useSelector(state=>state.Reducer.resData);
     const cart=useSelector(state=>state.Reducer.cart);
     const [products , setProducts]=useState([]);
+    const [show , setShow]=useState(true);
 
     const addToCart=(product)=>{
+        setShow(false);
         let already=false;
-        console.log(cart[0])
-        cart.map((pr)=>{
-            if(pr.ID===product.ID){
-                already = true;
-                pr.count = product.count;
+        if(cart && cart.length>0 && cart[0].ProviderID!==product.ProviderID){
+            toast.warning("شما فقط میتوانید از یک تامین کننده خرید کنید",{
+                position:"bottom-left"
+            })
+        }else{
+            cart.map((pr)=>{
+                if(pr.ID===product.ID){
+                    already = true;
+                    pr.count = product.count;
+                }
+            });
+            toast.success("به سبد خرید افزوده شد",{
+                position:"bottom-left"
+            })
+            if (!already) {
+                if(product.count===0 || product.count===1){
+                    cart.push({...product , count:1});
+                }else if(product.count>1){
+                    cart.push(product);
+                }
             }
-        });
-        toast.success("به سبد خرید افزوده شد",{
-            position:"bottom-left"
-        })
-        if (!already) {
-            cart.push({...product , count:1});
+            if(cart && cart.length>0){
+                localStorage.setItem("cart",JSON.stringify(cart));
+            }
         }
     }
 
@@ -44,7 +58,13 @@ const RestaurantPage=()=>{
     },[])
 
     useEffect(()=>{
-        if(cart.length>0){
+        if(show===false){
+            setShow(true);
+        }
+    },[show])
+
+    useEffect(()=>{
+        if(cart && cart.length>0){
             localStorage.setItem("cart",JSON.stringify(cart));
         }
     })
@@ -134,6 +154,7 @@ const RestaurantPage=()=>{
                                             <select
                                                 onChange={(e)=>{
                                                     pr.count=parseInt(e.target.value);
+                                                    console.log(pr)
                                                 }}
                                             >
                                                 <option value="1">۱ عدد</option>
@@ -181,7 +202,7 @@ const RestaurantPage=()=>{
                         <div className={styles.restaurant_page_bottom_box}>
                             <Button onClick={()=>router.push("/cart")} className="enter_purple_btn">اتمام خرید</Button>
                             <Button className="enter_purple_btn">
-                                {cart && 
+                                {cart && show &&
                                     FormatHelper.toPersianString(cart.reduce((a, c) => a + c.Price * c.count, 0).toLocaleString())} تومان
                             </Button>
                         </div>

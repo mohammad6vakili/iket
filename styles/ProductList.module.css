@@ -98,14 +98,14 @@
   color: #00a854;
   margin-top: 5px;
 }
-.product_list_list > div > div:nth-child(2) > div:nth-child(3) {
+.product_list_list > div > div:nth-child(2) > div:nth-child(4) {
   width: 100%;
   margin-top: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.product_list_list > div > div:nth-child(2) > div:nth-child(3) > button {
+.product_list_list > div > div:nth-child(2) > div:nth-child(4) > button {
   width: 100px;
   font-size: 11px;
   padding: 0 5px;

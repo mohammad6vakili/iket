@@ -20,66 +20,73 @@ const Product=()=>{
 
     const addToCart=()=>{
         let already = false;
-        if(cart.length>0){
-            cart.map((data)=>{
-                if(data.ID===product.ID){
-                    already=true;
-                }else{
-                    already=false;
-                }
-            })
-        }
-        if(cart.length===0){
-            product.count++;
-            cart.push(product);
-            toast.success("به سبد خرید افزوده شد",{
+        if(cart && cart.length>0 && cart[0].ProviderID!==product.ProviderID){
+            toast.warning("شما فقط میتوانید از یک تامین کننده خرید کنید",{
                 position:"bottom-left"
             })
-            console.log("first");
-            setCount(count+1);
         }else{
-            if(already===true){
-                    product.count++;
-                    cart.map((data)=>{
-                        if(data.ID===product.ID){
-                            data.count=product.count;
-                        }
-                    })
-                    setCount(count+1);
-                    console.log("already");
+            if(cart && cart.length>0){
+                cart.map((data)=>{
+                    if(data.ID===product.ID){
+                        already=true;
+                    }else{
+                        already=false;
+                    }
+                })
             }
-            if(already===false){
-                product.count++;
-                cart.push(product);
-                console.log("not already");
-                toast.success("به سبد خرید افزوده شد",{
+            if(product.count===0){
+                toast.warning("لطفا مقدار را بیشتر از صفر قرار دهید",{
                     position:"bottom-left"
                 });
-                setCount(count + 1);
+            }else{
+                if(cart && cart.length===0){
+                    cart.push(product);
+                    toast.success("به سبد خرید افزوده شد",{
+                        position:"bottom-left"
+                    })
+                    console.log("first");
+                }else{
+                    if(already===true){
+                        cart.map((data)=>{
+                            if(data.ID===product.ID){
+                                data.count=product.count;
+                            }
+                        })
+                        toast.success("به سبد خرید افزوده شد",{
+                            position:"bottom-left"
+                        });
+                    }
+                    if(already===false && cart){
+                        cart.push(product);
+                        toast.success("به سبد خرید افزوده شد",{
+                            position:"bottom-left"
+                        });
+                    }
+                }
             }
+            console.log(cart);
+        }
+    }
+
+    const Increase=()=>{
+        product.count++;
+        setCount(count+1);
+        if(count===10){
+            product.count=10;
+            setCount(10);
+        }
+    }
+
+    const removeFromCart=()=>{
+        product.count--;
+        setCount(count-1);
+        if(count===1){
+            product.count=0;
+            setCount(0);
         }
         console.log(cart);
     }
 
-    const removeFromCart=()=>{
-        cart.map((data)=>{
-            if(data.ID===product.ID){
-                product.count--;
-                data.count=product.count;
-                setCount(count-1);
-            }
-            if(count===1){
-                dispatch(setCart(
-                    cart.filter(cr=>cr.ID !== product.ID)
-                ));
-                product.count=0;
-                toast.success("از سبد خرید حذف شد",{
-                    position:"bottom-left"
-                })
-            }
-        })
-    console.log(cart);
-    }
 
     useEffect(()=>{
         console.log(product);
@@ -89,7 +96,7 @@ const Product=()=>{
     },[])
 
     useEffect(()=>{
-        if(cart.length>0){
+        if(cart && cart.length>0){
             localStorage.setItem("cart",JSON.stringify(cart));
         }
     })
@@ -163,7 +170,7 @@ const Product=()=>{
                                 </div>
                                 <div onClick={()=>{
                                     if(product.count<10){
-                                        addToCart();
+                                        Increase();
                                     }
                                 }}>
                                     +
@@ -188,7 +195,9 @@ const Product=()=>{
                         justifyContent:"center",
                         alignItems:"center",
                         color:"white"
-                    }}>
+                    }}
+                    onClick={addToCart}
+                    >
                         افزودن به سبد خرید
                     </div>
                 </div>

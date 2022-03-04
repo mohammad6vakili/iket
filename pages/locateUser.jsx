@@ -54,6 +54,22 @@ const LocateUser=()=>{
             const response=await axios.post(Env.baseUrl + "SelectArea.aspx",postData);
             if(response.data.Status===1){
                 setCity(response.data.Data);
+                if(localStorage.getItem("selectCity")){
+                    response.data.Data.map((city)=>{
+                        if(city.ID.toString()===localStorage.getItem("selectCity")){
+                            setSelectCity(city);
+                        }
+                    })
+                }
+                if(localStorage.getItem("selectArea")){
+                    response.data.Data.map((city)=>{
+                        city.Area.map((area)=>{
+                            if(area.ID.toString()===localStorage.getItem("selectArea")){
+                                setSelectArea(area);
+                            }
+                        })
+                    })
+                }
             }else{
                 toast.warning(response.data.Message,{
                     position:"bottom-left"
@@ -191,7 +207,7 @@ const LocateUser=()=>{
     },[])
 
     useEffect(()=>{
-        if(cartData.length>0){
+        if(cartData && cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
     })

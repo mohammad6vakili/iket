@@ -32,7 +32,7 @@ const Signup=()=>{
 
 
     const getCode=async(e)=>{
-        e.preventDefault();
+        setIsCount(false);
         if(name===""){
             toast.warning("لطفا نام و نام خانوادگی خود را وارد کنید",{
                 position:"bottom-left"
@@ -105,8 +105,8 @@ const Signup=()=>{
                         position:"bottom-left"
                     })
                     setStep(1);
-                    setIsCount(true);
                     setUserId(response.data.Data);
+                    setIsCount(true);
                 }else{
                     toast.warning(response.data.Message,{
                         position:"bottom-left"

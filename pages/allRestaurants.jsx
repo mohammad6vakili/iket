@@ -64,7 +64,7 @@ const AllRestaurants=()=>{
     },[])
 
     useEffect(()=>{
-        if(cartData.length>0){
+        if(cartData && cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
     })
@@ -90,7 +90,11 @@ const AllRestaurants=()=>{
             <div className={`${styles.all_restaurants} dashboard-page`}>
                 <Menu/>
                 <div onClick={()=>console.log(search , text)} className="header">
-                    رستوران ها
+                    {categoryType==="2" ?
+                        "لیست رستوران ها"
+                    :
+                        "لیست فست فود ها"
+                    }
                 </div>
                 <div className={styles.all_restaurants_search_bar}>
                     <Input 

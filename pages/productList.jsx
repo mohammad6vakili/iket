@@ -18,26 +18,33 @@ const ProductList=()=>{
     const dispatch=useDispatch();
 
     const subCat = useSelector(state=>state.Reducer.selectedSubCat);
+    const selectedHyper=useSelector(state=>state.Reducer.selectedHyper);
     const cart=useSelector(state=>state.Reducer.cart);
 
     const addToCart=(data)=>{
         let already=false;
-        cart.map((pr)=>{
-            if(pr.ID===data.ID){
-                already = true;
-                pr.count = data.count;
+        if(cart && cart.length>0 && cart[0].ProviderID!==data.ProviderID){
+            toast.warning("شما فقط میتوانید از یک تامین کننده خرید کنید",{
+                position:"bottom-left"
+            })
+        }else{
+            cart.map((pr)=>{
+                if(pr.ID===data.ID){
+                    already = true;
+                    pr.count = data.count;
+                }
+            });
+            toast.success("به سبد خرید افزوده شد",{
+                position:"bottom-left"
+            })
+            if (!already) {
+                cart.push(data);
             }
-        });
-        toast.success("به سبد خرید افزوده شد",{
-            position:"bottom-left"
-        })
-        if (!already) {
-            cart.push(data);
         }
     }
 
     useEffect(()=>{
-        if(cart.length>0){
+        if(cart && cart.length>0){
             localStorage.setItem("cart",JSON.stringify(cart));
         }
     })
@@ -81,14 +88,14 @@ const ProductList=()=>{
                     {subCat && subCat.Product && subCat.Product.length>0 && subCat.Product.map((data,index)=>(
                         <div
                             onClick={()=>{
-                                if(data.IsActive===false){
+                                if(selectedHyper && selectedHyper.IsWork===0){
                                     console.log("product is not active");
                                 }else{
                                     dispatch(setProduct(data));
                                     router.push("/product");
                                 }
                             }}
-                            className={data.IsActive===false ? styles.restaurant_page_item_disabled : ""}
+                            className={selectedHyper && selectedHyper.IsWork===0 ? styles.restaurant_page_item_disabled : ""}
                             key={index}
                         >
                             <div>
@@ -102,7 +109,10 @@ const ProductList=()=>{
                             </div>
                             <div>
                                 <div>{data.Title}</div>
-                                <div>{FormatHelper.toPersianString(data.Price)} تومان</div>
+                                <div style={data.PriceWithDiscount!==data.Price ? {color:"red",textDecoration:"line-through"} : {color:"green"}}>{FormatHelper.toPersianString(data.Price.toLocaleString())} تومان</div>
+                                <div style={{color:"green"}}>
+                                    {data.PriceWithDiscount!==data.Price && FormatHelper.toPersianString(data.PriceWithDiscount.toLocaleString()) +"تومان"}
+                                </div>
                                 <div>
                                     <select
                                         onChange={(e)=>{

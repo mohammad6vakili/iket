@@ -54,17 +54,23 @@ const Search=()=>{
 
     const addToCart=(product)=>{
         let already=false;
-        cart.map((pr)=>{
-            if(pr.ID===product.ID){
-                already = true;
-                pr.count = product.count;
+        if(cart && cart.length>0 && cart[0].ProviderID!==product.ProviderID){
+            toast.warning("شما فقط میتوانید از یک تامین کننده خرید کنید",{
+                position:"bottom-left"
+            })
+        }else{
+            cart.map((pr)=>{
+                if(pr.ID===product.ID){
+                    already = true;
+                    pr.count = product.count;
+                }
+            });
+            toast.success("به سبد خرید افزوده شد",{
+                position:"bottom-left"
+            })
+            if (!already) {
+                cart.push({...product , count:1});
             }
-        });
-        toast.success("به سبد خرید افزوده شد",{
-            position:"bottom-left"
-        })
-        if (!already) {
-            cart.push({...product , count:1});
         }
     }
 
@@ -77,7 +83,7 @@ const Search=()=>{
     },[products])
 
     useEffect(()=>{
-        if(cart.length>0){
+        if(cart && cart.length>0){
             localStorage.setItem("cart",JSON.stringify(cart));
         }
     })

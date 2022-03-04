@@ -12,6 +12,7 @@ import Env from "../Constant/Env.json";
 import FormatHelper from "../Helper/FormatHelper";
 import scooter from "../assets/images/scooter.png";
 import trashRed from "../assets/images/trash-red.svg";
+import noFood from "../assets/images/empty_food.png";
 import { toast } from "react-toastify";
 
 
@@ -49,19 +50,19 @@ const Cart=()=>{
         toast.success("با موفقیت از سبد خرید شما حذف شد",{
             position:'bottom-left'
         });
-        if(cartData.length>0){
+        if(cartData && cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
     }
 
     useEffect(()=>{
-        if(cartData.length>0){
+        if(cartData && cartData.length>0){
             getDeliveryPrice();
         }
     },[])
 
     useEffect(()=>{
-        if(cartData.length>0){
+        if(cartData && cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
     })
@@ -71,6 +72,12 @@ const Cart=()=>{
             setShowTotal(true);
         }
     },[change])
+
+    useEffect(()=>{
+        if(cartData && cartData.length===0){
+            localStorage.removeItem("cart");
+        }
+    },[cartData])
 
     return(
         <div className="app-container">
@@ -94,7 +101,7 @@ const Cart=()=>{
                                 toast.success("سبد خرید شما خالی شد",{
                                     position:'bottom-left'
                                 });
-                                if(cartData.length>0){
+                                if(cartData && cartData.length>0){
                                     localStorage.setItem("cart",JSON.stringify(cartData));
                                 }
                             }}
@@ -127,13 +134,23 @@ const Cart=()=>{
                         <div onClick={()=>console.log(data)} key={index} className={styles.cart_item}>
                             <div>
                                 <div>
-                                    <Image
-                                        src={data.PhotoUrl}
-                                        loader={()=>data.PhotoUrl}
-                                        alt="food logo"
-                                        width={50}
-                                        height={50}
-                                    />
+                                    {data.PhotoUrl==="https://iketpanel.com" ?
+                                        <Image
+                                            src={noFood}
+                                            alt="food logo"
+                                            width={50}
+                                            height={50}
+                                        />
+                                    :
+                                        <Image
+                                            src={data.PhotoUrl}
+                                            loader={()=>data.PhotoUrl}
+                                            alt="food logo"
+                                            width={50}
+                                            height={50}
+                                        />
+                                    }
+
                                 </div>
                                 <div>
                                     <div>{data.Title && FormatHelper.toPersianString(data.Title)}</div>

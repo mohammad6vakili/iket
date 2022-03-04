@@ -68,7 +68,7 @@ const Home=()=>{
     },[])
     
     useEffect(()=>{
-        if(cartData.length>0){
+        if(cartData && cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
     })
@@ -150,20 +150,25 @@ const Home=()=>{
                 <div className={styles.home_item_one}>
                     <div 
                         onClick={()=>{
-                            if(hypers.length===0){
-                                toast.error("در حال حاضر مجموعه ای جهت ارائه خدمات فعال نمی باشد",{
-                                    position:"bottom-left"
-                                })
-                            }else if(hypers.length===1){
-                                setSelectedHyper(hypers[0].ID);
+                            if(lat!==""){
                                 dispatch(setCategoryType("1"));
+                                router.push("/hypers");
                             }else{
-                                if(hypers.length>0){
-                                    dispatch(setHypers(
-                                        hypers.filter((v,i,a)=>a.findIndex(t=>(t.ID===v.ID))===i)
-                                    ))
+                                if(hypers.length===0){
+                                    toast.error("در حال حاضر مجموعه ای جهت ارائه خدمات فعال نمی باشد",{
+                                        position:"bottom-left"
+                                    })
+                                }else if(hypers.length===1){
+                                    setSelectedHyper(hypers[0].ID);
+                                    dispatch(setCategoryType("1"));
+                                }else{
+                                    if(hypers.length>0){
+                                        dispatch(setHypers(
+                                            hypers.filter((v,i,a)=>a.findIndex(t=>(t.ID===v.ID))===i)
+                                        ))
+                                    }
+                                    setModal(true);
                                 }
-                                setModal(true);
                             }
                         }}
                     >

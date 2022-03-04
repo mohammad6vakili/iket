@@ -19,17 +19,26 @@ const store = createStore(rootReducer , applyMiddleware(thunk));
 
 
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps , message}) {
   const router=useRouter();
-
   
   useEffect(()=>{
-    router.push("/");
-    if(localStorage.getItem("lat") && !localStorage.getItem("first")){
+    console.log(router.pathname)
+    if(!localStorage.getItem("first")){
       router.push("/welcome");
+    }else{
+      if(router.pathname==="/wallet"){
+        router.push("/wallet");
+      }else if(router.pathname==="/myOrders"){
+        router.push("/myOrders")
+      }else if(localStorage.getItem("userId") && localStorage.getItem("selectArea")){
+        router.push("/locateUser");
+        // dispatch(setMenu(0));
+      }else{
+        router.push("/enter");
+      }
     }
   },[])
-
 
   return(
     <Provider store={store}>
@@ -37,6 +46,14 @@ function MyApp({ Component, pageProps }) {
       <Component {...pageProps} />
     </Provider>
   ) 
+}
+
+export async function getServerSideProps(context) {
+  if(context.req.headers.referer){
+    return{props:{message:context.req.headers.referer}}
+  }else{
+    return{props:{}}
+  }
 }
 
 export default MyApp

@@ -22,20 +22,27 @@ const EditProfile=()=>{
     const [email , setEmail]=useState("");
     const [uploadRef , setUploadRef]=useState(null);
     const [imageList , setImageList]=useState("");
-    const [isImageList , setIsImageList]=useState(false);
     const [fileList , setFileList]=useState([]);
 
-    const upload = (e) => {
-        let list=[];        
-        for (var i = 0; i < e.target.files.length; i++) {
-            list.push(e.target.files[i]);
-        }
-        list.map((li)=>{
-            setImageList(URL.createObjectURL(li))
-        })
-        setFileList(list);
-        setIsImageList(true);
+    const upload =async  (e) => {
+        let list=[];
+        const base64 = await converter(e.target.files[0]);
+        setImageList(base64)
+        setFileList(base64);
     };
+
+    const converter=(file)=>{
+        return new Promise((resolve , reject)=>{
+           const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload =()=>{
+                resolve(fileReader.result);
+            }
+            fileReader.onerror = (error) =>{
+                reject(error);
+            }
+        })
+    }
 
     const profile=useSelector(state=>state.Reducer.profile);
     const cartData=useSelector(state=>state.Reducer.cart);
@@ -48,7 +55,7 @@ const EditProfile=()=>{
         postData.append("Email",email);
         postData.append("FullName",name);
         if(fileList && fileList.length>0){
-            postData.append("PhotoUrl",fileList);
+            postData.append("imageBase64",fileList);
         }
         try{
             const response = await axios.post(Env.baseUrl + "UpdateUserInformationByUserID.aspx",postData)
@@ -77,14 +84,10 @@ const EditProfile=()=>{
     },[])
 
     useEffect(()=>{
-        if(cartData.length>0){
+        if(cartData && cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
     })
-
-    useEffect(()=>{
-        setIsImageList(false);
-    },[isImageList])
 
 
     return(
@@ -115,11 +118,11 @@ const EditProfile=()=>{
                     </div>
                     <div className={styles.edit_profile_top}>
                         <div onClick={()=>uploadRef.click()}>
-                            {profile && imageList==="" ?
+                            {profile && imageList && imageList==="" ?
                                 <div style={{cursor:"pointer"}}>
                                     افزودن تصویر
                                 </div>
-                            :
+                            :imageList!=="" &&
                                 <Image
                                     src={imageList}
                                     alt="back"

@@ -18,6 +18,7 @@
     "react-countdown": "^2.3.2",
     "react-dom": "17.0.2",
     "react-elastic-carousel": "^0.11.5",
+    "react-file-base64": "^1.0.3",
     "react-map-gl": "^5.2.11",
     "react-modern-calendar-datepicker": "^3.1.6",
     "react-redux": "^7.2.6",

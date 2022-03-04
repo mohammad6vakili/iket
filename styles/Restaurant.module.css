@@ -101,12 +101,20 @@
     display: flex;
     align-items: center;
     margin-top: auto;
-    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
     border-top:1px solid rgba(117, 117, 117, 0.493);
     color: rgb(117, 117, 117);
 }
 .restaurant_slider_box_delivery>span{
+    display: flex;
+    align-items: center;
+}
+.restaurant_slider_box_delivery>span:nth-child(2){
     color: rgb(0, 168, 84);
-    font-weight: 700;
     margin-right: 3px;
+    display: flex;
+    align-items: center;
 }

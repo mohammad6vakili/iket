@@ -133,7 +133,7 @@ const Hypers=()=>{
     }
 
     useEffect(()=>{
-        if(selectedHyper){
+        if(selectedHyper || lat!==""){
             getSliders();
             getNewest();
             getBest();
@@ -141,7 +141,7 @@ const Hypers=()=>{
     },[])
 
     useEffect(()=>{
-        if(cartData.length>0){
+        if(cartData && cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
     })
@@ -231,7 +231,7 @@ const Hypers=()=>{
                         enableAutoPlay={true}
                     >
                         {sliders && sliders.length!==0 && sliders.map((data,index)=>(
-                            <a href={data.Link}>
+                            <a href={data.Link !=="" ? data.Link : "#"}>
                                 <Image
                                     key={index}
                                     width={"100%"}
@@ -285,7 +285,7 @@ const Hypers=()=>{
                                             loader={()=>data.PhotoUrl}
                                             alt="slider"
                                         />
-                                        {data.isActive===false &&
+                                        {selectedHyper && selectedHyper.IsWork===0 &&
                                             <div>تعطیل</div>
                                         }
                                     </div>
@@ -299,7 +299,10 @@ const Hypers=()=>{
                                         style={{justifyContent:"flex-end",color:Colors.success}}
                                         className={styles.restaurant_slider_box_delivery}
                                     >
-                                        {FormatHelper.toPersianString(data.Price)} تومان 
+                                        <div style={data.PriceWithDiscount!==data.Price ? {color:"red",textDecoration:"line-through",margin:"0 5px"} : {color:"green"}}>{FormatHelper.toPersianString(data.Price.toLocaleString())} تومان</div>
+                                        <div style={{color:"green"}}>
+                                            {data.PriceWithDiscount!==data.Price && FormatHelper.toPersianString(data.PriceWithDiscount.toLocaleString()) +"تومان"}
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -334,7 +337,7 @@ const Hypers=()=>{
                                         loader={()=>data.PhotoUrl}
                                         alt="slider"
                                     />
-                                    {data.isActive===false &&
+                                    {selectedHyper && selectedHyper.IsWork===0 &&
                                         <div>تعطیل</div>
                                     }
                                 </div>
