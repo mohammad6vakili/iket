@@ -103,7 +103,7 @@ const Factor=()=>{
                         ))}
                     </div>
                     <div className={styles.factor_bottom_box}>
-                        <div>شماره پیگیری : {factorData && factorData.TrackingCode && FormatHelper.toPersianString(factorData.TrackingCode)}</div>        
+                        <div style={{fontSize:"14px"}}>شماره پیگیری : {factorData && factorData.TrackingCode && FormatHelper.toPersianString(factorData.TrackingCode)}</div>        
                         <div>
                             <div>
                                 <div style={{fontSize:"11px"}}>هزینه ارسال</div>
@@ -115,7 +115,7 @@ const Factor=()=>{
                             <div>
                                 <div style={{fontSize:"13px"}}>مبلغ کل</div>
                                 <div style={{color:"gray"}}>- - - - - - - - - -</div>
-                                <div style={{fontSize:"13px"}}>
+                                <div style={{fontSize:"14px"}}>
                                     {factorData && factorData.TotalPrice && FormatHelper.toPersianString(factorData.TotalPrice.toLocaleString())} تومان
                                 </div>
                             </div>

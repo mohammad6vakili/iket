@@ -17,6 +17,7 @@
 }
 .factor_top_logo{
     width: 100%;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,6 +42,7 @@
     flex-direction: column;
 }
 .factor_body>div:first-child{
+    font-weight: 700 !important;
     border-bottom: 1px solid black;
 }
 .factor_body>div>div{
@@ -51,6 +53,7 @@
     text-overflow: ellipsis;
     align-items: center;
     justify-content: center;
+    min-height: 25px;
 }
 .factor_body>div{
     width: 100%;
@@ -78,7 +81,7 @@
     color: #5925B6;
     display: flex;
     flex-direction: column;
-    background-color: rgb(211, 208, 208);
+    background-color: #f1f1f1;
 }
 .factor_bottom_box>div:nth-child(2)>div{
     width: 100%;

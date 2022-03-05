@@ -412,6 +412,7 @@ const LocateUser=()=>{
                                 }
                             }}
                             className="enter_green_btn"
+                            style={{height:"50px"}}
                         >
                             ثبت آدرس
                         </Button>

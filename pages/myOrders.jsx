@@ -73,14 +73,14 @@ const MyOrders=()=>{
                                     />      
                                 </div>
                                 <div>
-                                    <span style={{fontWeight:"600",color:"black"}}>{order.BusinessName}</span>
+                                    <span style={{fontWeight:"600",color:"black",fontSize:"14px"}}>{order.BusinessName}</span>
                                     <span style={{fontSize:"12px"}}>
                                         تاریخ سفارش : {FormatHelper.toPersianString(order.CDate)}
                                     </span>
                                     <span style={{fontSize:"12px"}}>
                                         ساعت سفارش : {FormatHelper.toPersianString(order.CTime)}
                                     </span>
-                                    <span style={{fontSize:"12px"}}>
+                                    <span style={{fontSize:"13px"}}>
                                         مبلغ : {FormatHelper.toPersianString(order.TotalPrice.toLocaleString())} تومان
                                     </span>
                                 </div>

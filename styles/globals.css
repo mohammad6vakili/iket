@@ -40,29 +40,29 @@
 .header {
   width: 100%;
   max-width: 420px;
-  height: 10vh;
+  height: 7vh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: fixed;
   z-index: 99;
   top: 0;
-  font-size: 16px;
+  font-size: 14px;
   color: white;
-  background: rgb(89,37,176);
-  background: linear-gradient(90deg, rgba(89,37,176,1) 0%, rgba(105,26,247,1) 50%, rgba(157,103,255,1) 100%);  
+  background: #4876e6;
+  background: linear-gradient(90deg, #4876e6 0%, #8c54e9 50%, #8c54e9 100%);  
   margin-bottom: 10vh;
 }
 .header-right-icon{
   position:absolute;
   right: 15px;
-  top: 28%;
+  top: 24%;
   cursor: pointer;
 }
 .header-left-icon{
   position:absolute;
   left: 15px;
-  top: 30%;
+  top: 24%;
   cursor: pointer;
 }
 .btn_green{
@@ -74,13 +74,13 @@
   color: white !important;
 }
 .enter_green_btn{
-  background: rgb(0, 168, 84) !important;
-  background: linear-gradient(90deg, rgb(0, 168, 84) 0%, rgba(27,208,118,1) 50%, rgba(0,208,171,1) 100%) !important;  
+  background: #358f51 !important;
+  background: linear-gradient(90deg, #358f51 0%, #56b3d2 50%, #56b3d2 100%) !important;  
   color: white !important;
 }
 .enter_green_btn:focus{
-  background: rgb(0, 168, 84) !important;
-  background: linear-gradient(90deg, rgb(0, 168, 84) 0%, rgba(27,208,118,1) 50%, rgba(0,208,171,1) 100%) !important;  
+  background: #358f51 !important;
+  background: linear-gradient(90deg, #358f51 0%, #56b3d2 50%, #56b3d2 100%) !important;  
   color: white !important;
 }
 .enter_purple_btn{
@@ -142,6 +142,9 @@
   align-items: center;
   justify-content: space-between;
 }
+.service_change_wrapper span{
+  font-size: 12px;
+}
 .service_change_wrapper>div{
   width: 20% !important;
   text-align: center;
@@ -151,7 +154,13 @@
 .type_selected > span:last-child{
   border-bottom: 1px solid #5a25b6a2 !important;
 }
-
+.ant-collapse-header{
+  background-color: white !important;
+  color: rgba(128, 128, 128) !important;
+}
+.ant-collapse-item-active>div:nth-child(1){
+  color: #5925B6 !important;
+}
 @media only screen and (min-width:420px){
   .dashboard-page{
     box-shadow: 1px 1px 5px rgba(255, 255, 255, 0.685);

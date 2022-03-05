@@ -391,10 +391,11 @@ const AddAddress=()=>{
                         <Button
                             style={{
                                 width:"90%",
-                                height:"40px",
+                                height:"50px",
                                 border:"none",
-                                borderRadius:"6px",
-                                marginTop:"10px"
+                                borderRadius:"5px",
+                                boxShadow:"0 0 5px 0 #a3a3a3",
+                                marginTop:"50px"
                             }}
                             onClick={submitAddressReq}
                             className="enter_green_btn"
@@ -446,7 +447,7 @@ const AddAddress=()=>{
                                 setIsMap(false);
                             }}
                             className="enter_green_btn"
-                            style={{maxWidth:"420px"}}
+                            style={{maxWidth:"420px",height:"50px"}}
                         >
                             ثبت آدرس
                         </Button>

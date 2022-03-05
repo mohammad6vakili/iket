@@ -21,7 +21,7 @@
 }
 .locate_user_title {
   padding: 0 10px;
-  font-size: 19px;
+  font-size: 15px;
   text-align: center;
 }
 .locate_user_select_wrapper {
@@ -36,6 +36,10 @@
   border-bottom: 1px solid #5a25b691 !important;
   border-radius: 0;
 }
+.locate_user_select_wrapper input {
+  font-size: 13px !important;
+  color: #7268cb;
+}
 .locate_user_select_wrapper > span:nth-child(1) {
   width: 35% !important;
 }
@@ -44,7 +48,7 @@
 }
 .locate_user_map_button {
   width: 100%;
-  margin: 7vh 0;
+  margin: 5vh 0 7vh 0;
   padding: 0 15px;
   display: flex;
   flex-direction: column;
@@ -57,18 +61,23 @@
   height: 70px;
   display: flex;
   justify-content: center;
+  background-color: #f1f1f1;
+  box-shadow: 0 0 3px 0 #a3a3a3;
   align-items: center;
   border-radius: 50%;
-  background-color: rgba(211, 206, 206, 0.425);
 }
 .locate_user_map_button > span {
-  color: rgb(163, 163, 163);
+  color: #616161;
   margin-top: 10px;
+  font-size: 13px;
 }
 .locate_user_login_button {
-  width: calc(100% - 30px);
+  width: calc(100% - 50px);
   border: none;
-  height: 40px;
+  border-radius:5px;
+  height: 50px;
+  margin-top: 50px;
+  box-shadow: 0 0 3px 0 #a3a3a3;
   position: relative;
 }
 .locate_user_city_modal_body {
@@ -149,13 +158,13 @@
 }
 .map_page_bottom_btn > button{
   width: 80% !important;
-  height: 40px;
+  height: 50px;
   border-radius: 6px;
 }
 .map_page>div:nth-child(2){
   max-width: 100% !important;
-  margin-top: 10vh !important;
-  height: 80vh !important;
+  margin-top: 7vh !important;
+  height: 83vh !important;
   z-index: 999999999999999 !important;
 }
 @media only screen and (max-width: 375px) {

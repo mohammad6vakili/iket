@@ -28,6 +28,7 @@ const Categories=()=>{
     const [categories , setCategories]=useState(null);
     const [selectedCategory , setSelectedCategory]=useState(null);
     const [selectedSubCategory, setSelectedSubCategory]=useState(null);
+    const [inId , setInId]=useState(null);
 
     const getCategories=async()=>{
         const areaId = localStorage.getItem("selectArea");
@@ -138,7 +139,7 @@ const Categories=()=>{
                     <div className={styles.categories_step_two}>
                         <div>
                             {selectedCategory && selectedCategory.SubCategory.map((data , index)=>(
-                                <div onClick={()=>setSelectedSubCategory(data.SubCategoryVitrin)} key={index}>
+                                <div onClick={()=>{setSelectedSubCategory(data.SubCategoryVitrin);setInId(data.ID)}} key={index}>
                                     <Image
                                         width={"65px"}
                                         height={"65px"}
@@ -146,7 +147,7 @@ const Categories=()=>{
                                         loader={()=>data.PhotoUrl}
                                         alt="category"
                                     />
-                                    <span>{data.Title}</span>
+                                    <span style={inId && inId===data.ID ? {color:"#5925B6"} : {color:"unset"}}>{data.Title}</span>
                                 </div>
                             ))}
                         </div>

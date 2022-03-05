@@ -148,7 +148,7 @@ const foodPage=()=>{
                                 {food.Title}
                             </div>
                             <div>
-                                {food.Description && food.Description}
+                                {food.Description && FormatHelper.toPersianString(food.Description)}
                             </div>
                             <div>
                                 <div className={food.PriceWithDiscount!==food.Price ? styles.restaurant_page_discount_price : ""}>
@@ -187,7 +187,7 @@ const foodPage=()=>{
                             position:"absolute",
                             bottom:"0",
                             width:"100%",
-                            height:"40px",
+                            height:"50px",
                             display:"flex",
                             background:"#00a854",
                             justifyContent:"center",

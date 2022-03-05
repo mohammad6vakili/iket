@@ -8,7 +8,7 @@
 .food_page {
   font-family: "sans";
   overflow-y: auto !important;
-  padding: 10vh 0 10vh 0;
+  padding: 7vh 0 10vh 0;
   background-color: rgb(233, 233, 233);
 }
 .food_page_banner {
@@ -32,7 +32,7 @@
 }
 .food_page_box > div {
   width: 90%;
-  height: 180px;
+  height: 250px;
   border-radius: 8px;
   background-color: white;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.171);
@@ -61,9 +61,11 @@
   font-size: 15px;
 }
 .food_page_box > div > div:nth-child(4) {
-  height: 30%;
-  border: 1px solid gray;
+  height: 22%;
+  border: none ;
+  box-shadow: 0 0 5px 0 #a3a3a3;
   border-radius: 25px;
+  margin-bottom: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -76,7 +78,8 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: #5925B6;
+    background-color: #7036e7;
+    box-shadow: 0 0 5px 1 #a3a3a3;
     color: white;
     display: flex;
     justify-content: center;

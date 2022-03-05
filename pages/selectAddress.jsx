@@ -12,7 +12,7 @@ import Head from 'next/head';
 import { Radio , Modal,Button} from "antd";
 import Env from "../Constant/Env.json";
 import FormatHelper from "../Helper/FormatHelper";
-import trash from "../assets/images/trash-black.svg";
+import trash from "../assets/images/trash-black.png";
 import editIcon from "../assets/images/edit-pen.png";
 import { toast } from "react-toastify";
 
@@ -172,19 +172,19 @@ const SelectAddress=()=>{
                 >
                     {address && address.length>0 && address.map((data)=>(
                         <Radio
-                            // disabled={data.DeliveryPrice===-1}
+                            disabled={data.DeliveryPrice===-1}
                             value={data.ID}
                         >
-                            {data.Title}
-                            <div style={{color:"gray",margin:"5px 0"}}>{data.FullAddress}</div>
+                            <span style={{color:"black",fontSize:"12px",fontWeight:"600"}}>{data.Title}</span> 
+                            <div style={{color:"#747474",margin:"5px 0",fontSize:"11px",fontWeight:"600"}}>{data.FullAddress}</div>
                             {data.DeliveryPrice>0 &&
-                                <div style={{color:"gray",marginBottom:"5px"}}>هزینه ارسال : {FormatHelper.toPersianString(data.DeliveryPrice)} تومان</div>
+                                <div style={{color:"gray",marginBottom:"5px",fontSize:"12px"}}>هزینه ارسال : {FormatHelper.toPersianString(data.DeliveryPrice)} تومان</div>
                             }
                             {data.DeliveryPrice===0 &&
-                                <div style={{color:"gray",marginBottom:"5px"}}>هزینه ارسال : رایگان</div>
+                                <div style={{color:"gray",marginBottom:"5px",fontSize:"12px"}}>هزینه ارسال : رایگان</div>
                             }
                             {data.DeliveryPrice===-1 &&
-                                <div style={{color:"red",marginBottom:"5px"}}>غیر قابل ارسال</div>
+                                <div style={{color:"red",marginBottom:"5px",fontSize:"12px"}}>غیر قابل ارسال</div>
                             }
                             <div>
                                 <Image
@@ -221,22 +221,27 @@ const SelectAddress=()=>{
                     </div>
                 }
                 <div 
+                 className={styles.addLoc}
                     style={{
                         width:"50px",
                         height:"50px",
                         position:"absolute",
-                        bottom:"8vh",
+                        bottom:"10vh",
                         right:"10px",
                         borderRadius:"50%",
                         background:"white",
-                        cursor:"pointer"
+                        cursor:"pointer",
+                        boxShadow:"0 0 3px 0 #a3a3a3"
                     }}
                 >
                     <Image
                         src={addLocation}
                         alt="back"
+                        width={40}
+                        height={40}
                         onClick={()=>router.push("/addAddress")}
                     />
+                    <div style={{fontSize:"8px",color:"#5925B6",textAlign:"center"}}>آدرس جدید</div>
                 </div>
             </div>
         </div>

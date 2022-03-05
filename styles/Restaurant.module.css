@@ -13,6 +13,7 @@
 }
 .restaurant_slider{
     margin-top: 10px;
+    height: 27vh;
     cursor: pointer;
 }
 .all_restaurants_btn{

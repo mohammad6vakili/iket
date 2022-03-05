@@ -8,7 +8,7 @@
 .restaurant_page {
   font-family: "sans";
   overflow-y: auto !important;
-  padding: 10vh 0 10vh 0;
+  padding: 7vh 0 10vh 0;
   background-color: rgb(233, 233, 233);
 }
 .restaurant_page_banner {

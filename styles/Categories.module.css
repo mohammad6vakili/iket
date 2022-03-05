@@ -21,12 +21,14 @@
     width: 90%;
     cursor: pointer;
     height: 13vh;
-    border-radius: 6px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px 0 #a3a3a3;
     background-color: white;
     display: flex;
+    font-size: 16px;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 10px 20px 10px 10px;
     color: rgba(128, 128, 128);
     margin-bottom: 10px;
 }
@@ -34,6 +36,11 @@
     width: 100%;
     height: calc(100vh - 22vh);
     display: flex;
+    justify-content: space-between;
+    background-color: white;
+}
+.categories_step_two div{
+    border-right: none !important;
 }
 .categories_step_two>div{
     height: 100%;
@@ -48,6 +55,7 @@
 }
 .categories_step_two>div:nth-child(1){
     border-left: 1px solid gray;
+    background-color: white !important;
     width: 25%;
 }
 .categories_step_two>div:nth-child(1)>div{
@@ -61,14 +69,16 @@
     cursor: pointer;
 }
 .categories_step_two>div:nth-child(2){
-    width: 75%;
+    width: 73%;
+    margin-left: 3px;
 }
 .categories_step_two>div:nth-child(2)>div{
     width: 100%;
     color: rgba(128, 128, 128);
+    border-left: none !important;
 }
 .categories_step_two>div:nth-child(2)>div>div>div{
-    color: rgba(128, 128, 128) !important;
+    color: rgba(128, 128, 128);
 }
 .category_package_item{
     width: 100%;

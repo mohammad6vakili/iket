@@ -160,11 +160,12 @@ const EditProfile=()=>{
                         onClick={updateProfile}
                         className="enter_green_btn"
                         style={{
-                            width:"calc(100% - 20px)",
+                            width:"calc(100% - 50px)",
                             border:"none",
-                            borderRadius:"6px",
-                            marginTop:"auto",
-                            height:"40px"
+                            borderRadius:"5px",
+                            marginTop:"150px",
+                            height:"50px",
+                            boxShadow:"0 0 5px 0 #a3a3a3"
                         }}
                     >
                         ثبت تغییرات

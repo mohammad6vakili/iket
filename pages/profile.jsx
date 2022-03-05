@@ -236,7 +236,7 @@ const Profile=()=>{
                     </div>
                     <Button 
                         className="enter_purple_btn"
-                        style={{width:"calc(100% - 20px)",border:"none",borderRadius:"6px",marginTop:"5px"}}
+                        style={{width:"90%",boxShadow:"0 0 5px 0 #a3a3a3",border:"none",borderRadius:"6px",marginTop:"5px",height:"50px"}}
                     >
                         <a href="tel:09426001269">
                             تماس با پشتیبانی

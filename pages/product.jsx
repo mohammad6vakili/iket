@@ -149,7 +149,7 @@ const Product=()=>{
                                 {product.Title}
                             </div>
                             <div>
-                                {product.Description && product.Description}
+                                {product.Description && FormatHelper.toPersianString(product.Description)}
                             </div>
                             <div>
                                 <div className={product.PriceWithDiscount!==product.Price ? styles.restaurant_page_discount_price : ""}>
@@ -193,7 +193,7 @@ const Product=()=>{
                         position:"absolute",
                         bottom:"0",
                         width:"100%",
-                        height:"40px",
+                        height:"50px",
                         display:"flex",
                         background:"#00a854",
                         justifyContent:"center",

@@ -37,6 +37,10 @@
 }
 .combos_wrapper > select {
   width: 30%;
+  border: 1px solid #79708563 !important;
+  color: #766d9c;
+  background-color: #f0edf8;
+  border-radius: 2px !important;
 }
 .locate_user_map_button {
   width: 100%;
@@ -55,12 +59,13 @@
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: rgba(211, 206, 206, 0.425);
+  background-color: #f0edf8;
+  box-shadow: 0 0 3px 0 #a3a3a3;
 }
 .locate_user_map_button > span {
-  color: rgb(163, 163, 163);
-  margin-top: 5px;
-  font-size: 10px;
+  color: #616161;
+  margin-top: 15px;
+  font-size: 12px;
 }
 .map_page_bottom_btn{
     position: absolute;

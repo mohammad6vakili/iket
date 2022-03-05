@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import FormatHelper from "../Helper/FormatHelper";
 import { Button } from "antd";
 import { toast } from "react-toastify";
+import noFoodIcon from "../assets/no-food.png";
 
 
 const RestaurantPage=()=>{

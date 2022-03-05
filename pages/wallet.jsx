@@ -61,70 +61,73 @@ const Wallet=()=>{
                             />
                         </div>
                     </div>
-                    <div 
-                        onClick={()=>console.log(profile)}
-                        style={{fontSize:"20px",width:"100%",textAlign:"right",padding:"0 10px",margin:"20px 0 10px 0"}}
-                    >
-                        افزایش اعتبار
-                    </div>
-                    <div style={{fontSize:"12px",color:"gray",width:"100%",textAlign:"right",padding:"0 10px"}}>
-                        موجودی کیف پول : {profile && FormatHelper.toPersianString(profile.Wallet.toLocaleString())} تومان
-                    </div>
-                    <div
-                        onClick={()=>{
-                            if(price.length===0){
-                                toast.warning("لطفا مبلغ را وارد کنید",{
-                                    position:"bottom-left"
-                                });
-                            }else if(price==="0"){
-                                toast.warning("لطفا مبلغ را وارد کنید",{
-                                    position:"bottom-left"
-                                });
-                            }else{
-                                chargeWallet();
-                            }
-                        }}
-                        className={styles.cart_page_bottom_box}
-                    >
-                        پرداخت
-                    </div>
-                    <div 
-                        style={{
-                            width:"100%",
-                            padding:"0 10px",
-                            display:"flex",
-                            alignItems:"center",
-                            justifyContent:"space-between",
-                            margin:"20px 0 10px 0"
-                        }}
-                    >
-                        <Button 
-                            onClick={()=>setPrice(50000)}
-                            style={{backgroundColor:"transparent",fontSize:"12px"}}
+                    <div style={{width:"94%",display:"flex",flexDirection:"column",alignItems:"center",background:"white",borderRadius:"5px",padding:"10px 5px"}}>
+                        <div 
+                            onClick={()=>console.log(profile)}
+                            style={{fontSize:"20px",width:"100%",textAlign:"right",padding:"0 10px",margin:"20px 0 10px 0"}}
                         >
-                            ۵۰,۰۰۰ تومان
-                        </Button>
-                        <Button 
-                            onClick={()=>setPrice(20000)}
-                            style={{backgroundColor:"transparent",fontSize:"12px"}}
+                            افزایش اعتبار
+                        </div>
+                        <div style={{fontSize:"12px",color:"gray",width:"100%",textAlign:"right",padding:"0 10px"}}>
+                            موجودی کیف پول : {profile && FormatHelper.toPersianString(profile.Wallet.toLocaleString())} تومان
+                        </div>
+                        <div 
+                            style={{
+                                width:"100%",
+                                padding:"0 10px",
+                                display:"flex",
+                                alignItems:"center",
+                                justifyContent:"space-between",
+                                margin:"20px 0 10px 0"
+                            }}
                         >
-                            ۲۰,۰۰۰ تومان
-                        </Button>
-                        <Button 
-                            onClick={()=>setPrice(10000)}
-                            style={{backgroundColor:"transparent",fontSize:"12px"}}
-                        >
-                            ۱۰,۰۰۰ تومان
-                        </Button>
+                            <Button 
+                                onClick={()=>setPrice(50000)}
+                                style={{backgroundColor:"transparent",fontSize:"12px"}}
+                            >
+                                ۵۰,۰۰۰ تومان
+                            </Button>
+                            <Button 
+                                onClick={()=>setPrice(20000)}
+                                style={{backgroundColor:"transparent",fontSize:"12px"}}
+                            >
+                                ۲۰,۰۰۰ تومان
+                            </Button>
+                            <Button 
+                                onClick={()=>setPrice(10000)}
+                                style={{backgroundColor:"transparent",fontSize:"12px"}}
+                            >
+                                ۱۰,۰۰۰ تومان
+                            </Button>
+                        </div>
+                        <Input
+                            value={FormatHelper.toPersianString(price)}
+                            onChange={(e)=>setPrice(e.target.value)}
+                            style={{marginTop:"20px",backgroundColor:"transparent"}}
+                            type="tel"
+                            placeholder="مبلغ مورد نظر را وارد کنید"
+                            className={styles.enter_input}
+                        />
                     </div>
-                    <Input
-                        value={FormatHelper.toPersianString(price)}
-                        onChange={(e)=>setPrice(e.target.value)}
-                        style={{marginTop:"20px",backgroundColor:"transparent"}}
-                        type="tel"
-                        placeholder="مبلغ مورد نظر را وارد کنید"
-                        className={styles.enter_input}
-                    />
+                    <Button
+                            onClick={()=>{
+                                if(price.length===0){
+                                    toast.warning("لطفا مبلغ را وارد کنید",{
+                                        position:"bottom-left"
+                                    });
+                                }else if(price==="0"){
+                                    toast.warning("لطفا مبلغ را وارد کنید",{
+                                        position:"bottom-left"
+                                    });
+                                }else{
+                                    chargeWallet();
+                                }
+                            }}
+                            style={{width:"94%",marginTop:"60px",height:"50px",borderRadius:"5px"}}
+                            className={"enter_green_btn"}
+                    >
+                            پرداخت
+                    </Button>
                 </div>
             </div>        
         </div>

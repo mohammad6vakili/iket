@@ -25,6 +25,7 @@ const Hypers=()=>{
     const dispatch=useDispatch();
     const router=useRouter();
     
+    const hypers=useSelector(state=>state.Reducer.hypers);
     const cartData=useSelector(state=>state.Reducer.cart);
     const categoryType=useSelector(state=>state.Reducer.categoryType);
     const selectedHyper=useSelector(state=>state.Reducer.selectedHyper);
@@ -164,7 +165,14 @@ const Hypers=()=>{
                         width={"100px"}
                         height={"28px"}
                     />
-                    <div style={{cursor:"pointer"}} className="header-left-icon">
+                    <div 
+                        onClick={()=>{
+                            dispatch(setMenu(3));
+                            router.push("/search");
+                        }}
+                        style={{cursor:"pointer"}}
+                        className="header-left-icon"
+                    >
                         <Image
                             src={searchIcon}
                             alt="search"

@@ -59,9 +59,11 @@ const ProductList=()=>{
     })
 
     useEffect(()=>{
-        subCat.Product.map((pr)=>{
-            brands.push(pr.Brand);
-        })
+        {subCat &&
+            subCat.Product.map((pr)=>{
+                brands.push(pr.Brand);
+            })
+        }
     })
 
     return(
