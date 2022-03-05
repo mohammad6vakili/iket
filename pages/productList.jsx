@@ -167,7 +167,6 @@ const ProductList=()=>{
                                 <Checkbox style={{marginBottom:"5px"}} value={brand}>{brand}</Checkbox>
                             ))}
                         </div>
-                        <Slider />
                     </div>
                     <Button style={{width:"100%",height:"40px",marginTop:"10px",borderRadius:"5px"}} className="enter_green_btn">فیلتر کردن</Button>
                 </Modal>
