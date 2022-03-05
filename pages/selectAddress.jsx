@@ -172,7 +172,7 @@ const SelectAddress=()=>{
                 >
                     {address && address.length>0 && address.map((data)=>(
                         <Radio
-                            disabled={data.DeliveryPrice===-1} 
+                            // disabled={data.DeliveryPrice===-1}
                             value={data.ID}
                         >
                             {data.Title}

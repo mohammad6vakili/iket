@@ -6,7 +6,7 @@ import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import { useRouter } from "next/router";
 import FormatHelper from "../Helper/FormatHelper";
-import {Button} from "antd";
+import {Button , Checkbox, Modal ,Slider} from "antd";
 import Head from 'next/head';
 import { toast } from "react-toastify";
 import listIcon from "../assets/images/list.svg";
@@ -21,10 +21,19 @@ const ProductList=()=>{
     const selectedHyper=useSelector(state=>state.Reducer.selectedHyper);
     const cart=useSelector(state=>state.Reducer.cart);
 
+    const [filterModal , setFilterModal]=useState(false);
+    const [sortModal , setSortModal]=useState(false);
+    const [brands , setBrands]=useState([]);
+
+
     const addToCart=(data)=>{
         let already=false;
         if(cart && cart.length>0 && cart[0].ProviderID!==data.ProviderID){
             toast.warning("شما فقط میتوانید از یک تامین کننده خرید کنید",{
+                position:"bottom-left"
+            })
+        }else if(data.count > data.Quantity){
+            toast.warning("ظرفیت غذا کافی نمیباشد",{
                 position:"bottom-left"
             })
         }else{
@@ -49,6 +58,12 @@ const ProductList=()=>{
         }
     })
 
+    useEffect(()=>{
+        subCat.Product.map((pr)=>{
+            brands.push(pr.Brand);
+        })
+    })
+
     return(
         <div className="app-container">
             <Head>
@@ -69,7 +84,7 @@ const ProductList=()=>{
                     </div>
                 </div>
                 <div className={styles.product_list_filters}>
-                    <Button>
+                    <Button onClick={()=>{setFilterModal(true);setBrands(brands.filter((v,i,a)=>a.findIndex(t=>(t===v))===i))}}>
                         <Image
                             src={filterIcon}
                             alt="filter"
@@ -138,6 +153,24 @@ const ProductList=()=>{
                         </div>
                     ))}
                 </div>
+                <Modal 
+                    onCancel={()=>setFilterModal(false)}
+                    visible={filterModal}
+                    width={320}
+                    bodyStyle={{backgroundColor:"rgb(233, 233, 233)"}}
+                    closable={false}
+                >
+                    <div className={styles.filter_modal}>
+                        <span onClick={()=>console.log(subCat)} style={{color:"#5925B6"}}>برند</span>
+                        <div style={{width:"100%",height:"25vh",display:"flex",flexDirection:"column",overflowY:"auto",marginTop:"5px",background:"white",padding:"5px",borderRadius:"5px"}}>
+                            {brands && brands.map((brand)=>(
+                                <Checkbox style={{marginBottom:"5px"}} value={brand}>{brand}</Checkbox>
+                            ))}
+                        </div>
+                        <Slider />
+                    </div>
+                    <Button style={{width:"100%",height:"40px",marginTop:"10px",borderRadius:"5px"}} className="enter_green_btn">فیلتر کردن</Button>
+                </Modal>
                 <div className={styles.product_bottom_box}>
                     <Button onClick={()=>router.push("/cart")} className="enter_purple_btn">اتمام خرید</Button>
                     <Button className="enter_purple_btn">

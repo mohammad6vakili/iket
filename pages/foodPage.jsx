@@ -24,6 +24,10 @@ const foodPage=()=>{
             toast.warning("شما فقط میتوانید از یک تامین کننده خرید کنید",{
                 position:"bottom-left"
             })
+        }else if(food.count > food.Quantity){
+            toast.warning("ظرفیت کافی نمیباشد",{
+                position:"bottom-left"
+            })
         }else{
             if(cart && cart.length>0){
                 cart.map((data)=>{

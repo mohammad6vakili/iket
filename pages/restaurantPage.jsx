@@ -28,6 +28,10 @@ const RestaurantPage=()=>{
             toast.warning("شما فقط میتوانید از یک تامین کننده خرید کنید",{
                 position:"bottom-left"
             })
+        }else if(product.count > product.Quantity){
+            toast.warning("ظرفیت غذا کافی نمیباشد",{
+                position:"bottom-left"
+            })
         }else{
             cart.map((pr)=>{
                 if(pr.ID===product.ID){
