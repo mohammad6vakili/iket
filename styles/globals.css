@@ -161,6 +161,9 @@
 .ant-collapse-item-active>div:nth-child(1){
   color: #5925B6 !important;
 }
+#no_pic_image{
+  background-color: rgb(52,50,113) !important;
+}
 @media only screen and (min-width:420px){
   .dashboard-page{
     box-shadow: 1px 1px 5px rgba(255, 255, 255, 0.685);

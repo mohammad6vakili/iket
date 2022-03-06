@@ -42,8 +42,13 @@
     align-items: flex-end;
   }
   .restaurant_page_menu_menu > div > div:nth-child(2) > select {
-    border: 1px solid rgba(117, 117, 117, 0.76);
-    width: 100px;
+    border: 1px solid #79708563 !important;
+    color: #766d9c;
+    background-color: #f0edf8;
+    border-radius: 2px !important;
+    width: 80px;
+    margin-right: 40px;
+    margin-bottom: 5px;
   }
   .restaurant_page_menu_menu > div > div:nth-child(2) > div:nth-child(2) {
     display: flex;

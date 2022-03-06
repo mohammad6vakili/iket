@@ -10,7 +10,8 @@ import { useRouter } from "next/router";
 import FormatHelper from "../Helper/FormatHelper";
 import { Button } from "antd";
 import { toast } from "react-toastify";
-import noFoodIcon from "../assets/no-food.png";
+import noFoodIcon from "../assets/images/no-food.png";
+import logo from "../assets/images/logo_colored.webp";
 
 
 const RestaurantPage=()=>{
@@ -21,6 +22,7 @@ const RestaurantPage=()=>{
     const cart=useSelector(state=>state.Reducer.cart);
     const [products , setProducts]=useState([]);
     const [show , setShow]=useState(true);
+    const [catId , setCatId]=useState(null);
 
     const addToCart=(product)=>{
         setShow(false);
@@ -101,7 +103,7 @@ const RestaurantPage=()=>{
                 </div>
                 {resData &&
                     <>
-                        <div className={styles.restaurant_page_banner}>
+                        <div id={resData.PhotoUrl!=="https://iketpanel.com" ? "no_pic_image" : ""} className={styles.restaurant_page_banner}>
                             <Image
                                 src={resData.Profilebackground}
                                 loader={()=>resData.Profilebackground}
@@ -110,15 +112,26 @@ const RestaurantPage=()=>{
                                 height={"100%"}
                             />
                             <div className={styles.restaurant_page_banner_overlay}></div>
-                            <div className={styles.restaurant_page_banner_overlay_image}>
-                                <Image
-                                    src={resData.PhotoUrl}
-                                    loader={()=>resData.PhotoUrl}
-                                    alt="restaurant logo"
-                                    width={"100%"}
-                                    height={"100%"}
-                                />  
-                            </div>
+                                {resData.PhotoUrl==="https://iketpanel.com"?
+                                <div className={styles.restaurant_page_banner_overlay_image}>
+                                    <Image
+                                        src={logo}
+                                        alt="restaurant logo"
+                                        width={"100px"}
+                                        height={"50px"}
+                                    />
+                                </div>
+                                :
+                                <div className={styles.restaurant_page_banner_overlay_image}>
+                                    <Image
+                                        src={resData.PhotoUrl}
+                                        loader={()=>resData.PhotoUrl}
+                                        alt="restaurant logo"
+                                        width={"100%"}
+                                        height={"100%"}
+                                    />
+                                </div>
+                                }
                             <div>{resData.Title}</div>
                             <div>{resData.SubTitle && FormatHelper.toPersianString(resData.SubTitle)}</div>
                         </div>
@@ -126,7 +139,7 @@ const RestaurantPage=()=>{
                             <div className={styles.restaurant_page_menu_sidebar}>
                                 {resData.SubCategory && resData.SubCategory.map((cat,index)=>{
                                     if(cat.Product.length>0){
-                                        return <div key={index} onClick={()=>setProducts(cat.Product)}>
+                                        return <div key={index} onClick={()=>{setProducts(cat.Product);setCatId(cat.ID)}}>
                                                     <Image
                                                         src={cat.PhotoUrl}
                                                         loader={()=>cat.PhotoUrl}
@@ -134,7 +147,7 @@ const RestaurantPage=()=>{
                                                         width={"100%"}
                                                         height={"100%"}
                                                     />
-                                                    <div>{cat.Title}</div>
+                                                    <div style={cat.ID===catId ? {color:"rgb(139,85,233)"} : {color:"unset"}}>{cat.Title}</div>
                                                 </div>
                                     }
                                 })}
@@ -155,6 +168,7 @@ const RestaurantPage=()=>{
                                         >
                                             {pr.Title}
                                         </div>
+                                        <div>{pr.Description}</div>
                                         <div>
                                             <select
                                                 onChange={(e)=>{
@@ -198,6 +212,16 @@ const RestaurantPage=()=>{
                                                 <Button onClick={()=>addToCart(pr)}>
                                                     افزودن به سبد خرید
                                                 </Button>
+                                            </div>
+                                            <div style={{position:"absolute",left:"10px",top:"10px"}}>
+                                                {pr.IsActive===false &&
+                                                    <Image
+                                                        src={noFoodIcon}
+                                                        alt="off"
+                                                        width={"25px"}
+                                                        height={"25px"}
+                                                    />
+                                                }
                                             </div>
                                         </div>
                                     </div>

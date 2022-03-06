@@ -197,13 +197,13 @@ const SelectPayment=()=>{
                             return <span style={{fontSize:"12px",color:"gray",marginTop:"5px"}}>{data.FullAddress}</span>
                         }
                     })}
-                    <div style={{width:"100%",display:"flex",alignItems:"center",marginTop:"10px"}}>
+                    <div style={{width:"100%",display:"flex",alignItems:"center",marginTop:"20px"}}>
                         <Input
                             value={discount}
                             onChange={(e)=>setDiscount(e.target.value)}
                             style={{
                                 boxShadow:"1px 2px 5px rgb(0,0,0,.2)",
-                                height:"40px",
+                                height:"50px",
                                 borderRadius:"5px"
                             }}
                             placeholder="کد تخفیف"
@@ -212,7 +212,7 @@ const SelectPayment=()=>{
                             style={{
                                 backgroundColor:"#5925B6",
                                 width:"100px",
-                                height:"40px",
+                                height:"50px",
                                 border:"none",
                                 borderRadius:"5px",
                                 color:"white",

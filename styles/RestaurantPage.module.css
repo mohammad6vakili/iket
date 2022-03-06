@@ -13,7 +13,7 @@
 }
 .restaurant_page_banner {
   width: 100%;
-  height: 27vh;
+  height: 26vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,6 +31,9 @@
   height: 70px;
   margin-bottom: 70px;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   background-color: rgba(255, 255, 255, 0.384);
 }
@@ -44,7 +47,7 @@
 .restaurant_page_banner > div:nth-child(4) {
   color: white;
   margin-top: 30px;
-  font-size: 18px;
+  font-size: 15px;
 }
 .restaurant_page_banner > div:nth-child(5) {
   color: rgba(255, 255, 255, 0.8);
@@ -58,10 +61,10 @@
 .restaurant_page_bottom_box {
   width: 100%;
   max-width: 420px;
-  height: 10vh;
+  height: 8vh;
   position: fixed;
   bottom: 0;
-  border-top: 1px solid rgba(117, 117, 117, 0.76);
+  box-shadow: 0 0 3px 0 #a3a3a3;
   background-color: white;
   display: flex;
   align-items: center;
@@ -70,14 +73,15 @@
 }
 .restaurant_page_bottom_box > button {
   border: none;
-  border-radius: 10px;
+  border-radius: 7px;
+  box-shadow: 0 0 5px 0 #a3a3a3;
   color: white;
-  width: 130px;
-  height: 7vh;
+  width: 115px;
+  height: 6vh;
 }
 .restaurant_page_menu_wrapper {
   width: 100%;
-  height: 53vh;
+  height: 59vh;
   display: flex;
   background-color: white;
 }
@@ -115,10 +119,12 @@
   width: 70%;
   height: 100%;
   overflow-y: auto;
+  margin: 2px;
 }
 .restaurant_page_menu_menu > div {
   width: 100%;
-  height: 20vh;
+  height: 22vh;
+  margin-bottom: 2px;
   border-bottom: 1px solid rgba(117, 117, 117, 0.76);
   padding: 10px 5px;
   display: flex;
@@ -131,16 +137,22 @@
   font-size: 12px;
 }
 .restaurant_page_menu_menu > div > div:nth-child(2) {
+  font-size: 12px;
+  color: gray;
+}
+.restaurant_page_menu_menu > div > div:nth-child(3) {
   width: 100%;
   height: 70%;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
-.restaurant_page_menu_menu > div > div:nth-child(2) > select {
+.restaurant_page_menu_menu > div > div:nth-child(3) > select {
   border: 1px solid rgba(117, 117, 117, 0.76);
+  height: 33px;
+  margin-right: 40px;
 }
-.restaurant_page_menu_menu > div > div:nth-child(2) > div:nth-child(2) {
+.restaurant_page_menu_menu > div > div:nth-child(3) > div:nth-child(2) {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -154,7 +166,7 @@
   > div:nth-child(1) {
   color: #00a854;
 }
-.restaurant_page_menu_menu > div > div:nth-child(2) > div > button {
+.restaurant_page_menu_menu > div > div:nth-child(3) > div > button {
   background-color: #00a854;
   color: white;
   font-size: 10px;

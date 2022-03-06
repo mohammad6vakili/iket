@@ -18,7 +18,6 @@
   width: 100%;
   max-width: 420px;
   height: 6.5vh;
-  background: #358f51 !important;
   background: linear-gradient(90deg, #358f51 0%, #56b3d2 50%, #56b3d2 100%) !important;  
   color: white;
   cursor: pointer;
