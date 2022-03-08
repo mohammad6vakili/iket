@@ -45,9 +45,7 @@ const Search=()=>{
                 const response=await axios.post(Env.baseUrl + "SelectBySearch.aspx",postData);
                 setProducts(response.data.Data);
             }catch(err){
-                toast.error("خطا در برقراری ارتباط",{
-                    position:"bottom-left"
-                });
+                console.log(err);
             }
         }
     }

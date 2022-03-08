@@ -60,9 +60,7 @@ const AddAddress=()=>{
             });
             setProvinces(response.data.Data);
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            });
+            console.log(err);
         }
     }
 
@@ -114,9 +112,6 @@ const AddAddress=()=>{
                 setPostAddress(response.data.formatted_address);
             }catch(err){
                 console.log(err);
-                toast.error("خطا در برقراری ارتباط",{
-                    position:"bottom-left"
-                });
             }
         }
 
@@ -191,9 +186,6 @@ const AddAddress=()=>{
                     }
                 }catch(err){
                     console.log(err);
-                    toast.error("خطا در برقراری ارتباط",{
-                        position:"bottom-left"
-                    });
                 }
             }
         }

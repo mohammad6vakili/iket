@@ -8,7 +8,7 @@
 .categories{
     font-family: "sans";
     overflow-y: auto !important;
-    padding: 11vh 0;
+    padding: 7vh 0;
     background-color: rgb(233, 233, 233);
 }
 .categories_items{
@@ -34,7 +34,7 @@
 }
 .categories_step_two{
     width: 100%;
-    height: calc(100vh - 22vh);
+    height: calc(100vh - 15vh);
     display: flex;
     justify-content: space-between;
     background-color: white;

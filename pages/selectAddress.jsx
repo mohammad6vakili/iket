@@ -9,7 +9,7 @@ import infoIcon from "../assets/images/info.png";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import axios from "axios";
 import Head from 'next/head';
-import { Radio , Modal,Button} from "antd";
+import { Radio , Modal,Button,Tooltip} from "antd";
 import Env from "../Constant/Env.json";
 import FormatHelper from "../Helper/FormatHelper";
 import trash from "../assets/images/trash-black.png";
@@ -25,6 +25,7 @@ const SelectAddress=()=>{
     const address = useSelector(state=>state.Reducer.address);
     const selectedHyper = useSelector(state=>state.Reducer.selectedHyper);
     const selectedAddress = useSelector(state=>state.Reducer.selectedAddress);
+    const cart = useSelector(state=>state.Reducer.cart);
 
     const [modal , setModal]=useState(false);
     const [selectAddress , setSelectAddress]=useState(null);
@@ -34,16 +35,18 @@ const SelectAddress=()=>{
         let postData = new FormData();
         postData.append("ID",userId);
         if(index){
-            postData.append("ProviderID",selectedHyper.ID);
+            if(selectedHyper){
+                postData.append("ProviderID",selectedHyper.ID);
+            }else{
+                postData.append("ProviderID",cart[0].ProviderID);
+            }
         }        
         postData.append("Token",Env.token);
         try{
             const response=await axios.post(Env.baseUrl + "SelectUserAddressByUserID.aspx",postData);
             dispatch(setAddress(response.data.Data));
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            });
+            console.log(err);
         }
     }
 
@@ -67,9 +70,7 @@ const SelectAddress=()=>{
                 getAddresses();
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            });
+            console.log(err);
         }
     }
 
@@ -85,7 +86,7 @@ const SelectAddress=()=>{
     }
 
     useEffect(()=>{
-        if(selectedHyper){
+        if(selectedHyper || cart.length>0){
             getAddresses(1);
         }else{
             getAddresses();
@@ -169,42 +170,71 @@ const SelectAddress=()=>{
                 <Radio.Group 
                     onChange={(e)=>dispatch(setSelectedAddress(e.target.value))} 
                     className={styles.address_body}
+                    onClick={()=>{
+                        if(data.DeliveryPrice===-1){
+                            toast.warning(data.Message,{
+                                position:"bottom-left"
+                            })
+                        }
+                    }}
                 >
                     {address && address.length>0 && address.map((data)=>(
-                        <Radio
-                            disabled={data.DeliveryPrice===-1}
-                            value={data.ID}
-                        >
-                            <span style={{color:"black",fontSize:"12px",fontWeight:"600"}}>{data.Title}</span> 
-                            <div style={{color:"#747474",margin:"5px 0",fontSize:"11px",fontWeight:"600"}}>{data.FullAddress}</div>
-                            {data.DeliveryPrice>0 &&
-                                <div style={{color:"gray",marginBottom:"5px",fontSize:"12px"}}>هزینه ارسال : {FormatHelper.toPersianString(data.DeliveryPrice)} تومان</div>
-                            }
-                            {data.DeliveryPrice===0 &&
-                                <div style={{color:"gray",marginBottom:"5px",fontSize:"12px"}}>هزینه ارسال : رایگان</div>
-                            }
-                            {data.DeliveryPrice===-1 &&
-                                <div style={{color:"red",marginBottom:"5px",fontSize:"12px"}}>غیر قابل ارسال</div>
-                            }
-                            <div>
-                                <Image
-                                    src={trash}
-                                    alt="back"
-                                    onClick={()=>{
-                                        setSelectAddress(data);
-                                        setModal(true);
-                                    }}
-                                />
-                                <Image
-                                    src={editIcon}
-                                    alt="back"
-                                    onClick={()=>{
-                                        dispatch(setEditAddress(data));
-                                        router.push("/addAddress");
-                                    }}
-                                />
-                            </div>
-                        </Radio>
+                        <Tooltip placement="bottom" title={data.DeliveryPrice===-1 && data.Message}>
+                            <Radio
+                                disabled={data.DeliveryPrice===-1}
+                                value={data.ID}
+                            >
+                                <span 
+                                    style={{color:"black",fontSize:"12px",fontWeight:"600"}}
+                                >
+                                    {data.Title}
+                                </span> 
+                                <div 
+                                    style={{color:"#747474",margin:"5px 0",fontSize:"11px",fontWeight:"600"}}
+                                >
+                                    {data.FullAddress}
+                                </div>
+                                {data.DeliveryPrice>0 &&
+                                    <div 
+                                        style={{color:"gray",marginBottom:"5px",fontSize:"12px"}}
+                                    >
+                                        هزینه ارسال : {FormatHelper.toPersianString(data.DeliveryPrice)} تومان
+                                    </div>
+                                }
+                                {data.DeliveryPrice===0 &&
+                                    <div 
+                                        style={{color:"gray",marginBottom:"5px",fontSize:"12px"}}
+                                    >
+                                        هزینه ارسال : رایگان
+                                    </div>
+                                }
+                                {data.DeliveryPrice===-1 &&
+                                    <div 
+                                        style={{color:"red",marginBottom:"5px",fontSize:"12px"}}
+                                    >
+                                        غیر قابل ارسال
+                                    </div>
+                                }
+                                <div>
+                                    <Image
+                                        src={trash}
+                                        alt="back"
+                                        onClick={()=>{
+                                            setSelectAddress(data);
+                                            setModal(true);
+                                        }}
+                                    />
+                                    <Image
+                                        src={editIcon}
+                                        alt="back"
+                                        onClick={()=>{
+                                            dispatch(setEditAddress(data));
+                                            router.push("/addAddress");
+                                        }}
+                                    />
+                                </div>
+                            </Radio>
+                        </Tooltip>
                     ))}
                 </Radio.Group>
                 {menu!==4 &&

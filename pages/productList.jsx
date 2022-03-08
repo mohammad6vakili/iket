@@ -3,6 +3,7 @@ import styles from "../styles/ProductList.module.css";
 import { useSelector , useDispatch} from "react-redux";
 import {setProduct} from "../Store/Action";
 import Image from "next/image";
+import Logo from "../assets/images/logo_colored.webp";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import { useRouter } from "next/router";
 import FormatHelper from "../Helper/FormatHelper";
@@ -115,14 +116,23 @@ const ProductList=()=>{
                             className={selectedHyper && selectedHyper.IsWork===0 ? styles.restaurant_page_item_disabled : ""}
                             key={index}
                         >
-                            <div>
-                                <Image
-                                    src={data.PhotoUrl}
-                                    loader={()=>data.PhotoUrl}
-                                    alt="food logo"
-                                    width={"100%"}
-                                    height={"100%"}
-                                />
+                            <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                                {data.PhotoUrl === "https://iketpanel.com" ?
+                                    <Image
+                                        src={Logo}
+                                        alt="food logo"
+                                        width={80}
+                                        height={50}
+                                    />
+                                :
+                                    <Image
+                                        src={data.PhotoUrl}
+                                        loader={()=>data.PhotoUrl}
+                                        alt="food logo"
+                                        width={"100%"}
+                                        height={"100%"}
+                                    />
+                                }
                             </div>
                             <div>
                                 <div>{data.Title}</div>

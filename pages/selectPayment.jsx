@@ -19,7 +19,7 @@ const SelectPayment=()=>{
     const dispatch=useDispatch();
     const router=useRouter();
 
-    const [method , setMethod]=useState("");
+    const [method , setMethod]=useState("0");
     const [isWallet , setIsWallet]=useState(false);
     const [discount , setDiscount]=useState("");
     const [discountVal , setDiscountVal]=useState(null);
@@ -41,9 +41,7 @@ const SelectPayment=()=>{
             const response = await axios.post(Env.baseUrl + "GetUserInfo.aspx",postData);
             dispatch(setProfile(response.data.Data));
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            });
+            console.log(err);
         }
     }
 
@@ -67,9 +65,7 @@ const SelectPayment=()=>{
                 setSum(response.data.Data);
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            });
+            console.log(err);
         }
     }
 
@@ -97,9 +93,7 @@ const SelectPayment=()=>{
                 window.location.href = response.data.Message;
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            });
+            console.log(err);
         }
     }
 
@@ -171,7 +165,8 @@ const SelectPayment=()=>{
                             setSum(cart.reduce((a, c) => a + c.Price * c.count, 0));
                             setIsWallet(false);
                         }
-                    }} 
+                    }}
+                    value={method}
                     className={styles.address_body}
                 >
                         <Radio value={"0"}>

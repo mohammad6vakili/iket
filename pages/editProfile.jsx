@@ -28,7 +28,7 @@ const EditProfile=()=>{
         let list=[];
         const base64 = await converter(e.target.files[0]);
         setImageList(base64)
-        setFileList(base64);
+        setFileList(base64.split(',')[1]);
     };
 
     const converter=(file)=>{
@@ -54,6 +54,7 @@ const EditProfile=()=>{
         postData.append("Token",Env.token);
         postData.append("Email",email);
         postData.append("FullName",name);
+        postData.append("PhotoUrl","image");
         if(fileList && fileList.length>0){
             postData.append("imageBase64",fileList);
         }
@@ -70,9 +71,7 @@ const EditProfile=()=>{
                 });
             }
         }catch({err,response}){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
+            console.log(err);
         }
     }
 
@@ -118,7 +117,7 @@ const EditProfile=()=>{
                     </div>
                     <div className={styles.edit_profile_top}>
                         <div onClick={()=>uploadRef.click()}>
-                            {profile && imageList && imageList==="" ?
+                            {imageList==="" ?
                                 <div style={{cursor:"pointer"}}>
                                     افزودن تصویر
                                 </div>
@@ -127,7 +126,7 @@ const EditProfile=()=>{
                                     src={imageList}
                                     alt="back"
                                     width={"70px"}
-                                    height={"40px"}
+                                    height={"70px"}
                                 />
                             }
                             
@@ -153,7 +152,7 @@ const EditProfile=()=>{
                             />
                         </div>
                         <div style={{padding:"0 20px",marginTop:"10px"}}>
-                            موبایل : {profile && FormatHelper.toPersianString(profile.CellPhone)}
+                            موبایل : {profile && profile.CellPhone && FormatHelper.toPersianString(profile.CellPhone)}
                         </div>
                     </div>
                     <Button

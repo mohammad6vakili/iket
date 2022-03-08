@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps , message}) {
 
   return(
     <Provider store={store}>
-      <ToastContainer rtl autoClose={6000} pauseOnFocusLoss={false}/>
+      <ToastContainer rtl autoClose={3000} pauseOnFocusLoss={false}/>
       <Component {...pageProps} />
     </Provider>
   ) 

@@ -69,9 +69,7 @@ const Profile=()=>{
             const response = await axios.post(Env.baseUrl + "GetUserInfo.aspx",postData)
             dispatch(setProfile(response.data.Data));
         }catch({err,response}){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
+            console.log(err);
         }
     }
 
@@ -160,8 +158,8 @@ const Profile=()=>{
                                         src={profile.PhotoUrl}
                                         loader={()=>profile.PhotoUrl}
                                         alt="user avatar"
-                                        width={"50px"}
-                                        height={"50px"}
+                                        width={"70px"}
+                                        height={"70px"}
                                     />
                                 }
                             </div>

@@ -4,6 +4,7 @@ import Menu from "../Components/Menu/Menu";
 import { useSelector , useDispatch} from "react-redux";
 import {setSelectedSubCat} from "../Store/Action";
 import Image from "next/image";
+import Logo from "../assets/images/logo_colored.webp";
 import Head from 'next/head';
 import { useRouter } from "next/router";
 import rightArrow from "../assets/images/right-arrow-white.svg";
@@ -66,9 +67,6 @@ const Categories=()=>{
                 })
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
             console.log(err);
         }
     }
@@ -122,14 +120,23 @@ const Categories=()=>{
                             >
                                 <div>
                                     {data.Title}
-                                    <Image
-                                        key={index}
-                                        width={"65px"}
-                                        height={"65px"}
-                                        src={data.PhotoUrl}
-                                        loader={()=>data.PhotoUrl}
-                                        alt="slider"
-                                    />
+                                    {data.PhotoUrl==="https://iketpanel.com" ?
+                                        <Image
+                                            src={Logo}
+                                            alt="food logo"
+                                            width={80}
+                                            height={50}
+                                        />
+                                        :
+                                        <Image
+                                            key={index}
+                                            width={"65px"}
+                                            height={"65px"}
+                                            src={data.PhotoUrl}
+                                            loader={()=>data.PhotoUrl}
+                                            alt="slider"
+                                        />
+                                    }
                                 </div>
                             </div>
                         ))}
@@ -140,13 +147,22 @@ const Categories=()=>{
                         <div>
                             {selectedCategory && selectedCategory.SubCategory.map((data , index)=>(
                                 <div onClick={()=>{setSelectedSubCategory(data.SubCategoryVitrin);setInId(data.ID)}} key={index}>
-                                    <Image
-                                        width={"65px"}
-                                        height={"65px"}
-                                        src={data.PhotoUrl}
-                                        loader={()=>data.PhotoUrl}
-                                        alt="category"
-                                    />
+                                    {data.PhotoUrl==="https://iketpanel.com" ?
+                                        <Image
+                                            src={Logo}
+                                            alt="food logo"
+                                            width={80}
+                                            height={50}
+                                        />
+                                    :
+                                        <Image
+                                            width={"65px"}
+                                            height={"65px"}
+                                            src={data.PhotoUrl}
+                                            loader={()=>data.PhotoUrl}
+                                            alt="category"
+                                        />
+                                    }
                                     <span style={inId && inId===data.ID ? {color:"#5925B6"} : {color:"unset"}}>{data.Title}</span>
                                 </div>
                             ))}
@@ -170,13 +186,22 @@ const Categories=()=>{
                                                 }}
                                                 className={styles.category_package_item}
                                             >
-                                                <Image
-                                                    width={"65px"}
-                                                    height={"65px"}
-                                                    src={pac.PhotoUrl}
-                                                    loader={()=>pac.PhotoUrl}
-                                                    alt="product"
-                                                />
+                                                {pac.PhotoUrl === "https://iketpanel.com" ?
+                                                    <Image
+                                                        src={Logo}
+                                                        alt="food logo"
+                                                        width={80}
+                                                        height={50}
+                                                    />
+                                                :
+                                                    <Image
+                                                        width={"65px"}
+                                                        height={"65px"}
+                                                        src={pac.PhotoUrl}
+                                                        loader={()=>pac.PhotoUrl}
+                                                        alt="product"
+                                                    />
+                                                }
                                                 {pac.Title}
                                             </div>
                                         ))}

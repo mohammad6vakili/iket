@@ -76,9 +76,6 @@ const LocateUser=()=>{
                 })                
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
             console.log(err);
         }
     }
@@ -101,9 +98,6 @@ const LocateUser=()=>{
                 })
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
             console.log(err);
         }
     }
@@ -194,9 +188,6 @@ const LocateUser=()=>{
             setState(response.data.state);
         }catch(err){
             console.log(err);
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            });
         }
     }
 
@@ -409,6 +400,7 @@ const LocateUser=()=>{
                                     });
                                     dispatch(setLat(""));
                                     dispatch(setLng(""));
+                                    setLocName("");
                                 }
                             }}
                             className="enter_green_btn"

@@ -28,9 +28,7 @@ const MyOrders=()=>{
             const response = await axios.post(Env.baseUrl + "SelectOrdersByUserID.aspx",postData)
             setOrders(response.data.Data);
         }catch({err,response}){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
+            console.log(err);
         }
     }
 

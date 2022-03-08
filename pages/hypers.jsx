@@ -2,9 +2,9 @@ import { useState,useEffect } from "react";
 import styles from "../styles/Restaurant.module.css";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Button } from "antd";
+import { Button , Modal} from "antd";
 import { useDispatch , useSelector} from "react-redux";
-import { setMenu, setProduct , setCart , setCategoryType} from "../Store/Action";
+import { setMenu, setProduct , setHypers , setCategoryType , setSelectedHyper} from "../Store/Action";
 import Head from 'next/head';
 import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
@@ -35,6 +35,8 @@ const Hypers=()=>{
     const [newest , setNewest]=useState(null);
     const [best , setBest]=useState(null);
 
+    const [modal , setModal]=useState(false);
+
     const getSliders=async()=>{
         const cityId = localStorage.getItem("selectCity");
         let postData=new FormData();
@@ -51,9 +53,6 @@ const Hypers=()=>{
                 })
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
             console.log(err);
         }
     }
@@ -86,9 +85,6 @@ const Hypers=()=>{
                 })
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
             console.log(err);
         }
     }
@@ -121,9 +117,6 @@ const Hypers=()=>{
                 })
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
             console.log(err);
         }
     }
@@ -156,10 +149,69 @@ const Hypers=()=>{
                 <link rel="manifest" href="/manifest.json" />
             </Head>
             <div className={`${styles.restaurant} dashboard-page`}>
+            <Modal
+                    visible={modal}
+                    width={320}
+                    style={{top:"42vh"}}
+                    bodyStyle={{backgroundColor:"rgba(200,200,200,0.5)"}}
+                    onCancel={()=>setModal(false)}
+                    onOk={()=>setModal(false)}
+                    closable={false}
+                >
+                    <div style={{width:"100%",display:"flex",flexDirection:"column"}}>
+                        <div 
+                            style={{
+                                width:"100%",
+                                fontSize:"16px",
+                                marginBottom:"20px",
+                                textAlign:"center",
+                                color:Colors.purple,
+                            }}
+                        >
+                            نزدیکترین هایپر مارکت ها
+                        </div>
+                           {hypers.length > 0 && hypers.map((data)=>(
+                                <div style={{display:'flex',alignItems:"center",marginBottom:"10px"}}>
+                                    <input
+                                        style={{marginLeft:"7px",cursor:"pointer"}}
+                                        onClick={(e)=>{
+                                            dispatch(setSelectedHyper(e.target.value));
+                                            dispatch(setSelectedHyper(data));
+                                        }}
+                                        type="radio"
+                                        value={data.ID}
+                                        name="hyper"
+                                    />
+                                    <label htmlFor="hyper">
+                                        {data.BusinessName}
+                                    </label>
+                                </div>
+                           ))}
+                        <div 
+                            onClick={()=>{
+                                if(selectedHyper===""){
+                                    toast.warning("لطفا مجموعه مورد نظر خود را انتخاب کنید",{
+                                        position:"bottom-left"
+                                    })
+                                }else{
+                                    dispatch(setCategoryType("1"));
+                                    setModal(false);
+                                    getSliders();
+                                    getNewest();
+                                    getBest();
+                                }
+                                 
+                            }}
+                            style={{color:Colors.purple,marginTop:"10px",cursor:"pointer"}}
+                        >
+                            انتخاب
+                        </div>
+                    </div>
+                </Modal>
                 <Menu/>
                 <div className="header">
                     <Image
-                        onClick={()=>console.log(newest)}
+                        onClick={()=>console.log(selectedHyper)}
                         src={whiteLogo}
                         alt="iket"
                         width={"100px"}
@@ -184,20 +236,25 @@ const Hypers=()=>{
                     <div
                         className={categoryType==="1" ? "type_selected" : ""}
                         onClick={()=>{
-                            if(hypers.length===0){
-                                toast.error("در حال حاضر مجموعه ای جهت ارائه خدمات فعال نمی باشد",{
-                                    position:"bottom-left"
-                                })
-                            }else if(hypers.length===1){
-                                dispatch(setSelectedHyper(hypers[0].ID));
+                            if(lat!==""){
                                 dispatch(setCategoryType("1"));
+                                router.push("/hypers");
                             }else{
-                                if(hypers.length>0){
-                                    dispatch(setHypers(
-                                        hypers.filter((v,i,a)=>a.findIndex(t=>(t.ID===v.ID))===i)
-                                    ))
+                                if(hypers.length===0){
+                                    toast.error("در حال حاضر مجموعه ای جهت ارائه خدمات فعال نمی باشد",{
+                                        position:"bottom-left"
+                                    })
+                                }else if(hypers.length===1){
+                                    dispatch(setSelectedHyper(hypers[0].ID));
+                                    dispatch(setCategoryType("1"));
+                                }else{
+                                    if(hypers.length>0){
+                                        dispatch(setHypers(
+                                            hypers.filter((v,i,a)=>a.findIndex(t=>(t.ID===v.ID))===i)
+                                        ))
+                                    }
+                                    setModal(true);
                                 }
-                                setModal(true);
                             }
                         }}
                     >
@@ -209,7 +266,11 @@ const Hypers=()=>{
                     </div>
                     <div
                         className={categoryType==="2" ? "type_selected" : ""}
-                        onClick={()=>{dispatch(setCategoryType("2"));router.push("/restaurant")}}
+                        onClick={()=>{
+                            dispatch(setCategoryType("2"));
+                            router.push("/restaurant");
+                            dispatch(setSelectedHyper(null));
+                        }}
                     >
                         <Image
                             src={restaurantImage}
@@ -220,7 +281,11 @@ const Hypers=()=>{
                     <div className={styles.home_item_two}>
                         <div
                             className={categoryType==="3" ? "type_selected" : ""}
-                            onClick={()=>{dispatch(setCategoryType("3"));router.push("/restaurant")}}
+                            onClick={()=>{
+                                dispatch(setCategoryType("3"));
+                                router.push("/restaurant");
+                                dispatch(setSelectedHyper(null));
+                            }}
                         >
                             <Image
                                 src={fastFoodImage}
@@ -293,7 +358,7 @@ const Hypers=()=>{
                                             loader={()=>data.PhotoUrl}
                                             alt="slider"
                                         />
-                                        {selectedHyper && selectedHyper.IsWork===0 &&
+                                        {data.IsActive===false &&
                                             <div>تعطیل</div>
                                         }
                                     </div>
@@ -345,7 +410,7 @@ const Hypers=()=>{
                                         loader={()=>data.PhotoUrl}
                                         alt="slider"
                                     />
-                                    {selectedHyper && selectedHyper.IsWork===0 &&
+                                    {data.IsActive===false &&
                                         <div>تعطیل</div>
                                     }
                                 </div>

@@ -58,9 +58,6 @@ const Login=()=>{
                     })
                 }
             }catch({err,response}){
-                toast.error("خطا در برقراری ارتباط",{
-                    position:"bottom-left"
-                })
                 console.log(err);
             }
         }
@@ -97,9 +94,6 @@ const Login=()=>{
                     })
                 }
             }catch({err,response}){
-                toast.error("خطا در برقراری ارتباط",{
-                    position:"bottom-left"
-                })
                 console.log(err);
             }
         }

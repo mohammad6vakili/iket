@@ -52,9 +52,6 @@ const Restaurant=()=>{
                 })
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
             console.log(err);
         }
     }
@@ -82,9 +79,6 @@ const Restaurant=()=>{
                 })
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
             console.log(err);
         }
     }
@@ -112,9 +106,6 @@ const Restaurant=()=>{
                 })
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
             console.log(err);
         }
     }
@@ -245,6 +236,7 @@ const Restaurant=()=>{
                                 }else if(hypers.length===1){
                                     dispatch(setSelectedHyper(hypers[0].ID));
                                     dispatch(setCategoryType("1"));
+                                    router.push("/hypers");
                                 }else{
                                     if(hypers.length>0){
                                         dispatch(setHypers(
@@ -264,7 +256,11 @@ const Restaurant=()=>{
                     </div>
                     <div
                         className={categoryType==="2" ? "type_selected" : ""}
-                        onClick={()=>{dispatch(setCategoryType("2"));router.push("/restaurant")}}
+                        onClick={()=>{
+                            dispatch(setCategoryType("2"));
+                            router.push("/restaurant");
+                            dispatch(setSelectedHyper(null));
+                        }}
                     >
                         <Image
                             src={restaurantImage}
@@ -275,7 +271,11 @@ const Restaurant=()=>{
                     <div className={styles.home_item_two}>
                         <div
                             className={categoryType==="3" ? "type_selected" : ""}
-                            onClick={()=>{dispatch(setCategoryType("3"));router.push("/restaurant")}}
+                            onClick={()=>{
+                                dispatch(setCategoryType("3"));
+                                router.push("/restaurant");
+                                dispatch(setSelectedHyper(null));
+                            }}
                         >
                             <Image
                                 src={fastFoodImage}

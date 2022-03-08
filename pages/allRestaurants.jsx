@@ -47,9 +47,6 @@ const AllRestaurants=()=>{
                 })
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
             console.log(err);
         }
     }

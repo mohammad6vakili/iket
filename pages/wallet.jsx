@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import styles from "../styles/Wallet.module.css";
 import axios from "axios";
 import Env from "../Constant/Env.json";
 import { Button , Input} from "antd";
 import Head from 'next/head';
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch} from "react-redux";
 import { toast } from "react-toastify";
+import { setProfile } from "../Store/Action";
 import FormatHelper from "../Helper/FormatHelper";
 import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
@@ -14,6 +15,7 @@ import rightArrow from "../assets/images/right-arrow-white.svg";
 
 const Wallet=()=>{
     const router = useRouter();
+    const dispatch = useDispatch();
     const profile = useSelector(state=>state.Reducer.profile);
 
     const [price , setPrice]=useState("");
@@ -35,11 +37,25 @@ const Wallet=()=>{
             }
         }catch(err){
             console.log(err);
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            });
         }
     }
+
+    const getProfile=async()=>{
+        const userId =localStorage.getItem("userId");
+        let postData = new FormData();
+        postData.append("ID",userId);
+        postData.append("Token",Env.token);
+        try{
+            const response = await axios.post(Env.baseUrl + "GetUserInfo.aspx",postData)
+            dispatch(setProfile(response.data.Data));
+        }catch({err,response}){
+            console.log(err);
+        }
+    }
+
+        useEffect(() => {
+            getProfile();
+        }, []);
 
     return(
         <div>

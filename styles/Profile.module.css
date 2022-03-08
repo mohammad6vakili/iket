@@ -43,6 +43,11 @@
   border-radius: 50%;
   background-color: #5a25b66e;
 }
+.profile_white_box>div:nth-child(1)>div img{
+  border-radius: 50% !important;
+  width: 100%;
+  height: 100%;
+}
 .profile_white_box>div:nth-child(2){
   width: 75%;
   height: 100%;

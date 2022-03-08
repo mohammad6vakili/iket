@@ -41,11 +41,10 @@ const Home=()=>{
                 console.log(response.data.Data);
                 response.data.Data.map((data)=>{
                     data.Area.map((ar)=>{
-                        if(ar.Provider.length>0){
-                             ar.Provider.map((pr , index)=>{
-                                if(pr.AreaIDFK === parseInt(localStorage.getItem("selectArea"))){
-                                    hypers.push(pr);
-                                }
+                        console.log(ar)
+                        if(ar.Provider.length>0 && ar.ID.toString() === localStorage.getItem("selectArea")){
+                            ar.Provider.map((pr , index)=>{
+                                hypers.push(pr);
                              })
                         }
                     })
@@ -56,9 +55,6 @@ const Home=()=>{
                 })    
             }
         }catch(err){
-            toast.error("خطا در برقراری ارتباط",{
-                position:"bottom-left"
-            })
             console.log(err);
         }
     }
@@ -123,7 +119,7 @@ const Home=()=>{
                            ))}
                         <div 
                             onClick={()=>{
-                                if(selectedHyper===""){
+                                if(selectedHyper==="" || selectedHyper===null){
                                     toast.warning("لطفا مجموعه مورد نظر خود را انتخاب کنید",{
                                         position:"bottom-left"
                                     })
@@ -161,6 +157,7 @@ const Home=()=>{
                                 }else if(hypers.length===1){
                                     setSelectedHyper(hypers[0].ID);
                                     dispatch(setCategoryType("1"));
+                                    router.push("/hypers");
                                 }else{
                                     if(hypers.length>0){
                                         dispatch(setHypers(
@@ -178,7 +175,11 @@ const Home=()=>{
                         />  
                         <span>هایپر مارکت</span>
                     </div>
-                    <div onClick={()=>{dispatch(setCategoryType("2"));router.push("/restaurant")}}>
+                    <div onClick={()=>{
+                        dispatch(setCategoryType("2"));
+                        dispatch(setSelectedHyper(null));
+                        router.push("/restaurant");
+                    }}>
                         <Image
                             src={restaurantImage}
                             alt="service"
@@ -187,7 +188,11 @@ const Home=()=>{
                     </div>
                 </div>
                 <div className={styles.home_item_two}>
-                    <div onClick={()=>{dispatch(setCategoryType("3"));router.push("/restaurant")}}>
+                    <div onClick={()=>{
+                        dispatch(setCategoryType("3"));
+                        router.push("/restaurant");
+                        dispatch(setSelectedHyper(null));
+                    }}>
                         <Image
                             src={fastFoodImage}
                             alt="service"

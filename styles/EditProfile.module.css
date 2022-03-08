@@ -20,6 +20,9 @@
     display: flex;
     background-color: white;
 }
+.edit_profile_top img{
+  border-radius: 50% !important;
+}
 .edit_profile_top > div{
     display: flex;
     flex-direction: column;

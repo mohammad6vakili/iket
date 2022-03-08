@@ -20,6 +20,7 @@ const Cart=()=>{
     const dispatch=useDispatch();
     const router=useRouter();
     const cartData=useSelector(state=>state.Reducer.cart);
+    const selectedHyper=useSelector(state=>state.Reducer.selectedHyper);
 
     const [deliveryPrice , setDeliveryPrice]=useState(null);
     const [change , setChange]=useState(false);
