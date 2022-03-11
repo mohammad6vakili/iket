@@ -5,7 +5,7 @@ import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
 import { Button } from "antd";
 import { useEffect } from "react";
-import {setFactorData} from "../Store/Action";
+import {setFactorData,setMenu} from "../Store/Action";
 import Head from 'next/head';
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
@@ -34,6 +34,7 @@ const MyOrders=()=>{
 
     useEffect(()=>{
         getOrders();
+        dispatch(setMenu(4));
     },[])
 
     return(
@@ -79,7 +80,7 @@ const MyOrders=()=>{
                                         ساعت سفارش : {FormatHelper.toPersianString(order.CTime)}
                                     </span>
                                     <span style={{fontSize:"13px"}}>
-                                        مبلغ : {FormatHelper.toPersianString(order.TotalPrice.toLocaleString())} تومان
+                                        مبلغ : {FormatHelper.toPersianString(order.TotalPriceWithDiscount.toLocaleString())} تومان
                                     </span>
                                 </div>
                                 <Button 

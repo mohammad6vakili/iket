@@ -102,6 +102,30 @@ const SelectAddress=()=>{
                 <link rel="manifest" href="/manifest.json" />
             </Head>
             <div className={`${styles.select_address} dashboard-page`}>
+            <div 
+                 className={styles.addLoc}
+                    style={{
+                        width:"50px",
+                        height:"50px",
+                        position:"absolute",
+                        zIndex:"99999999",
+                        bottom:"11vh",
+                        right:"10px",
+                        borderRadius:"50%",
+                        background:"white",
+                        cursor:"pointer",
+                        boxShadow:"0 0 3px 0 #a3a3a3"
+                    }}
+                >
+                    <Image
+                        src={addLocation}
+                        alt="back"
+                        width={40}
+                        height={40}
+                        onClick={()=>router.push("/addAddress")}
+                    />
+                    <div style={{fontSize:"8px",color:"#5925B6",textAlign:"center"}}>آدرس جدید</div>
+                </div>
                 <div style={{fontSize:"14px"}} className="header">
                     آدرس های من
                     <div className="header-right-icon">
@@ -185,24 +209,52 @@ const SelectAddress=()=>{
                                 value={data.ID}
                             >
                                 <span 
+                                    onClick={()=>{
+                                        if(data.DeliveryPrice===-1){
+                                            toast.error(data.Message ,{
+                                                position:"bottom-left"
+                                            })
+                                        }
+                                    }}
                                     style={{color:"black",fontSize:"12px",fontWeight:"600"}}
                                 >
                                     {data.Title}
                                 </span> 
                                 <div 
+                                    onClick={()=>{
+                                        if(data.DeliveryPrice===-1){
+                                            toast.error(data.Message ,{
+                                                position:"bottom-left"
+                                            })
+                                        }
+                                    }}
                                     style={{color:"#747474",margin:"5px 0",fontSize:"11px",fontWeight:"600"}}
                                 >
                                     {data.FullAddress}
                                 </div>
                                 {data.DeliveryPrice>0 &&
                                     <div 
+                                        onClick={()=>{
+                                            if(data.DeliveryPrice===-1){
+                                                toast.error(data.Message ,{
+                                                    position:"bottom-left"
+                                                })
+                                            }
+                                        }}
                                         style={{color:"gray",marginBottom:"5px",fontSize:"12px"}}
                                     >
-                                        هزینه ارسال : {FormatHelper.toPersianString(data.DeliveryPrice)} تومان
+                                        هزینه ارسال : {FormatHelper.toPersianString(data.DeliveryPrice.toLocaleString())} تومان
                                     </div>
                                 }
                                 {data.DeliveryPrice===0 &&
                                     <div 
+                                        onClick={()=>{
+                                            if(data.DeliveryPrice===-1){
+                                                toast.error(data.Message ,{
+                                                    position:"bottom-left"
+                                                })
+                                            }
+                                        }}
                                         style={{color:"gray",marginBottom:"5px",fontSize:"12px"}}
                                     >
                                         هزینه ارسال : رایگان
@@ -210,6 +262,13 @@ const SelectAddress=()=>{
                                 }
                                 {data.DeliveryPrice===-1 &&
                                     <div 
+                                        onClick={()=>{
+                                            if(data.DeliveryPrice===-1){
+                                                toast.error(data.Message ,{
+                                                    position:"bottom-left"
+                                                })
+                                            }
+                                        }}
                                         style={{color:"red",marginBottom:"5px",fontSize:"12px"}}
                                     >
                                         غیر قابل ارسال
@@ -250,29 +309,6 @@ const SelectAddress=()=>{
                         شما آدرسی ثبت نکردید
                     </div>
                 }
-                <div 
-                 className={styles.addLoc}
-                    style={{
-                        width:"50px",
-                        height:"50px",
-                        position:"absolute",
-                        bottom:"11vh",
-                        right:"10px",
-                        borderRadius:"50%",
-                        background:"white",
-                        cursor:"pointer",
-                        boxShadow:"0 0 3px 0 #a3a3a3"
-                    }}
-                >
-                    <Image
-                        src={addLocation}
-                        alt="back"
-                        width={40}
-                        height={40}
-                        onClick={()=>router.push("/addAddress")}
-                    />
-                    <div style={{fontSize:"8px",color:"#5925B6",textAlign:"center"}}>آدرس جدید</div>
-                </div>
             </div>
         </div>
     )

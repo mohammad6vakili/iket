@@ -18,7 +18,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    max-width: 420px;
+    max-width: 430px;
     height: 6.5vh;
     background-color: #00a854;
     color: white;
@@ -28,7 +28,7 @@
     align-items: center;    
 }
 .enter_input{
-    width: 90% !important;
+    width: 79% !important;
     border: none;
     margin-bottom:2vh;
     height: 40px;

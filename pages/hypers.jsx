@@ -19,6 +19,10 @@ import Menu from "../Components/Menu/Menu";
 import fastFoodImage from "../assets/images/fastfood.png";
 import hyperMarketImage from "../assets/images/hyper_market.png";
 import restaurantImage from "../assets/images/restaurant.png";
+import fastfood_selected from "../assets/images/fastfood_selected.webp";
+import hyper_market_selected from "../assets/images/hyper_market_selected.webp";
+import restaurant_selected from "../assets/images/restaurant_selected.webp";
+import loadingSvg from "../assets/images/loading.svg";
 
 
 const Hypers=()=>{
@@ -132,6 +136,7 @@ const Hypers=()=>{
             getNewest();
             getBest();
         }
+        dispatch(setMenu(0));
     },[])
 
     useEffect(()=>{
@@ -232,9 +237,19 @@ const Hypers=()=>{
                         />
                     </div>
                 </div>
+                {newest===null &&
+                    <div style={{width:"100%",display:"flex",flexDirection:"column",alignItems:"center"}}> 
+                        <Image
+                            src={loadingSvg}
+                            alt="loading"
+                            width={100}
+                            height={100}
+                        />
+                        <div>لطفا منتظر بمانید</div>
+                    </div>
+                }
                 <div className="service_change_wrapper">
                     <div
-                        className={categoryType==="1" ? "type_selected" : ""}
                         onClick={()=>{
                             if(lat!==""){
                                 dispatch(setCategoryType("1"));
@@ -258,10 +273,17 @@ const Hypers=()=>{
                             }
                         }}
                     >
-                        <Image
-                            src={hyperMarketImage}
-                            alt="service"
-                        />  
+                        {categoryType==="1" ?
+                            <Image
+                                src={hyper_market_selected}
+                                alt="service"
+                            />
+                        :
+                            <Image
+                                src={hyperMarketImage}
+                                alt="service"
+                            />
+                        }
                         <span>هایپر مارکت</span>
                     </div>
                     <div
@@ -272,10 +294,17 @@ const Hypers=()=>{
                             dispatch(setSelectedHyper(null));
                         }}
                     >
-                        <Image
-                            src={restaurantImage}
-                            alt="service"
-                        />
+                        {categoryType==="2" ?
+                            <Image
+                                src={restaurant_selected}
+                                alt="service"
+                            />
+                        :
+                            <Image
+                                src={restaurantImage}
+                                alt="service"
+                            />
+                        }
                         <span>رستوران</span>
                     </div>
                     <div className={styles.home_item_two}>
@@ -287,10 +316,17 @@ const Hypers=()=>{
                                 dispatch(setSelectedHyper(null));
                             }}
                         >
-                            <Image
-                                src={fastFoodImage}
-                                alt="service"
-                            />
+                            {categoryType==="3" ?
+                                <Image
+                                    src={fastfood_selected}
+                                    alt="service"
+                                />
+                                :
+                                <Image
+                                    src={fastFoodImage}
+                                    alt="service"
+                                />
+                            }
                             <span>فست فود</span>
                         </div>
                     </div>
@@ -301,7 +337,6 @@ const Hypers=()=>{
                         showArrows={false}
                         itemsToShow={1}
                         isRTL={true}
-                        enableAutoPlay={true}
                     >
                         {sliders && sliders.length!==0 && sliders.map((data,index)=>(
                             <a href={data.Link !=="" ? data.Link : "#"}>
@@ -339,9 +374,8 @@ const Hypers=()=>{
                         <Carousel
                             className={styles.restaurant_slider}
                             showArrows={false}
-                            enableAutoPlay={true}
                             renderPagination={()=>(<span></span>)}
-                            itemsToShow={2}
+                            itemsToShow={2.25}
                             isRTL={true}
                         >
                             {newest.map((data,index)=>(
@@ -369,10 +403,10 @@ const Hypers=()=>{
                                         {data.Title}
                                     </div>
                                     <div 
-                                        style={{justifyContent:"flex-end",color:Colors.success}}
+                                        style={{alignItems:"flex-end",color:Colors.success,flexDirection:"column"}}
                                         className={styles.restaurant_slider_box_delivery}
                                     >
-                                        <div style={data.PriceWithDiscount!==data.Price ? {color:"red",textDecoration:"line-through",margin:"0 5px"} : {color:"green"}}>{FormatHelper.toPersianString(data.Price.toLocaleString())} تومان</div>
+                                        <div style={data.PriceWithDiscount!==data.Price ? {color:"red",textDecoration:"line-through"} : {color:"green"}}>{FormatHelper.toPersianString(data.Price.toLocaleString())} تومان</div>
                                         <div style={{color:"green"}}>
                                             {data.PriceWithDiscount!==data.Price && FormatHelper.toPersianString(data.PriceWithDiscount.toLocaleString()) +"تومان"}
                                         </div>
@@ -391,9 +425,8 @@ const Hypers=()=>{
                     <Carousel
                         className={styles.restaurant_slider}
                         showArrows={false}
-                        enableAutoPlay={true}
                         renderPagination={()=>(<span></span>)}
-                        itemsToShow={2}
+                        itemsToShow={2.25}
                         isRTL={true}
                     >
                         {best.map((data,index)=>(
@@ -418,10 +451,13 @@ const Hypers=()=>{
                                     {data.Title}
                                 </div>
                                 <div 
-                                    style={{justifyContent:"flex-end",color:Colors.success}}
+                                    style={{alignItems:"flex-end",color:Colors.success,flexDirection:"column"}}
                                     className={styles.restaurant_slider_box_delivery}
                                 >
-                                    {FormatHelper.toPersianString(data.Price)} تومان 
+                                    <div style={data.PriceWithDiscount!==data.Price ? {color:"red",textDecoration:"line-through"} : {color:"green"}}>{FormatHelper.toPersianString(data.Price.toLocaleString())} تومان</div>
+                                    <div style={{color:"green"}}>
+                                        {data.PriceWithDiscount!==data.Price && FormatHelper.toPersianString(data.PriceWithDiscount.toLocaleString()) +"تومان"}
+                                    </div>
                                 </div>
                             </div>
                         ))}

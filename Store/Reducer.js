@@ -16,7 +16,8 @@ import {
     ADDRESS,
     SELECTED_ADDRESS,
     FACTOR_DATA,
-    EDTI_ADDRESS
+    EDTI_ADDRESS,
+    BADGE
 } from "./Action";
 
 const initialState = {
@@ -37,7 +38,8 @@ const initialState = {
     address:null,
     selectedAddress:null,
     factorData:null,
-    editAddress:null
+    editAddress:null,
+    badge:0
 };
 
 const Reducer = (state = initialState, action) => {
@@ -78,6 +80,8 @@ const Reducer = (state = initialState, action) => {
       return {...state, factorData: action.payload};
     case EDTI_ADDRESS:
       return {...state, editAddress: action.payload};
+    case BADGE:
+      return {...state, badge: action.payload};
     default:
       return state;
   }

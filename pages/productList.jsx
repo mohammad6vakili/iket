@@ -1,7 +1,7 @@
 import { useEffect,useState } from "react";
 import styles from "../styles/ProductList.module.css";
 import { useSelector , useDispatch} from "react-redux";
-import {setProduct} from "../Store/Action";
+import {setProduct , setMenu , setBadge} from "../Store/Action";
 import Image from "next/image";
 import Logo from "../assets/images/logo_colored.webp";
 import rightArrow from "../assets/images/right-arrow-white.svg";
@@ -30,7 +30,7 @@ const ProductList=()=>{
     const addToCart=(data)=>{
         let already=false;
         if(cart && cart.length>0 && cart[0].ProviderID!==data.ProviderID){
-            toast.warning("شما فقط میتوانید از یک تامین کننده خرید کنید",{
+            toast.warning("خرید از چند فروشگاه امکان پذیر نیست.",{
                 position:"bottom-left"
             })
         }else if(data.count > data.Quantity){
@@ -51,6 +51,7 @@ const ProductList=()=>{
                 cart.push(data);
             }
         }
+        dispatch(setBadge(cart.length));
     }
 
     useEffect(()=>{
@@ -66,6 +67,10 @@ const ProductList=()=>{
             })
         }
     })
+
+    useEffect(()=>{
+        dispatch(setMenu(1));
+    },[])
 
     return(
         <div className="app-container">
@@ -105,18 +110,20 @@ const ProductList=()=>{
                 <div className={styles.product_list_list}>
                     {subCat && subCat.Product && subCat.Product.length>0 && subCat.Product.map((data,index)=>(
                         <div
-                            onClick={()=>{
-                                if(selectedHyper && selectedHyper.IsWork===0){
-                                    console.log("product is not active");
-                                }else{
-                                    dispatch(setProduct(data));
-                                    router.push("/product");
-                                }
-                            }}
                             className={selectedHyper && selectedHyper.IsWork===0 ? styles.restaurant_page_item_disabled : ""}
                             key={index}
                         >
-                            <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+                            <div 
+                                onClick={()=>{
+                                    if(selectedHyper && selectedHyper.IsWork===0){
+                                        console.log("product is not active");
+                                    }else{
+                                        dispatch(setProduct(data));
+                                        router.push("/product");
+                                    }
+                                }}
+                                style={{display:"flex",justifyContent:"center",alignItems:"center"}}
+                            >
                                 {data.PhotoUrl === "https://iketpanel.com" ?
                                     <Image
                                         src={Logo}
@@ -135,9 +142,42 @@ const ProductList=()=>{
                                 }
                             </div>
                             <div>
-                                <div>{data.Title}</div>
-                                <div style={data.PriceWithDiscount!==data.Price ? {color:"red",textDecoration:"line-through"} : {color:"green"}}>{FormatHelper.toPersianString(data.Price.toLocaleString())} تومان</div>
-                                <div style={{color:"green"}}>
+                                <div
+                                    onClick={()=>{
+                                        if(selectedHyper && selectedHyper.IsWork===0){
+                                            console.log("product is not active");
+                                        }else{
+                                            dispatch(setProduct(data));
+                                            router.push("/product");
+                                        }
+                                    }}
+                                >
+                                    {data.Title}
+                                </div>
+                                <div
+                                    style={data.PriceWithDiscount!==data.Price ? {color:"red",textDecoration:"line-through"} : {color:"green"}}
+                                    onClick={()=>{
+                                        if(selectedHyper && selectedHyper.IsWork===0){
+                                            console.log("product is not active");
+                                        }else{
+                                            dispatch(setProduct(data));
+                                            router.push("/product");
+                                        }
+                                    }}
+                                >
+                                    {FormatHelper.toPersianString(data.Price.toLocaleString())} تومان
+                                </div>
+                                <div 
+                                    onClick={()=>{
+                                        if(selectedHyper && selectedHyper.IsWork===0){
+                                            console.log("product is not active");
+                                        }else{
+                                            dispatch(setProduct(data));
+                                            router.push("/product");
+                                        }
+                                    }}
+                                    style={{color:"green"}}
+                                >
                                     {data.PriceWithDiscount!==data.Price && FormatHelper.toPersianString(data.PriceWithDiscount.toLocaleString()) +"تومان"}
                                 </div>
                                 <div>
@@ -186,7 +226,7 @@ const ProductList=()=>{
                     <Button onClick={()=>router.push("/cart")} className="enter_purple_btn">اتمام خرید</Button>
                     <Button className="enter_purple_btn">
                         {cart && 
-                            FormatHelper.toPersianString(cart.reduce((a, c) => a + c.Price * c.count, 0).toLocaleString())} تومان
+                            FormatHelper.toPersianString(cart.reduce((a, c) => a + c.PriceWithDiscount * c.count, 0).toLocaleString())} تومان
                     </Button>
                 </div>
             </div>

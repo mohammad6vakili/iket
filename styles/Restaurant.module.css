@@ -8,7 +8,7 @@
 .restaurant{
     font-family: "sans";
     overflow-y: auto !important;
-    padding: 11vh 0;
+    padding: 7vh 0 11vh 0;
     background-color: rgb(233, 233, 233);
 }
 .restaurant_slider{
@@ -17,7 +17,7 @@
     cursor: pointer;
 }
 .all_restaurants_btn{
-    margin: 5px 10px 0 10px;
+    margin: 0 10px 0 10px;
     border-radius: 4px !important;
     height: 45px;
     display: flex;
@@ -53,8 +53,8 @@
 }
 .restaurant_slider_box{
     width: 170px;
-    height: 200px;
-    margin: 0 5px 5px 5px;
+    height: 220px;
+    margin: 0 3px 5px 3px;
     background-color: white;
     border-radius: 6px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.39);

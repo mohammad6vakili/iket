@@ -2,6 +2,7 @@ import { useState , useEffect } from "react";
 import styles from "../styles/Search.module.css";
 import { useSelector , useDispatch} from "react-redux";
 import { useRouter } from "next/router";
+import { setMenu , setBadge } from "../Store/Action";
 import Head from 'next/head';
 import Image from "next/image";
 import axios from "axios";
@@ -31,7 +32,7 @@ const Search=()=>{
         postData.append("CategoryTypeID",categoryType);
         postData.append("Search",str);
         if(selectedHyper!==null){
-            postData.append("ProviderID",selectedHyper);
+            postData.append("ProviderID",selectedHyper.ID);
         }
         if(categoryType!=="1"){
             postData.append("CityID",localStorage.getItem("selectCity"));
@@ -53,7 +54,7 @@ const Search=()=>{
     const addToCart=(product)=>{
         let already=false;
         if(cart && cart.length>0 && cart[0].ProviderID!==product.ProviderID){
-            toast.warning("شما فقط میتوانید از یک تامین کننده خرید کنید",{
+            toast.warning("خرید از چند فروشگاه امکان پذیر نیست.",{
                 position:"bottom-left"
             })
         }else if(product.count > product.Quantity){
@@ -81,6 +82,7 @@ const Search=()=>{
                 localStorage.setItem("cart",JSON.stringify(cart));
             }
         }
+        dispatch(setBadge(cart.length));
     }
 
     useEffect(()=>{
@@ -96,6 +98,10 @@ const Search=()=>{
             localStorage.setItem("cart",JSON.stringify(cart));
         }
     })
+
+    useEffect(()=>{
+        dispatch(setMenu(3));
+    },[])
 
     return(
         <div className="app-container">

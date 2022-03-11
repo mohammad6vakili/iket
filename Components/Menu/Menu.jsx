@@ -14,6 +14,7 @@ import searchActive from "../../assets/images/search_tab_selected.webp";
 import searchOff from "../../assets/images/search_tab_unselected.webp";
 import moreActive from "../../assets/images/more_tab_selected.webp";
 import moreOff from "../../assets/images/more_tab_unselected.webp";
+import FormatHelper from "../../Helper/FormatHelper";
 
 const Menu = () => {
   const router = useRouter();
@@ -21,6 +22,7 @@ const Menu = () => {
   const menu = useSelector((state) => state.Reducer.menu);
   const cart = useSelector((state) => state.Reducer.cart);
   const categoryType = useSelector((state) => state.Reducer.categoryType);
+  const badge = useSelector((state) => state.Reducer.badge);
 
   return (
     <div className={styles.menu}>
@@ -80,7 +82,7 @@ const Menu = () => {
             color:"white",
           }}
         >
-          {cart.length}
+          {FormatHelper.toPersianString(badge)}
         </div>
         {menu === 2 ? (
           <Image src={cartActive} alt="category" width={"50%"} height={"50%"} />

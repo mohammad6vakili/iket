@@ -4,7 +4,7 @@ import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import { useSelector , useDispatch} from "react-redux";
 import { useRouter } from "next/router";
-import { setCart } from "../Store/Action";
+import { setMenu , setBadge} from "../Store/Action";
 import Head from 'next/head';
 import noFood from "../assets/images/empty_food.png";
 import FormatHelper from "../Helper/FormatHelper";
@@ -16,12 +16,14 @@ const Product=()=>{
     const dispatch=useDispatch();
     const product = useSelector(state=>state.Reducer.product);
     const cart = useSelector(state=>state.Reducer.cart);
+    const menu = useSelector(state=>state.Reducer.menu);
     const [count , setCount]=useState(0);
-
+    
+    
     const addToCart=()=>{
         let already = false;
         if(cart && cart.length>0 && cart[0].ProviderID!==product.ProviderID){
-            toast.warning("شما فقط میتوانید از یک تامین کننده خرید کنید",{
+            toast.warning("خرید از چند فروشگاه امکان پذیر نیست.",{
                 position:"bottom-left"
             })
         }else if(product.count > product.Quantity){
@@ -29,6 +31,11 @@ const Product=()=>{
                 position:"bottom-left"
             })
         }else{
+            if(menu===1){
+                router.push("/productList");
+            }else{
+                router.push("/hypers");
+            }
             if(cart && cart.length>0){
                 cart.map((data)=>{
                     if(data.ID===product.ID){
@@ -69,6 +76,7 @@ const Product=()=>{
                 }
             }
             console.log(cart);
+            dispatch(setBadge(cart.length));
         }
     }
 
@@ -97,6 +105,7 @@ const Product=()=>{
         if(product){
             setCount(product.count)
         }
+        dispatch(setMenu(0));
     },[])
 
     useEffect(()=>{
@@ -121,7 +130,7 @@ const Product=()=>{
                             <Image
                                 src={rightArrow}
                                 alt="back"
-                                onClick={()=>router.push("/hypers")}
+                                onClick={()=>{router.push("/hypers");dispatch(setMenu(0));}}
                             />
                         </div>
                     </div>

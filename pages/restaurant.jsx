@@ -19,6 +19,11 @@ import Menu from "../Components/Menu/Menu";
 import fastFoodImage from "../assets/images/fastfood.png";
 import hyperMarketImage from "../assets/images/hyper_market.png";
 import restaurantImage from "../assets/images/restaurant.png";
+import fastfood_selected from "../assets/images/fastfood_selected.webp";
+import hyper_market_selected from "../assets/images/hyper_market_selected.webp";
+import restaurant_selected from "../assets/images/restaurant_selected.webp";
+import loadingSvg from "../assets/images/loading.svg";
+
 
 
 const Restaurant=()=>{
@@ -119,6 +124,7 @@ const Restaurant=()=>{
         getSliders();
         getNewest();
         getBest();
+        dispatch(setMenu(0));
     },[])
 
     useEffect(()=>{
@@ -221,9 +227,19 @@ const Restaurant=()=>{
                         />
                     </div>
                 </div>
+                {newest===null &&
+                    <div style={{width:"100%",display:"flex",flexDirection:"column",alignItems:"center"}}> 
+                        <Image
+                            src={loadingSvg}
+                            alt="loading"
+                            width={100}
+                            height={100}
+                        />
+                        <div>لطفا منتظر بمانید</div>
+                    </div>
+                }
                 <div className="service_change_wrapper">
                     <div
-                        className={categoryType==="1" ? "type_selected" : ""}
                         onClick={()=>{
                             if(lat!==""){
                                 dispatch(setCategoryType("1"));
@@ -248,39 +264,58 @@ const Restaurant=()=>{
                             }
                         }}
                     >
-                        <Image
-                            src={hyperMarketImage}
-                            alt="service"
-                        />  
+                        {categoryType==="1" ?
+                            <Image
+                                src={hyper_market_selected}
+                                alt="service"
+                            />
+                        :
+                            <Image
+                                src={hyperMarketImage}
+                                alt="service"
+                            />
+                        }
                         <span>هایپر مارکت</span>
                     </div>
                     <div
-                        className={categoryType==="2" ? "type_selected" : ""}
                         onClick={()=>{
                             dispatch(setCategoryType("2"));
                             router.push("/restaurant");
                             dispatch(setSelectedHyper(null));
                         }}
                     >
-                        <Image
-                            src={restaurantImage}
-                            alt="service"
-                        />
+                        {categoryType==="2" ?
+                            <Image
+                                src={restaurant_selected}
+                                alt="service"
+                            />
+                        :
+                            <Image
+                                src={restaurantImage}
+                                alt="service"
+                            />
+                        }
                         <span>رستوران</span>
                     </div>
                     <div className={styles.home_item_two}>
                         <div
-                            className={categoryType==="3" ? "type_selected" : ""}
                             onClick={()=>{
                                 dispatch(setCategoryType("3"));
                                 router.push("/restaurant");
                                 dispatch(setSelectedHyper(null));
                             }}
                         >
-                            <Image
-                                src={fastFoodImage}
-                                alt="service"
-                            />
+                            {categoryType==="3" ?
+                                <Image
+                                    src={fastfood_selected}
+                                    alt="service"
+                                />
+                                :
+                                <Image
+                                    src={fastFoodImage}
+                                    alt="service"
+                                />
+                            }
                             <span>فست فود</span>
                         </div>
                     </div>
@@ -330,9 +365,8 @@ const Restaurant=()=>{
                 <Carousel
                     className={styles.restaurant_slider}
                     showArrows={false}
-                    enableAutoPlay={true}
                     renderPagination={()=>(<span></span>)}
-                    itemsToShow={2}
+                    itemsToShow={2.25}
                     isRTL={true}
                 >
                     {newest && newest.length!==0 && newest.map((data,index)=>(
@@ -372,9 +406,8 @@ const Restaurant=()=>{
                 <Carousel
                     className={styles.restaurant_slider}
                     showArrows={false}
-                    enableAutoPlay={true}
                     renderPagination={()=>(<span></span>)}
-                    itemsToShow={2}
+                    itemsToShow={2.25}
                     isRTL={true}
                 >
                     {best && best.length!==0 && best.map((data,index)=>(

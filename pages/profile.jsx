@@ -6,7 +6,7 @@ import Env from "../Constant/Env.json";
 import { Button , Modal} from "antd";
 import { useRouter } from "next/router";
 import { useDispatch , useSelector } from "react-redux";
-import { setProfile } from "../Store/Action";
+import { setProfile , setMenu} from "../Store/Action";
 import { toast } from "react-toastify";
 import Head from 'next/head';
 import { useEffect } from "react";
@@ -76,6 +76,7 @@ const Profile=()=>{
 
     useEffect(()=>{
         getProfile();
+        dispatch(setMenu(4));
     },[])
 
 

@@ -2,7 +2,7 @@ import { useEffect,useState } from "react";
 import styles from "../styles/AllRestaurants.module.css";
 import Menu from "../Components/Menu/Menu";
 import { useSelector , useDispatch} from "react-redux";
-import {setResData} from "../Store/Action";
+import {setMenu, setResData} from "../Store/Action";
 import Image from "next/image";
 import Head from 'next/head';
 import { useRouter } from "next/router";
@@ -20,6 +20,8 @@ const AllRestaurants=()=>{
 
     const categoryType=useSelector(state=>state.Reducer.categoryType);
     const cartData=useSelector(state=>state.Reducer.cart);
+    const lat=useSelector(state=>state.Reducer.lat);
+    const lng=useSelector(state=>state.Reducer.lng);
     const [restaurants , setRestaurants]=useState(null);
     const [text , setText]=useState("");
     const [search , setSearch]=useState([]);
@@ -30,6 +32,12 @@ const AllRestaurants=()=>{
         postData.append("Token",Env.token);
         postData.append("CategoryTypeId",categoryType);
         postData.append("CityId",cityId);
+        if(lat!==""){
+            postData.append("Latitude",lat);
+        }
+        if(lng!==""){
+            postData.append("Longitude",lng);
+        }
         try{
             const response=await axios.post(Env.baseUrl + "SelectCategoryFamilyByRestaurant.aspx",postData);
             if(response.data.Status===1){
@@ -54,10 +62,12 @@ const AllRestaurants=()=>{
     const selectRes=(data)=>{
         router.push("/restaurantPage");
         dispatch(setResData(data));
+        dispatch(setMenu(0));
     }
 
     useEffect(()=>{
         getAllRestaurants();
+        dispatch(setMenu(1));
     },[])
 
     useEffect(()=>{
@@ -133,7 +143,7 @@ const AllRestaurants=()=>{
                                                 src={starIcon}
                                                 alt="rate"
                                             />
-                                            <span>{data.Points && FormatHelper.toPersianString(data.Points)}</span>
+                                            <span>{data.Points && FormatHelper.toPersianString(data.Points.toFixed(1))}</span>
                                         </div>
                                     }
                                 </div>

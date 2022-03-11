@@ -16,7 +16,7 @@
   position:fixed;
   bottom: 8vh;
   width: 100%;
-  max-width: 420px;
+  max-width: 430px;
   height: 6.5vh;
   background: linear-gradient(90deg, #358f51 0%, #56b3d2 50%, #56b3d2 100%) !important;  
   color: white;
@@ -85,13 +85,13 @@
   height: 70%;
 }
 .cart_item > div:nth-child(1)>div:nth-child(1){
-  width: 20%;
+  width: 40%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .cart_item > div:nth-child(1)>div:nth-child(2){
-  width: 80%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

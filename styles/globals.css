@@ -23,7 +23,7 @@
 }
 .dashboard-page{
   width: 100%;
-  max-width: 420px;
+  max-width: 430px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -39,7 +39,7 @@
 }
 .header {
   width: 100%;
-  max-width: 420px;
+  max-width: 430px;
   height: 7vh;
   display: flex;
   align-items: center;
@@ -112,7 +112,7 @@
 }
 .rec-item-wrapper a{
   width: 100% !important;
-  height: 30vh !important;
+  height: 26vh !important;
 }
 .rec-item-wrapper span{
   width: 100% !important;
@@ -163,6 +163,13 @@
 }
 #no_pic_image{
   background-color: rgb(52,50,113) !important;
+}
+.side_selected > div :nth-child(1){
+  border: 1px solid #5925B6 !important;
+  border-radius: 50% !important;
+}
+.ant-collapse-item-active>div:nth-child(1){
+  border-bottom: 1px solid #5925B6 !important;
 }
 @media only screen and (min-width:420px){
   .dashboard-page{

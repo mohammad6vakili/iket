@@ -4,7 +4,7 @@ import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import searchIcon from "../assets/images/search.svg";
 import {useDispatch,useSelector} from "react-redux";
-import { setFood } from "../Store/Action";
+import { setFood,setMenu,setBadge } from "../Store/Action";
 import Head from 'next/head';
 import { useRouter } from "next/router";
 import FormatHelper from "../Helper/FormatHelper";
@@ -28,7 +28,7 @@ const RestaurantPage=()=>{
         setShow(false);
         let already=false;
         if(cart && cart.length>0 && cart[0].ProviderID!==product.ProviderID){
-            toast.warning("شما فقط میتوانید از یک تامین کننده خرید کنید",{
+            toast.warning("خرید از چند فروشگاه امکان پذیر نیست.",{
                 position:"bottom-left"
             })
         }else if(product.count > product.Quantity){
@@ -56,12 +56,14 @@ const RestaurantPage=()=>{
                 localStorage.setItem("cart",JSON.stringify(cart));
             }
         }
+        dispatch(setBadge(cart.length));
     }
 
     useEffect(()=>{
         if(resData===null){
             router.push("/restaurant");
         }
+        dispatch(setMenu(0));
     },[])
 
     useEffect(()=>{
@@ -94,7 +96,7 @@ const RestaurantPage=()=>{
                             onClick={()=>router.push("/restaurant")}
                         />
                     </div>
-                    <div style={{cursor:"pointer"}} className="header-left-icon">
+                    <div onClick={()=>router.push("/search")} style={{cursor:"pointer"}} className="header-left-icon">
                         <Image
                             src={searchIcon}
                             alt="search"
@@ -139,14 +141,20 @@ const RestaurantPage=()=>{
                             <div className={styles.restaurant_page_menu_sidebar}>
                                 {resData.SubCategory && resData.SubCategory.map((cat,index)=>{
                                     if(cat.Product.length>0){
-                                        return <div key={index} onClick={()=>{setProducts(cat.Product);setCatId(cat.ID)}}>
-                                                    <Image
-                                                        src={cat.PhotoUrl}
-                                                        loader={()=>cat.PhotoUrl}
-                                                        alt="category image"
-                                                        width={"100%"}
-                                                        height={"100%"}
-                                                    />
+                                        return <div 
+                                                    key={index} 
+                                                    onClick={()=>{setProducts(cat.Product);setCatId(cat.ID)}}
+                                                    className={cat.ID===catId ? "side_selected" : ""}
+                                                >
+                                                    <div>
+                                                        <Image
+                                                            src={cat.PhotoUrl}
+                                                            loader={()=>cat.PhotoUrl}
+                                                            alt="category image"
+                                                            width={"100%"}
+                                                            height={"100%"}
+                                                        />
+                                                    </div>
                                                     <div style={cat.ID===catId ? {color:"rgb(139,85,233)"} : {color:"unset"}}>{cat.Title}</div>
                                                 </div>
                                     }
@@ -168,7 +176,7 @@ const RestaurantPage=()=>{
                                         >
                                             {pr.Title}
                                         </div>
-                                        <div>{pr.Description}</div>
+                                        <div>{FormatHelper.toPersianString(pr.Description)}</div>
                                         <div>
                                             <select
                                                 onChange={(e)=>{
@@ -232,7 +240,7 @@ const RestaurantPage=()=>{
                             <Button onClick={()=>router.push("/cart")} className="enter_purple_btn">اتمام خرید</Button>
                             <Button className="enter_purple_btn">
                                 {cart && show &&
-                                    FormatHelper.toPersianString(cart.reduce((a, c) => a + c.Price * c.count, 0).toLocaleString())} تومان
+                                    FormatHelper.toPersianString(cart.reduce((a, c) => a + c.PriceWithDiscount * c.count, 0).toLocaleString())} تومان
                             </Button>
                         </div>
                     </>

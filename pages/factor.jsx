@@ -98,7 +98,7 @@ const Factor=()=>{
                                 <div style={{width:"15%"}}>{FormatHelper.toPersianString(index+1)}</div>
                                 <div style={{width:"45%"}}>{data.Title}</div>
                                 <div style={{width:"15%"}}>{FormatHelper.toPersianString(data.Quantity)}</div>
-                                <div style={{width:"25%"}}>{FormatHelper.toPersianString(data.Price.toLocaleString())}</div>
+                                <div style={{width:"25%"}}>{FormatHelper.toPersianString((data.Price - data.PriceWithDiscount).toLocaleString())}</div>
                             </div>
                         ))}
                     </div>
@@ -116,7 +116,7 @@ const Factor=()=>{
                                 <div style={{fontSize:"13px"}}>مبلغ کل</div>
                                 <div style={{color:"gray"}}>- - - - - - - - - -</div>
                                 <div style={{fontSize:"14px"}}>
-                                    {factorData && factorData.TotalPrice && FormatHelper.toPersianString(factorData.TotalPrice.toLocaleString())} تومان
+                                    {factorData && factorData.TotalPrice && FormatHelper.toPersianString(factorData.TotalPriceWithDiscount.toLocaleString())} تومان
                                 </div>
                             </div>
                         </div>

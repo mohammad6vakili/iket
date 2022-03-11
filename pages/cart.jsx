@@ -1,7 +1,7 @@
 import { useState , useEffect } from "react";
 import styles from "../styles/Cart.module.css";
 import { useSelector , useDispatch} from "react-redux";
-import { setCart } from "../Store/Action";
+import { setCart, setMenu,setBadge } from "../Store/Action";
 import { useRouter } from "next/router";
 import trashIcon from "../assets/images/trash.svg";
 import Image from "next/image";
@@ -60,6 +60,7 @@ const Cart=()=>{
         if(cartData && cartData.length>0){
             getDeliveryPrice();
         }
+        dispatch(setMenu(2));
     },[])
 
     useEffect(()=>{
@@ -78,6 +79,10 @@ const Cart=()=>{
         if(cartData && cartData.length===0){
             localStorage.removeItem("cart");
         }
+        if(cartData && cartData.length>0){
+            localStorage.setItem("cart",JSON.stringify(cartData));
+        }
+        dispatch(setBadge(cartData.length));
     },[cartData])
 
     return(
@@ -139,16 +144,16 @@ const Cart=()=>{
                                         <Image
                                             src={noFood}
                                             alt="food logo"
-                                            width={50}
-                                            height={50}
+                                            width={85}
+                                            height={85}
                                         />
                                     :
                                         <Image
                                             src={data.PhotoUrl}
                                             loader={()=>data.PhotoUrl}
                                             alt="food logo"
-                                            width={50}
-                                            height={50}
+                                            width={85}
+                                            height={85}
                                         />
                                     }
 
@@ -157,9 +162,9 @@ const Cart=()=>{
                                     <div>{data.Title && FormatHelper.toPersianString(data.Title)}</div>
                                     <div>{data.Description && FormatHelper.toPersianString(data.Description)}</div>
                                     {data.Price && data.Price !== data.PriceWithDiscount &&
-                                        <div style={{color:"red",textDecoration:"line-through"}}>{FormatHelper.toPersianString(data.Price)} تومان</div>
+                                        <div style={{color:"red",textDecoration:"line-through"}}>{FormatHelper.toPersianString(data.Price.toLocaleString())} تومان</div>
                                     }
-                                    <div style={{color:"#00a854"}}>{data.PriceWithDiscount && FormatHelper.toPersianString(data.PriceWithDiscount)} تومان</div>
+                                    <div style={{color:"black"}}>{data.PriceWithDiscount && FormatHelper.toPersianString(data.PriceWithDiscount.toLocaleString())} تومان</div>
                                 </div>
                             </div>
                             <div>
@@ -195,7 +200,7 @@ const Cart=()=>{
                                 </div>
                                 <div>
                                     {showTotal &&
-                                        FormatHelper.toPersianString((data.Price * data.count).toLocaleString()) + "تومان"
+                                        FormatHelper.toPersianString((data.PriceWithDiscount * data.count).toLocaleString()) + "تومان"
                                     }
                                 </div>
                             </div>
@@ -220,7 +225,7 @@ const Cart=()=>{
                 >
                     خرید خود را نهایی کنید
                     <div>
-                        {FormatHelper.toPersianString(cartData.reduce((a, c) => a + c.Price * c.count, 0).toLocaleString())} تومان
+                        {FormatHelper.toPersianString(cartData.reduce((a, c) => a + c.PriceWithDiscount * c.count, 0).toLocaleString())} تومان
                     </div>
                 </div>
             </div>

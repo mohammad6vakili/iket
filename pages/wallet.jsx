@@ -2,12 +2,12 @@ import { useState , useEffect} from "react";
 import styles from "../styles/Wallet.module.css";
 import axios from "axios";
 import Env from "../Constant/Env.json";
-import { Button , Input} from "antd";
+import { Button , Form, Input} from "antd";
 import Head from 'next/head';
 import { useRouter } from "next/router";
 import { useSelector , useDispatch} from "react-redux";
 import { toast } from "react-toastify";
-import { setProfile } from "../Store/Action";
+import { setProfile,setMenu } from "../Store/Action";
 import FormatHelper from "../Helper/FormatHelper";
 import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
@@ -55,6 +55,7 @@ const Wallet=()=>{
 
         useEffect(() => {
             getProfile();
+            dispatch(setMenu(4));
         }, []);
 
     return(
@@ -116,14 +117,53 @@ const Wallet=()=>{
                                 ۱۰,۰۰۰ تومان
                             </Button>
                         </div>
-                        <Input
-                            value={FormatHelper.toPersianString(price)}
-                            onChange={(e)=>setPrice(e.target.value)}
-                            style={{marginTop:"20px",backgroundColor:"transparent"}}
-                            type="tel"
-                            placeholder="مبلغ مورد نظر را وارد کنید"
-                            className={styles.enter_input}
-                        />
+                        <div style={{position:"relative",width:"100%",display:"flex",justifyContent:"center"}}>
+                            <Input
+                                value={FormatHelper.toPersianString(price)}
+                                onChange={(e)=>setPrice(e.target.value)}
+                                style={{marginTop:"20px",backgroundColor:"transparent"}}
+                                type="tel"
+                                placeholder="مبلغ مورد نظر را وارد کنید"
+                                className={styles.enter_input}
+                            />
+                            <Button
+                                style={{
+                                    position:"absolute",
+                                    right:"0",
+                                    bottom:"20%",
+                                    display:"flex",
+                                    alignItems:"center",
+                                    paddingTop:"5px"
+                                }}
+                                onClick={()=>{
+                                    setPrice(parseFloat(price + 5000));
+                                }}
+                            >
+                                +
+                            </Button>
+                            <Button
+                                style={{
+                                    position:"absolute",
+                                    left:"0",
+                                    bottom:"20%",
+                                    display:"flex",
+                                    alignItems:"center",
+                                    paddingBottom:"10px"
+                                }}
+                                onClick={()=>{
+                                    if(price !== 0){
+                                        console.log(price)
+                                        if(parseFloat(FormatHelper.toEnglishString(price)) < 5000 || price===""){
+                                            setPrice(0);
+                                        }else{
+                                            setPrice(parseFloat(price - 5000));
+                                        }
+                                    }
+                                }}
+                            >
+                                _
+                            </Button>
+                        </div>
                     </div>
                     <Button
                             onClick={()=>{

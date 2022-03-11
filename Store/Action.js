@@ -16,6 +16,7 @@ export const ADDRESS="ADDRESS";
 export const SELECTED_ADDRESS="SELECTED_ADDRESS";
 export const FACTOR_DATA="FACTOR_DATA";
 export const EDTI_ADDRESS="EDTI_ADDRESS";
+export const BADGE="BADGE";
 
 
 
@@ -159,6 +160,14 @@ export const setEditAddress=(data)=>{
     return(
         {
             type:EDTI_ADDRESS,
+            payload:data
+        }
+    )
+}
+export const setBadge=(data)=>{
+    return(
+        {
+            type:BADGE,
             payload:data
         }
     )

@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import {setProfile} from "../Store/Action";
 import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
-import walletIcon from "../assets/images/wallet.svg";
+import walletIcon from "../assets/images/wallet-icon.webp";
 import axios from "axios";
 import { Input, Radio, Switch , Button } from "antd";
 import Env from "../Constant/Env.json";
@@ -63,6 +63,9 @@ const SelectPayment=()=>{
                 });
             }else{
                 setSum(response.data.Data);
+                toast.success(response.data.Message,{
+                    position:"bottom-left"
+                })
             }
         }catch(err){
             console.log(err);
@@ -98,7 +101,7 @@ const SelectPayment=()=>{
     }
 
     useEffect(()=>{
-        setSum(cart.reduce((a, c) => a + c.Price * c.count, 0));
+        setSum(cart.reduce((a, c) => a + c.PriceWithDiscount * c.count, 0));
         if(address){
             address.map((data)=>{
                 if(selectedAddress === data.ID){
@@ -144,8 +147,6 @@ const SelectPayment=()=>{
                             setIsWallet(true);
                             if(profile.Wallet===sum){
                                 setSum(0);
-                            } if(profile.Wallet>sum){
-                                setSum(0);
                             }
                             if(profile.Wallet> sum+delivery){
                                 setSum(0);
@@ -153,6 +154,11 @@ const SelectPayment=()=>{
                             }
                             if(profile.Wallet<sum){
                                 setSum(sum - profile.Wallet)
+                            }
+                            if(profile.Wallet>sum){
+                                setSum(0);
+                                console.log("mdm")
+                                setDelivery((sum + delivery) - profile.Wallet);
                             }
                         }else{
                             if(address){
@@ -162,7 +168,7 @@ const SelectPayment=()=>{
                                     }
                                 })
                             }
-                            setSum(cart.reduce((a, c) => a + c.Price * c.count, 0));
+                            setSum(cart.reduce((a, c) => a + c.PriceWithDiscount * c.count, 0));
                             setIsWallet(false);
                         }
                     }}
@@ -182,7 +188,27 @@ const SelectPayment=()=>{
                         <Radio value={"1"}>
                             <div>استفاده از کیف پول</div>
                             <div>موجودی کیف پول : {profile && FormatHelper.toPersianString(profile.Wallet.toLocaleString())} تومان</div>
-                            <Switch checked={isWallet}/>
+                            <Switch
+                                onChange={()=>{
+                                    setMethod("1");
+                                    setIsWallet(true);
+                                    if(profile.Wallet===sum){
+                                        setSum(0);
+                                    }
+                                    if(profile.Wallet> sum+delivery){
+                                        setSum(0);
+                                        setDelivery(0);
+                                    }
+                                    if(profile.Wallet<sum){
+                                        setSum(sum - profile.Wallet)
+                                    }
+                                    if(profile.Wallet>sum){
+                                        setSum(0);
+                                        setDelivery((sum + delivery) - profile.Wallet);
+                                    }
+                                }}
+                                checked={isWallet}
+                            />
                         </Radio>
                 </Radio.Group>
                 <div className={styles.select_payment_address_box}>

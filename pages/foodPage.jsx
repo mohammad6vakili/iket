@@ -5,7 +5,7 @@ import rightArrow from "../assets/images/right-arrow-white.svg";
 import { useSelector , useDispatch} from "react-redux";
 import Head from 'next/head';
 import { useRouter } from "next/router";
-import { setCart } from "../Store/Action";
+import { setMenu , setBadge} from "../Store/Action";
 import noFood from "../assets/images/empty_food.png";
 import FormatHelper from "../Helper/FormatHelper";
 import { toast } from "react-toastify";
@@ -21,7 +21,7 @@ const foodPage=()=>{
     const addToCart=()=>{
         let already = false;
         if(cart && cart.length>0 && cart[0].ProviderID!==food.ProviderID){
-            toast.warning("شما فقط میتوانید از یک تامین کننده خرید کنید",{
+            toast.warning("خرید از چند فروشگاه امکان پذیر نیست.",{
                 position:"bottom-left"
             })
         }else if(food.count > food.Quantity){
@@ -43,6 +43,7 @@ const foodPage=()=>{
                     position:"bottom-left"
                 });
             }else{
+                router.push("/restaurantPage");
                 if(cart && cart.length===0){
                     cart.push(food);
                     toast.success("به سبد خرید افزوده شد",{
@@ -69,6 +70,7 @@ const foodPage=()=>{
                 }
             }
             console.log(cart);
+            dispatch(setBadge(cart.length));
         }
     }
 
@@ -96,6 +98,7 @@ const foodPage=()=>{
         if(food){
             setCount(food.count)
         }
+        dispatch(setMenu(0));
     },[])
 
     useEffect(()=>{

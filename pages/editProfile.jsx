@@ -117,11 +117,21 @@ const EditProfile=()=>{
                     </div>
                     <div className={styles.edit_profile_top}>
                         <div onClick={()=>uploadRef.click()}>
-                            {imageList==="" ?
+                            {imageList.length===0 && profile && profile.PhotoUrl==="https://iketpanel.com" &&
                                 <div style={{cursor:"pointer"}}>
                                     افزودن تصویر
                                 </div>
-                            :imageList!=="" &&
+                            }
+                            {profile && profile.PhotoUrl!=="https://iketpanel.com" && imageList.length===0 &&
+                               <Image
+                                    src={profile.PhotoUrl}
+                                    loader={()=>profile.PhotoUrl}
+                                    alt="back"
+                                    width={"70px"}
+                                    height={"70px"}
+                                />
+                            }
+                            {imageList && imageList.length>0 &&
                                 <Image
                                     src={imageList}
                                     alt="back"

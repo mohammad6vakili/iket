@@ -2,7 +2,7 @@ import { useEffect,useState } from "react";
 import styles from "../styles/Categories.module.css";
 import Menu from "../Components/Menu/Menu";
 import { useSelector , useDispatch} from "react-redux";
-import {setSelectedSubCat} from "../Store/Action";
+import {setSelectedSubCat , setMenu} from "../Store/Action";
 import Image from "next/image";
 import Logo from "../assets/images/logo_colored.webp";
 import Head from 'next/head';
@@ -11,6 +11,7 @@ import rightArrow from "../assets/images/right-arrow-white.svg";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Env from "../Constant/Env.json";
+import loadingSvg from "../assets/images/loading.svg";
 import { Collapse } from "antd";
 const { Panel } = Collapse;
 
@@ -76,6 +77,7 @@ const Categories=()=>{
         if(selectedHyper || lat!==""){
             getCategories();
         }
+        dispatch(setMenu(1));
     },[])
 
     useEffect(()=>{
@@ -106,6 +108,17 @@ const Categories=()=>{
                         </div>
                     }
                 </div>
+                {categories===null &&
+                    <div style={{width:"100%",display:"flex",flexDirection:"column",alignItems:"center"}}> 
+                        <Image
+                            src={loadingSvg}
+                            alt="loading"
+                            width={100}
+                            height={100}
+                        />
+                        <div>لطفا منتظر بمانید</div>
+                    </div>
+                }
                 {step===0 &&
                     <div style={{marginTop:"20px"}}>
                         {categories && categories.length>0 && categories.map((data,index)=>(
@@ -168,12 +181,11 @@ const Categories=()=>{
                             ))}
                         </div>
                         <div>
+                        <Collapse accordion defaultActiveKey={['0']}>
                             {selectedSubCategory && selectedSubCategory.length>0 && selectedSubCategory.map((data,index)=>(
-                                <Collapse defaultActiveKey={['0']}>
-                                    <Panel header={data.Title} key={index}>
+                                    <Panel header={data.Title} key={index.toString()}>
                                         {data.SubCategoryPackage && data.SubCategoryPackage.length>0 && data.SubCategoryPackage.map((pac,index)=>(
                                             <div
-                                                key={index}
                                                 onClick={()=>{
                                                     if(pac.Product.length===0){
                                                         toast.warning("متاسفانه محصولی یافت نشد",{
@@ -206,8 +218,8 @@ const Categories=()=>{
                                             </div>
                                         ))}
                                     </Panel>
-                                </Collapse>
                             ))}
+                                </Collapse>
                         </div>
                     </div>
                 }

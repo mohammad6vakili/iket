@@ -58,6 +58,7 @@ const LocateUser=()=>{
                     response.data.Data.map((city)=>{
                         if(city.ID.toString()===localStorage.getItem("selectCity")){
                             setSelectCity(city);
+                            setArea(city.Area);
                         }
                     })
                 }
