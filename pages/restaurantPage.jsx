@@ -4,7 +4,7 @@ import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import searchIcon from "../assets/images/search.svg";
 import {useDispatch,useSelector} from "react-redux";
-import { setFood,setMenu,setBadge } from "../Store/Action";
+import { setFood,setMenu,setBadge,setCart,setSelectedProvider} from "../Store/Action";
 import Head from 'next/head';
 import { useRouter } from "next/router";
 import FormatHelper from "../Helper/FormatHelper";
@@ -32,7 +32,7 @@ const RestaurantPage=()=>{
                 position:"bottom-left"
             })
         }else if(product.count > product.Quantity){
-            toast.warning("ظرفیت غذا کافی نمیباشد",{
+            toast.warning("موجودی محصول کافی نیست",{
                 position:"bottom-left"
             })
         }else{
@@ -63,7 +63,16 @@ const RestaurantPage=()=>{
         if(resData===null){
             router.push("/restaurant");
         }
+        if(resData && cart && cart.length>0){
+            if(resData.ID!==cart[0].ProviderID){
+                dispatch(setCart([]));
+                dispatch(setBadge(0))
+                localStorage.setItem("cart",[]);
+                console.log("2")
+            }
+        }
         dispatch(setMenu(0));
+        dispatch(setSelectedProvider(resData.ID));
     },[])
 
     useEffect(()=>{
@@ -134,8 +143,8 @@ const RestaurantPage=()=>{
                                     />
                                 </div>
                                 }
-                            <div>{resData.Title}</div>
-                            <div>{resData.SubTitle && FormatHelper.toPersianString(resData.SubTitle)}</div>
+                            <div>{resData && resData.Title}</div>
+                            <div>{resData && resData.SubTitle && FormatHelper.toPersianString(resData.SubTitle)}</div>
                         </div>
                         <div className={styles.restaurant_page_menu_wrapper}>
                             <div className={styles.restaurant_page_menu_sidebar}>
@@ -161,7 +170,7 @@ const RestaurantPage=()=>{
                                 })}
                             </div>
                             <div className={styles.restaurant_page_menu_menu}>
-                                {products.map((pr,index)=>(
+                                {products && products.map((pr,index)=>(
                                     <div
                                         className={pr.IsActive===false ? styles.restaurant_page_item_disabled : ""}
                                         key={index}
@@ -176,7 +185,7 @@ const RestaurantPage=()=>{
                                         >
                                             {pr.Title}
                                         </div>
-                                        <div>{FormatHelper.toPersianString(pr.Description)}</div>
+                                        <div>{pr && pr.Description && FormatHelper.toPersianString(pr.Description)}</div>
                                         <div>
                                             <select
                                                 onChange={(e)=>{
@@ -205,7 +214,7 @@ const RestaurantPage=()=>{
                                                     }}
                                                     className={pr.PriceWithDiscount!==pr.Price ? styles.restaurant_page_discount_price : ""}
                                                 >
-                                                    {FormatHelper.toPersianString(pr.Price.toLocaleString()) + " تومان"}
+                                                    {pr && pr.Price && FormatHelper.toPersianString(pr.Price.toLocaleString()) + " تومان"}
                                                 </div>
                                                 <div
                                                     onClick={()=>{
@@ -215,7 +224,7 @@ const RestaurantPage=()=>{
                                                         }
                                                     }}
                                                 >
-                                                    {pr.PriceWithDiscount!==pr.Price && FormatHelper.toPersianString(pr.PriceWithDiscount.toLocaleString()) +"تومان"}
+                                                    {pr && pr.PriceWithDiscount && pr.Price &&pr.PriceWithDiscount!==pr.Price && FormatHelper.toPersianString(pr.PriceWithDiscount.toLocaleString()) +"تومان"}
                                                 </div>
                                                 <Button onClick={()=>addToCart(pr)}>
                                                     افزودن به سبد خرید

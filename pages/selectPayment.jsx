@@ -22,7 +22,7 @@ const SelectPayment=()=>{
     const [method , setMethod]=useState("0");
     const [isWallet , setIsWallet]=useState(false);
     const [discount , setDiscount]=useState("");
-    const [discountVal , setDiscountVal]=useState(null);
+    const [isDiscount , setIsDiscount]=useState(false);
 
     const address = useSelector(state=>state.Reducer.address);
     const profile = useSelector(state=>state.Reducer.profile);
@@ -66,6 +66,7 @@ const SelectPayment=()=>{
                 toast.success(response.data.Message,{
                     position:"bottom-left"
                 })
+                setIsDiscount(true);
             }
         }catch(err){
             console.log(err);
@@ -244,6 +245,11 @@ const SelectPayment=()=>{
                             اعمال
                         </Button>
                     </div>
+                    {isDiscount===true &&
+                        <div style={{width:"100%",textAlign:"center",marginTop:"10px",color:"red",textDecoration:"line-through"}}>
+                            مبلغ قبل از تخفیف : {FormatHelper.toPersianString(cart.reduce((a, c) => a + c.PriceWithDiscount * c.count, 0).toLocaleString())} تومان
+                        </div>
+                    }
                     <div style={{width:"100%",textAlign:"center",marginTop:"10px"}}>
                         مبلغ : {FormatHelper.toPersianString(sum.toLocaleString())} تومان
                     </div>

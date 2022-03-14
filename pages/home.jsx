@@ -62,6 +62,9 @@ const Home=()=>{
     useEffect(()=>{
         getAreaWithProvider();
         dispatch(setMenu(0));
+        if(localStorage.getItem("categoryType")){
+            dispatch(setCategoryType(localStorage.getItem("categroyType")));
+        }
     },[])
     
     useEffect(()=>{
@@ -125,6 +128,7 @@ const Home=()=>{
                                         position:"bottom-left"
                                     })
                                 }else{
+                                    localStorage.setItem("categoryType","1");
                                     dispatch(setCategoryType("1"));
                                     router.push("/hypers");
                                 }
@@ -148,6 +152,7 @@ const Home=()=>{
                     <div 
                         onClick={()=>{
                             if(lat!==""){
+                                localStorage.setItem("categoryType","1");
                                 dispatch(setCategoryType("1"));
                                 router.push("/hypers");
                             }else{
@@ -157,6 +162,8 @@ const Home=()=>{
                                     })
                                 }else if(hypers.length===1){
                                     setSelectedHyper(hypers[0].ID);
+                                    dispatch(setSelectedHyper(hypers[0]));
+                                    localStorage.setItem("categoryType","1");
                                     dispatch(setCategoryType("1"));
                                     router.push("/hypers");
                                 }else{
@@ -177,6 +184,7 @@ const Home=()=>{
                         <span>هایپر مارکت</span>
                     </div>
                     <div onClick={()=>{
+                        localStorage.setItem("categoryType","2");
                         dispatch(setCategoryType("2"));
                         dispatch(setSelectedHyper(null));
                         router.push("/restaurant");
@@ -190,6 +198,7 @@ const Home=()=>{
                 </div>
                 <div className={styles.home_item_two}>
                     <div onClick={()=>{
+                        localStorage.setItem("categoryType","3");
                         dispatch(setCategoryType("3"));
                         router.push("/restaurant");
                         dispatch(setSelectedHyper(null));

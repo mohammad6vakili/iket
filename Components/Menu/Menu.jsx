@@ -1,9 +1,9 @@
-import React from "react";
+import React,{useEffect} from "react";
 import styles from "../../styles/Menu.module.css";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { setMenu } from "../../Store/Action";
+import { setMenu,setSelectedProvider } from "../../Store/Action";
 import homeActive from "../../assets/images/home_tab_selected.webp";
 import homeOff from "../../assets/images/home_tab_unselected.webp";
 import catActive from "../../assets/images/category_tab_selected.webp";
@@ -23,6 +23,7 @@ const Menu = () => {
   const cart = useSelector((state) => state.Reducer.cart);
   const categoryType = useSelector((state) => state.Reducer.categoryType);
   const badge = useSelector((state) => state.Reducer.badge);
+
 
   return (
     <div className={styles.menu}>

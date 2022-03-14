@@ -16,6 +16,7 @@ const Product=()=>{
     const dispatch=useDispatch();
     const product = useSelector(state=>state.Reducer.product);
     const cart = useSelector(state=>state.Reducer.cart);
+    const subCat = useSelector(state=>state.Reducer.selectedSubCat);
     const menu = useSelector(state=>state.Reducer.menu);
     const [count , setCount]=useState(0);
     
@@ -27,7 +28,7 @@ const Product=()=>{
                 position:"bottom-left"
             })
         }else if(product.count > product.Quantity){
-            toast.warning("ظرفیت کافی نمیباشد",{
+            toast.warning("موجودی محصول کافی نیست",{
                 position:"bottom-left"
             })
         }else{
@@ -124,13 +125,19 @@ const Product=()=>{
             </Head>
             {product &&
                 <div className={`${styles.food_page} dashboard-page`} style={{position:"relative"}}>
-                    <div style={{fontSize:"14px"}} className="header">
+                    <div onClick={()=>console.log(subCat)} style={{fontSize:"14px"}} className="header">
                         {product.Title}
                         <div className="header-right-icon">
                             <Image
                                 src={rightArrow}
                                 alt="back"
-                                onClick={()=>{router.push("/hypers");dispatch(setMenu(0));}}
+                                onClick={()=>{
+                                    if(subCat===null){
+                                        router.push("/hypers");dispatch(setMenu(0));
+                                    }else{
+                                        router.push("/productList");
+                                    }
+                                }}
                             />
                         </div>
                     </div>

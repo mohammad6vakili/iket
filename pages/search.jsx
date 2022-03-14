@@ -23,6 +23,7 @@ const Search=()=>{
     const cart = useSelector(state=>state.Reducer.cart);
     const categoryType = useSelector(state=>state.Reducer.categoryType);
     const selectedHyper = useSelector(state=>state.Reducer.selectedHyper);
+    const selectedProvider = useSelector(state=>state.Reducer.selectedProvider);
     const lat = useSelector(state=>state.Reducer.lat);
     const lng = useSelector(state=>state.Reducer.lng);
 
@@ -31,6 +32,9 @@ const Search=()=>{
         postData.append("Token",Env.token);
         postData.append("CategoryTypeID",categoryType);
         postData.append("Search",str);
+        if(selectedProvider){
+            postData.append("ProviderID",selectedProvider);
+        }
         if(selectedHyper!==null){
             postData.append("ProviderID",selectedHyper.ID);
         }
@@ -58,7 +62,7 @@ const Search=()=>{
                 position:"bottom-left"
             })
         }else if(product.count > product.Quantity){
-            toast.warning("ظرفیت غذا کافی نمیباشد",{
+            toast.warning("موجودی محصول کافی نیست",{
                 position:"bottom-left"
             })
         }else{
@@ -101,6 +105,7 @@ const Search=()=>{
 
     useEffect(()=>{
         dispatch(setMenu(3));
+        console.log(selectedProvider)
     },[])
 
     return(

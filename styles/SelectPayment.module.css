@@ -59,7 +59,7 @@
 }
 .select_payment_address_box{
     width: calc(100% - 20px);
-    min-height: 30vh;
+    min-height: 34vh;
 }
 .address_body > label > span:nth-child(1) {
   position: absolute;

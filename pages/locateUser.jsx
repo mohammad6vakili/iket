@@ -10,7 +10,7 @@ import Head from 'next/head';
 import ReactMapGL,{Marker} from "react-map-gl";
 import rightArrow from "../assets/images/right-arrow-white.svg";
 import { useDispatch , useSelector} from "react-redux";
-import { setLat , setLng} from "../Store/Action";
+import { setLat , setLng , setCart, setCategoryType} from "../Store/Action";
 import { useRouter } from "next/router";
 import markerIcon from "../assets/images/location-marker.png";
 import { Input , Button , Modal} from "antd";
@@ -143,8 +143,9 @@ const LocateUser=()=>{
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(setCoord,handler);
                 function setCoord(position){
-                    dispatch(setLat(position.coords.latitude.toFixed(6)));
+                    dispatch(setLat(position.coords.latitude.toFixed(6)) , position.coords.longitude.toFixed(6));
                     dispatch(setLng(position.coords.longitude.toFixed(6)));
+                    getAddress(position.coords.latitude.toFixed(6) , )
                     viewport.latitude =parseFloat(position.coords.latitude.toFixed(6));
                     viewport.longitude =parseFloat(position.coords.longitude.toFixed(6));
                     setIsMap(true);
@@ -196,6 +197,12 @@ const LocateUser=()=>{
         getAreas();
         getLatestNotifications();
         setIsMap(false);
+        if(localStorage.getItem("cart")){
+            dispatch(setCart(JSON.parse(localStorage.getItem("cart"))));
+        }
+        if(localStorage.getItem("categoryType")){
+            dispatch(setCategoryType(localStorage.getItem("categoryType")));
+        }
     },[])
 
     useEffect(()=>{
@@ -377,7 +384,7 @@ const LocateUser=()=>{
                     onNativeClick={(val)=>{
                         dispatch(setLng(val.lngLat[0]));
                         dispatch(setLat(val.lngLat[1]));
-                        getAddress(lat , lng);
+                        getAddress(val.lngLat[1] , val.lngLat[0]);
                     }}
                     onViewportChange={(viewport)=>setViewport(viewport)}
                     mapStyle="mapbox://styles/mapbox/streets-v11"

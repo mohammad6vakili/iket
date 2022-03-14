@@ -17,6 +17,7 @@ export const SELECTED_ADDRESS="SELECTED_ADDRESS";
 export const FACTOR_DATA="FACTOR_DATA";
 export const EDTI_ADDRESS="EDTI_ADDRESS";
 export const BADGE="BADGE";
+export const SELECTED_PROVIDER="SELECTED_PROVIDER";
 
 
 
@@ -168,6 +169,14 @@ export const setBadge=(data)=>{
     return(
         {
             type:BADGE,
+            payload:data
+        }
+    )
+}
+export const setSelectedProvider=(data)=>{
+    return(
+        {
+            type:SELECTED_PROVIDER,
             payload:data
         }
     )

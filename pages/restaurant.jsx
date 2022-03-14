@@ -6,7 +6,7 @@ import { Modal } from "antd";
 import Colors from "../Helper/Colors";
 import { Button } from "antd";
 import { useDispatch , useSelector} from "react-redux";
-import { setResData,setMenu,setCart , setCategoryType , setHypers , setSelectedHyper} from "../Store/Action";
+import { setResData,setMenu,setCart , setCategoryType , setHypers , setSelectedHyper,setCityHypers,setSelectedProvider} from "../Store/Action";
 import Head from 'next/head';
 import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
@@ -40,6 +40,34 @@ const Restaurant=()=>{
     const [best , setBest]=useState(null);
 
     const [modal , setModal]=useState(false);
+
+    const getAreaWithProvider=async()=>{
+        let postData=new FormData();
+        postData.append("token",Env.token);
+        try{
+            const response=await axios.post(Env.baseUrl + "SelectAreaWithProvider.aspx",postData);
+            if(response.data.Status===1){
+                dispatch(setCityHypers(response.data.Data));
+                console.log(response.data.Data);
+                response.data.Data.map((data)=>{
+                    data.Area.map((ar)=>{
+                        console.log(ar)
+                        if(ar.Provider.length>0 && ar.ID.toString() === localStorage.getItem("selectArea")){
+                            ar.Provider.map((pr , index)=>{
+                                hypers.push(pr);
+                            })
+                        }
+                    })
+                })
+            }else{
+                toast.warning(response.data.Message,{
+                    position:"bottom-left"
+                })    
+            }
+        }catch(err){
+            console.log(err);
+        }
+    }
 
     const getSliders=async()=>{
         const cityId = localStorage.getItem("selectCity");
@@ -124,7 +152,9 @@ const Restaurant=()=>{
         getSliders();
         getNewest();
         getBest();
+        getAreaWithProvider();
         dispatch(setMenu(0));
+        dispatch(setSelectedProvider(null));
     },[])
 
     useEffect(()=>{
@@ -194,6 +224,7 @@ const Restaurant=()=>{
                                         position:"bottom-left"
                                     })
                                 }else{
+                                    localStorage.setItem("categoryType","1");
                                     dispatch(setCategoryType("1"));
                                     router.push("/hypers");
                                 }
@@ -205,7 +236,7 @@ const Restaurant=()=>{
                         </div>
                     </div>
                 </Modal>
-                <div className="header">
+                <div onClick={()=>console.log(hypers)} className="header">
                     <Image
                         src={whiteLogo}
                         alt="iket"
@@ -242,6 +273,7 @@ const Restaurant=()=>{
                     <div
                         onClick={()=>{
                             if(lat!==""){
+                                localStorage.setItem("categoryType","1");
                                 dispatch(setCategoryType("1"));
                                 router.push("/hypers");
                             }else{
@@ -251,6 +283,7 @@ const Restaurant=()=>{
                                     })
                                 }else if(hypers.length===1){
                                     dispatch(setSelectedHyper(hypers[0].ID));
+                                    localStorage.setItem("categoryType","1");
                                     dispatch(setCategoryType("1"));
                                     router.push("/hypers");
                                 }else{
@@ -279,6 +312,7 @@ const Restaurant=()=>{
                     </div>
                     <div
                         onClick={()=>{
+                            localStorage.setItem("categoryType","2");
                             dispatch(setCategoryType("2"));
                             router.push("/restaurant");
                             dispatch(setSelectedHyper(null));
@@ -300,6 +334,7 @@ const Restaurant=()=>{
                     <div className={styles.home_item_two}>
                         <div
                             onClick={()=>{
+                                localStorage.setItem("categoryType","3");
                                 dispatch(setCategoryType("3"));
                                 router.push("/restaurant");
                                 dispatch(setSelectedHyper(null));

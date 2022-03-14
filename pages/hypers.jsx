@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button , Modal} from "antd";
 import { useDispatch , useSelector} from "react-redux";
-import { setMenu, setProduct , setHypers , setCategoryType , setSelectedHyper} from "../Store/Action";
+import { setMenu, setProduct , setHypers , setCategoryType , setSelectedHyper , setCart, setBadge,setSelectedProvider} from "../Store/Action";
 import Head from 'next/head';
 import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
@@ -69,8 +69,21 @@ const Hypers=()=>{
         postData.append("AreaID",areaId);
         if(lat===""){
             postData.append("userLocation","0");
-            postData.append("latitude",parseFloat(selectedHyper.Latitude).toFixed(4));
-            postData.append("longitude",parseFloat(selectedHyper.Longitude).toFixed(4));
+            if(typeof(selectedHyper)==="object"){
+                hypers && hypers.map((hyper)=>{
+                    if(hyper.ID.toString()===selectedHyper.ID.toString()){
+                        postData.append("latitude",parseFloat(hyper.Latitude).toFixed(4));
+                        postData.append("longitude",parseFloat(hyper.Longitude).toFixed(4));
+                    }
+                })
+            }else{
+                hypers && hypers.map((hyper)=>{
+                    if(hyper.ID.toString()===selectedHyper.toString()){
+                        postData.append("latitude",parseFloat(hyper.Latitude).toFixed(4));
+                        postData.append("longitude",parseFloat(hyper.Longitude).toFixed(4));
+                    }
+                })
+            }
         }else{
             postData.append("userLocation","1");
             postData.append("latitude",lat);
@@ -101,8 +114,23 @@ const Hypers=()=>{
         postData.append("AreaID",areaId);
         if(lat===""){
             postData.append("userLocation","0");
-            postData.append("latitude",parseFloat(selectedHyper.Latitude).toFixed(4));
-            postData.append("longitude",parseFloat(selectedHyper.Longitude).toFixed(4));
+            if(hypers && selectedHyper){
+                if(typeof(selectedHyper)==="object"){
+                    hypers && hypers.map((hyper)=>{
+                        if(hyper.ID.toString()===selectedHyper.ID.toString()){
+                            postData.append("latitude",parseFloat(hyper.Latitude).toFixed(4));
+                            postData.append("longitude",parseFloat(hyper.Longitude).toFixed(4));
+                        }
+                    })
+                }else{
+                    hypers && hypers.map((hyper)=>{
+                        if(hyper.ID.toString()===selectedHyper.toString()){
+                            postData.append("latitude",parseFloat(hyper.Latitude).toFixed(4));
+                            postData.append("longitude",parseFloat(hyper.Longitude).toFixed(4));
+                        }
+                    })
+                }
+            }
         }else{
             postData.append("userLocation","1");
             postData.append("latitude",lat);
@@ -131,12 +159,25 @@ const Hypers=()=>{
     }
 
     useEffect(()=>{
+        console.log(selectedHyper);
+        dispatch(setSelectedProvider(null))
         if(selectedHyper || lat!==""){
             getSliders();
             getNewest();
             getBest();
         }
         dispatch(setMenu(0));
+        if(selectedHyper && cartData && cartData.length>0){
+            if(selectedHyper.ID!==cartData[0].ProviderID){
+                dispatch(setCart([]));
+                dispatch(setBadge(0))
+                localStorage.setItem("cart",[]);
+                console.log("2")
+            }
+        }
+        if(localStorage.getItem("categoryType")){
+            dispatch(setCategoryType(localStorage.getItem("categoryType")));
+        }
     },[])
 
     useEffect(()=>{
@@ -199,6 +240,7 @@ const Hypers=()=>{
                                         position:"bottom-left"
                                     })
                                 }else{
+                                    localStorage.setItem("categoryType","1");
                                     dispatch(setCategoryType("1"));
                                     setModal(false);
                                     getSliders();
@@ -214,9 +256,8 @@ const Hypers=()=>{
                     </div>
                 </Modal>
                 <Menu/>
-                <div className="header">
+                <div onClick={()=>console.log(hypers)} className="header">
                     <Image
-                        onClick={()=>console.log(selectedHyper)}
                         src={whiteLogo}
                         alt="iket"
                         width={"100px"}
@@ -252,6 +293,7 @@ const Hypers=()=>{
                     <div
                         onClick={()=>{
                             if(lat!==""){
+                                localStorage.setItem("categoryType","1");
                                 dispatch(setCategoryType("1"));
                                 router.push("/hypers");
                             }else{
@@ -261,6 +303,7 @@ const Hypers=()=>{
                                     })
                                 }else if(hypers.length===1){
                                     dispatch(setSelectedHyper(hypers[0].ID));
+                                    localStorage.setItem("categoryType","1");
                                     dispatch(setCategoryType("1"));
                                 }else{
                                     if(hypers.length>0){
@@ -289,6 +332,7 @@ const Hypers=()=>{
                     <div
                         className={categoryType==="2" ? "type_selected" : ""}
                         onClick={()=>{
+                            localStorage.setItem("categoryType","2");
                             dispatch(setCategoryType("2"));
                             router.push("/restaurant");
                             dispatch(setSelectedHyper(null));
@@ -311,6 +355,7 @@ const Hypers=()=>{
                         <div
                             className={categoryType==="3" ? "type_selected" : ""}
                             onClick={()=>{
+                                localStorage.setItem("categoryType","3");
                                 dispatch(setCategoryType("3"));
                                 router.push("/restaurant");
                                 dispatch(setSelectedHyper(null));

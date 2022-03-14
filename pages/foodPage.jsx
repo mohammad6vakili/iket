@@ -25,7 +25,7 @@ const foodPage=()=>{
                 position:"bottom-left"
             })
         }else if(food.count > food.Quantity){
-            toast.warning("ظرفیت کافی نمیباشد",{
+            toast.warning("موجودی محصول کافی نیست",{
                 position:"bottom-left"
             })
         }else{

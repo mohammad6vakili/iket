@@ -1,7 +1,7 @@
 import { useState , useEffect } from "react";
 import styles from "../styles/Cart.module.css";
 import { useSelector , useDispatch} from "react-redux";
-import { setCart, setMenu,setBadge } from "../Store/Action";
+import { setCart, setMenu,setBadge,setSelectedProvider } from "../Store/Action";
 import { useRouter } from "next/router";
 import trashIcon from "../assets/images/trash.svg";
 import Image from "next/image";
@@ -51,23 +51,17 @@ const Cart=()=>{
         toast.success("با موفقیت از سبد خرید شما حذف شد",{
             position:'bottom-left'
         });
-        if(cartData && cartData.length>0){
-            localStorage.setItem("cart",JSON.stringify(cartData));
-        }
     }
 
     useEffect(()=>{
         if(cartData && cartData.length>0){
             getDeliveryPrice();
-        }
-        dispatch(setMenu(2));
-    },[])
-
-    useEffect(()=>{
-        if(cartData && cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
-    })
+        dispatch(setMenu(2));
+        dispatch(setSelectedProvider(null))
+    },[])
+
 
     useEffect(()=>{
         if(showTotal===false){
@@ -76,9 +70,6 @@ const Cart=()=>{
     },[change])
 
     useEffect(()=>{
-        if(cartData && cartData.length===0){
-            localStorage.removeItem("cart");
-        }
         if(cartData && cartData.length>0){
             localStorage.setItem("cart",JSON.stringify(cartData));
         }
@@ -107,9 +98,7 @@ const Cart=()=>{
                                 toast.success("سبد خرید شما خالی شد",{
                                     position:'bottom-left'
                                 });
-                                if(cartData && cartData.length>0){
-                                    localStorage.setItem("cart",JSON.stringify(cartData));
-                                }
+                                localStorage.removeItem("cart")
                             }}
                         />
                     </div>

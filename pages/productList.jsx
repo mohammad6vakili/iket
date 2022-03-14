@@ -25,16 +25,18 @@ const ProductList=()=>{
     const [filterModal , setFilterModal]=useState(false);
     const [sortModal , setSortModal]=useState(false);
     const [brands , setBrands]=useState([]);
+    const [show , setShow]=useState(true);
 
 
     const addToCart=(data)=>{
+        setShow(false);
         let already=false;
         if(cart && cart.length>0 && cart[0].ProviderID!==data.ProviderID){
             toast.warning("خرید از چند فروشگاه امکان پذیر نیست.",{
                 position:"bottom-left"
             })
         }else if(data.count > data.Quantity){
-            toast.warning("ظرفیت غذا کافی نمیباشد",{
+            toast.warning("موجودی محصول کافی نیست",{
                 position:"bottom-left"
             })
         }else{
@@ -71,6 +73,12 @@ const ProductList=()=>{
     useEffect(()=>{
         dispatch(setMenu(1));
     },[])
+
+    useEffect(()=>{
+        if(show===false){
+            setShow(true);
+        }
+    },[show])
 
     return(
         <div className="app-container">
@@ -225,7 +233,7 @@ const ProductList=()=>{
                 <div className={styles.product_bottom_box}>
                     <Button onClick={()=>router.push("/cart")} className="enter_purple_btn">اتمام خرید</Button>
                     <Button className="enter_purple_btn">
-                        {cart && 
+                        {cart && show && 
                             FormatHelper.toPersianString(cart.reduce((a, c) => a + c.PriceWithDiscount * c.count, 0).toLocaleString())} تومان
                     </Button>
                 </div>

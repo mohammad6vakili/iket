@@ -2,7 +2,7 @@ import { useEffect,useState } from "react";
 import styles from "../styles/Categories.module.css";
 import Menu from "../Components/Menu/Menu";
 import { useSelector , useDispatch} from "react-redux";
-import {setSelectedSubCat , setMenu} from "../Store/Action";
+import {setSelectedSubCat , setMenu,setSelectedProvider} from "../Store/Action";
 import Image from "next/image";
 import Logo from "../assets/images/logo_colored.webp";
 import Head from 'next/head';
@@ -78,6 +78,7 @@ const Categories=()=>{
             getCategories();
         }
         dispatch(setMenu(1));
+        dispatch(setSelectedProvider(null))
     },[])
 
     useEffect(()=>{
