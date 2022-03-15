@@ -7,7 +7,7 @@ import Head from 'next/head';
 import { useRouter } from "next/router";
 import { useSelector , useDispatch} from "react-redux";
 import { toast } from "react-toastify";
-import { setProfile,setMenu } from "../Store/Action";
+import { setProfile,setMenu , setCategoryType} from "../Store/Action";
 import FormatHelper from "../Helper/FormatHelper";
 import Image from "next/image";
 import rightArrow from "../assets/images/right-arrow-white.svg";
@@ -56,6 +56,8 @@ const Wallet=()=>{
         useEffect(() => {
             getProfile();
             dispatch(setMenu(4));
+            dispatch(setCategoryType("2"));
+            localStorage.setItem("categoryType","2");
         }, []);
 
     return(

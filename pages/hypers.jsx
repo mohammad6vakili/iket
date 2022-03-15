@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { Button , Modal} from "antd";
 import { useDispatch , useSelector} from "react-redux";
-import { setMenu, setProduct , setHypers , setCategoryType , setSelectedHyper , setCart, setBadge,setSelectedProvider} from "../Store/Action";
+import { setMenu, setProduct , setHypers , setCategoryType , setSelectedHyper , setCart, setBadge,setSelectedProvider , setSelectedSubCat} from "../Store/Action";
 import Head from 'next/head';
 import Env from "../Constant/Env.json";
 import { toast } from "react-toastify";
@@ -178,6 +178,7 @@ const Hypers=()=>{
         if(localStorage.getItem("categoryType")){
             dispatch(setCategoryType(localStorage.getItem("categoryType")));
         }
+        dispatch(setSelectedSubCat(null));
     },[])
 
     useEffect(()=>{

@@ -123,7 +123,7 @@ const ProductList=()=>{
                         >
                             <div 
                                 onClick={()=>{
-                                    if(selectedHyper && selectedHyper.IsWork===0){
+                                    if(selectedHyper && selectedHyper.IsWork!==0){
                                         console.log("product is not active");
                                     }else{
                                         dispatch(setProduct(data));
