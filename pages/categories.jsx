@@ -32,6 +32,10 @@ const Categories=()=>{
     const [selectedSubCategory, setSelectedSubCategory]=useState(null);
     const [inId , setInId]=useState(null);
 
+    const divStyle = {
+        filter: "invert(50%) sepia(84%) saturate(457%) hue-rotate(216deg) brightness(83%) contrast(89%) !important"
+      };
+
     const getCategories=async()=>{
         const areaId = localStorage.getItem("selectArea");
         let postData=new FormData();
@@ -160,7 +164,10 @@ const Categories=()=>{
                     <div className={styles.categories_step_two}>
                         <div>
                             {selectedCategory && selectedCategory.SubCategory.map((data , index)=>(
-                                <div onClick={()=>{setSelectedSubCategory(data.SubCategoryVitrin);setInId(data.ID)}} key={index}>
+                                <div
+                                    
+                                    onClick={()=>{setSelectedSubCategory(data.SubCategoryVitrin);setInId(data.ID)}} key={index}
+                                >
                                     {data.PhotoUrl==="https://iketpanel.com" ?
                                         <Image
                                             src={Logo}

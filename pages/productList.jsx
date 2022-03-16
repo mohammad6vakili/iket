@@ -160,7 +160,7 @@ const ProductList=()=>{
                                         }
                                     }}
                                 >
-                                    {data.Title}
+                                    {FormatHelper.toPersianString(data.Title)}
                                 </div>
                                 <div
                                     style={data.PriceWithDiscount!==data.Price ? {color:"red",textDecoration:"line-through"} : {color:"green"}}

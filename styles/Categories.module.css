@@ -94,3 +94,6 @@
     justify-content: center;
     margin-left: 10px !important;
 }
+.pac-selected{
+    background-color: red !important;
+}

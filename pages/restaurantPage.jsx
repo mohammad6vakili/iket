@@ -25,6 +25,7 @@ const RestaurantPage=()=>{
     const [catId , setCatId]=useState(null);
 
     const addToCart=(product)=>{
+        console.log(product)
         setShow(false);
         let already=false;
         if(cart && cart.length>0 && cart[0].ProviderID!==product.ProviderID){
@@ -39,7 +40,7 @@ const RestaurantPage=()=>{
             cart.map((pr)=>{
                 if(pr.ID===product.ID){
                     already = true;
-                    pr.count = product.count;
+                    pr.count = product.count + pr.count;
                 }
             });
             toast.success("به سبد خرید افزوده شد",{
@@ -48,6 +49,7 @@ const RestaurantPage=()=>{
             if (!already) {
                 if(product.count===0 || product.count===1){
                     cart.push({...product , count:1});
+                    product.count = 1;
                 }else if(product.count>1){
                     cart.push(product);
                 }
@@ -72,7 +74,9 @@ const RestaurantPage=()=>{
             }
         }
         dispatch(setMenu(0));
-        dispatch(setSelectedProvider(resData.ID));
+        if(resData){
+            dispatch(setSelectedProvider(resData.ID));
+        }
     },[])
 
     useEffect(()=>{
@@ -102,7 +106,7 @@ const RestaurantPage=()=>{
                         <Image
                             src={rightArrow}
                             alt="back"
-                            onClick={()=>router.push("/restaurant")}
+                            onClick={()=>router.push("/allRestaurants")}
                         />
                     </div>
                     <div onClick={()=>router.push("/search")} style={{cursor:"pointer"}} className="header-left-icon">

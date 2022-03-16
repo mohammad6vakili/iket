@@ -141,7 +141,7 @@ const Product=()=>{
                             />
                         </div>
                     </div>
-                    <div className={styles.food_page_banner}>
+                    <div className={styles.food_page_banner} style={{height:"35vh"}}>
                         {product.PhotoUrl!=="https://iketpanel.com" ?
                             <Image
                                 src={product.PhotoUrl}
@@ -162,12 +162,12 @@ const Product=()=>{
                     <div className={styles.food_page_box}>
                         <div>
                             <div style={{fontSize:"14px"}}>
-                                {product.Title}
+                                {FormatHelper.toPersianString(product.Title)}
                             </div>
                             <div>
                                 {product.Description && FormatHelper.toPersianString(product.Description)}
                             </div>
-                            <div>
+                            <div style={{flexDirection:"column",alignItems:"flex-end"}}>
                                 <div className={product.PriceWithDiscount!==product.Price ? styles.restaurant_page_discount_price : ""}>
                                     {FormatHelper.toPersianString(product.Price.toLocaleString()) + " تومان"}
                                 </div>

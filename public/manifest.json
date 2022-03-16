@@ -4,37 +4,37 @@
     "description": "IKET",
     "icons": [
       {
-        "src": "/icons/android-36x36.png",
+        "src": "/icons/icon-36x36.png",
         "type": "image/png",
         "sizes": "36x36"
       },
       {
-        "src": "/icons/android-48x48.png",
+        "src": "/icons/icon-48x48.png",
         "type": "image/png",
         "sizes": "48x48"
       },
       {
-        "src": "/icons/android-72x72.png",
+        "src": "/icons/icon-72x72.png",
         "type": "image/png",
         "sizes": "72x72"
       },
       {
-        "src": "/icons/android-96x96.png",
+        "src": "/icons/icon-96x96.png",
         "type": "image/png",
         "sizes": "96x96"
       },
       {
-        "src": "/icons/android-144x144.png",
+        "src": "/icons/icon-144x144.png",
         "type": "image/png",
         "sizes": "144x144"
       },
       {
-        "src": "/icons/android-192x192.png",
+        "src": "/icons/icon-192x192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "/icons/android-512x512.png",
+        "src": "/icons/icon-512x512.png",
         "type": "image/png",
         "sizes": "512x512"
       },

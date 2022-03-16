@@ -38,7 +38,7 @@ const Search=()=>{
         if(selectedHyper!==null){
             postData.append("ProviderID",selectedHyper.ID);
         }
-        if(categoryType!=="1"){
+        if(categoryType!=="1" && selectedProvider===null){
             postData.append("CityID",localStorage.getItem("selectCity"));
         }
         if(lat!=="" && lng!==""){
@@ -129,7 +129,7 @@ const Search=()=>{
                         }}
                         onChange={(e)=>onSearch(e.target.value)}
                     />
-                    <div style={{cursor:"pointer"}} className="header-left-icon">
+                    <div onClick={()=>console.log(selectedHyper , categoryType)} style={{cursor:"pointer"}} className="header-left-icon">
                         <Image
                             src={searchIcon}
                             alt="search"

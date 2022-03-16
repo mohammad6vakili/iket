@@ -1,6 +1,11 @@
 const withPwa = require('next-pwa');
 
 module.exports = withPwa({
+  experimental: {
+    images: {
+      layoutRaw: true,
+    },
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

@@ -113,6 +113,7 @@
 .rec-item-wrapper a{
   width: 100% !important;
   height: 26vh !important;
+  max-height: 180px;
 }
 .rec-item-wrapper span{
   width: 100% !important;

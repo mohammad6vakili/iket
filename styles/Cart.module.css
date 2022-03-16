@@ -102,7 +102,9 @@
   width: 100%;
   font-size: 12px;
   font-weight: 600;
-  text-overflow: ellipsis !important;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
 .cart_item > div:nth-child(1)>div:nth-child(2)>div:nth-child(2){
   color: rgb(141, 141, 141);

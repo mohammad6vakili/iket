@@ -446,7 +446,7 @@ const Hypers=()=>{
                                         style={{fontSize:"10px",fontWeight:"100"}} 
                                         className={styles.restaurant_slider_box_title}
                                     >
-                                        {data.Title}
+                                        {FormatHelper.toPersianString(data.Title)}
                                     </div>
                                     <div 
                                         style={{alignItems:"flex-end",color:Colors.success,flexDirection:"column"}}
