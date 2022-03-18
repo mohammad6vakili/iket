@@ -2,7 +2,7 @@ import { useEffect,useState } from "react";
 import styles from "../styles/Categories.module.css";
 import Menu from "../Components/Menu/Menu";
 import { useSelector , useDispatch} from "react-redux";
-import {setSelectedSubCat , setMenu,setSelectedProvider} from "../Store/Action";
+import {setSelectedSubCat , setMenu,setSelectedProvider, setVitrin,setCategories,setStep} from "../Store/Action";
 import Image from "next/image";
 import Logo from "../assets/images/logo_colored.webp";
 import Head from 'next/head';
@@ -25,16 +25,12 @@ const Categories=()=>{
     const cartData=useSelector(state=>state.Reducer.cart);
     const lat=useSelector(state=>state.Reducer.lat);
     const lng=useSelector(state=>state.Reducer.lng);
+    const categories=useSelector(state=>state.Reducer.categories);
+    const vitrin=useSelector(state=>state.Reducer.vitrin);
+    const step=useSelector(state=>state.Reducer.step);
 
-    const [step , setStep]=useState(0);
-    const [categories , setCategories]=useState(null);
-    const [selectedCategory , setSelectedCategory]=useState(null);
     const [selectedSubCategory, setSelectedSubCategory]=useState(null);
     const [inId , setInId]=useState(null);
-
-    const divStyle = {
-        filter: "invert(50%) sepia(84%) saturate(457%) hue-rotate(216deg) brightness(83%) contrast(89%) !important"
-      };
 
     const getCategories=async()=>{
         const areaId = localStorage.getItem("selectArea");
@@ -54,7 +50,7 @@ const Categories=()=>{
         try{
             const response=await axios.post(Env.baseUrl + "SelectCategoryFamilyByHyperMarket.aspx",postData);
             if(response.data.Status===1){
-                setCategories(response.data.Data);
+                dispatch(setCategories(response.data.Data));
                 response.data.Data.map((data)=>{
                     data.SubCategory.map((subCat)=>{
                         subCat.SubCategoryVitrin.map((vitrin)=>{
@@ -78,12 +74,24 @@ const Categories=()=>{
 
 
     useEffect(()=>{
-        if(selectedHyper || lat!==""){
+        if(selectedHyper || lat!=="" || categories!==null){
             getCategories();
         }
         dispatch(setMenu(1));
         dispatch(setSelectedProvider(null))
+        if(vitrin){
+            dispatch(setStep(1))
+        }else{
+            dispatch(setStep(0))
+        }
     },[])
+
+    useEffect(()=>{
+        if(step===0){
+            dispatch(setVitrin(null));
+            setInId(null)
+        }
+    },[step])
 
     useEffect(()=>{
         if(cartData && cartData.length>0){
@@ -102,13 +110,13 @@ const Categories=()=>{
             <div className={`${styles.categories} dashboard-page`}>
                 <Menu/>
                 <div className="header">
-                    {selectedCategory===null ? "دسته بندی ها" : selectedCategory.Title}
+                    {vitrin===null ? "دسته بندی ها" : vitrin.Title}
                     {step===1 &&
                         <div className="header-right-icon">
                             <Image
                                 src={rightArrow}
                                 alt="back"
-                                onClick={()=>{setStep(0);setSelectedCategory(null);}}
+                                onClick={()=>{dispatch(setStep(0));dispatch(setVitrin(null));}}
                             />
                         </div>
                     }
@@ -130,8 +138,8 @@ const Categories=()=>{
                             <div 
                                 onClick={()=>{
                                     setSelectedSubCategory(null);
-                                    setSelectedCategory(data);
-                                    setStep(1);
+                                    dispatch(setVitrin(data));
+                                    dispatch(setStep(1));
                                 }}
                                 className={styles.categories_items} 
                                 key={index}
@@ -163,9 +171,8 @@ const Categories=()=>{
                 {step===1 &&
                     <div className={styles.categories_step_two}>
                         <div>
-                            {selectedCategory && selectedCategory.SubCategory.map((data , index)=>(
+                            {vitrin && vitrin.SubCategory.map((data , index)=>(
                                 <div
-                                    
                                     onClick={()=>{setSelectedSubCategory(data.SubCategoryVitrin);setInId(data.ID)}} key={index}
                                 >
                                     {data.PhotoUrl==="https://iketpanel.com" ?
@@ -179,6 +186,7 @@ const Categories=()=>{
                                         <Image
                                             width={"65px"}
                                             height={"65px"}
+                                            className={inId && inId===data.ID ? "side-vitrin-selected" : ""}
                                             src={data.PhotoUrl}
                                             loader={()=>data.PhotoUrl}
                                             alt="category"

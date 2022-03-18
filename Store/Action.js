@@ -18,6 +18,9 @@ export const FACTOR_DATA="FACTOR_DATA";
 export const EDTI_ADDRESS="EDTI_ADDRESS";
 export const BADGE="BADGE";
 export const SELECTED_PROVIDER="SELECTED_PROVIDER";
+export const VITRIN="VITRIN";
+export const CATEGORIES="CATEGORIES";
+export const STEP="STEP";
 
 
 
@@ -177,6 +180,30 @@ export const setSelectedProvider=(data)=>{
     return(
         {
             type:SELECTED_PROVIDER,
+            payload:data
+        }
+    )
+}
+export const setVitrin=(data)=>{
+    return(
+        {
+            type:VITRIN,
+            payload:data
+        }
+    )
+}
+export const setCategories=(data)=>{
+    return(
+        {
+            type:CATEGORIES,
+            payload:data
+        }
+    )
+}
+export const setStep=(data)=>{
+    return(
+        {
+            type:STEP,
             payload:data
         }
     )

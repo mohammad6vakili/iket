@@ -18,7 +18,10 @@ import {
     FACTOR_DATA,
     EDTI_ADDRESS,
     BADGE,
-    SELECTED_PROVIDER
+    SELECTED_PROVIDER,
+    VITRIN,
+    CATEGORIES,
+    STEP
 } from "./Action";
 
 const initialState = {
@@ -41,7 +44,10 @@ const initialState = {
     factorData:null,
     editAddress:null,
     badge:0,
-    selectedProvider:null
+    selectedProvider:null,
+    vitrin:null,
+    categories:null,
+    step:0
 };
 
 const Reducer = (state = initialState, action) => {
@@ -86,6 +92,12 @@ const Reducer = (state = initialState, action) => {
       return {...state, badge: action.payload};
     case SELECTED_PROVIDER:
       return {...state, selectedProvider: action.payload};
+    case VITRIN:
+      return {...state, vitrin: action.payload};
+    case CATEGORIES:
+      return {...state, categories: action.payload};
+    case STEP:
+      return {...state, step: action.payload};
     default:
       return state;
   }

@@ -115,6 +115,10 @@
   height: 26vh !important;
   max-height: 180px;
 }
+.side-vitrin-selected{
+  filter: invert(50%) sepia(84%) saturate(457%) hue-rotate(216deg)
+    brightness(83%) contrast(89%) !important;
+}
 .rec-item-wrapper span{
   width: 100% !important;
   height: 100% !important;
